@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CampusFest – College Event Registration System
 
 CampusFest is a comprehensive, responsive web-based event registration and management system tailored for university campuses. It streamlines event discovery, registration, and communication for students while giving faculty administrators powerful tools to organize, edit, and track events and announcements.
@@ -139,3 +140,7 @@ CampusFest uses domain-based email detection to differentiate between user roles
    npx serve .
    ```
 3. Navigate to `http://localhost:8000` (or `index.html`) in your browser to experience CampusFest.
+=======
+# CampusFest
+CampusFest is a responsive college event registration system built using HTML5, CSS3, Bootstrap, and JavaScript. Its main purpose is to simplify event management. Students can explore events, register, and manage profiles, while faculty can add, edit, and delete events, track registrations, and publish announcements through separate dashboards.
+>>>>>>> 8786d1e62cb78a27eb7758bbd36f0a97bc8bbb94
