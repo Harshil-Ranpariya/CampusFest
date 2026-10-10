@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgCult" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb7185" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bgCult)" />
+  <path d="M 0 50 Q 150 120 300 50 Q 450 120 600 50" stroke="#fef08a" stroke-width="2" fill="none"/>
+  <polygon points="50,75 70,72 60,110" fill="#ef4444" />
+  <polygon points="110,87 130,83 120,120" fill="#10b981" />
+  <polygon points="170,90 190,85 180,125" fill="#3b82f6" />
+  <polygon points="230,82 250,75 240,115" fill="#f59e0b" />
+  <polygon points="350,75 370,82 360,115" fill="#ec4899" />
+  <polygon points="410,85 430,90 420,125" fill="#10b981" />
+  <polygon points="470,83 490,87 480,120" fill="#6366f1" />
+  <circle cx="100" cy="180" r="8" fill="#fef08a" opacity="0.8"/>
+  <circle cx="500" cy="160" r="10" fill="#67e8f9" opacity="0.8"/>
+  <circle cx="220" cy="220" r="6" fill="#ffffff" opacity="0.9"/>
+  <circle cx="380" cy="200" r="8" fill="#f43f5e" opacity="0.9"/>
+  <path d="M 0 320 Q 300 270 600 320 L 600 400 L 0 400 Z" fill="#18181b" />
+  <circle cx="300" cy="250" r="16" fill="#fef08a"/>
+  <path d="M 285 270 L 315 270 L 325 340 L 275 340 Z" fill="#f43f5e"/>
+  <path d="M 50 400 L 70 330 L 90 400 M 120 400 L 140 310 L 160 400 M 200 400 L 220 320 L 240 400 M 360 400 L 380 320 L 400 400 M 450 400 L 470 310 L 490 400 M 520 400 L 540 340 L 560 400" stroke="#09090b" stroke-width="12" stroke-linecap="round"/>
+</svg>

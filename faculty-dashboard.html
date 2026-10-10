@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Dashboard - Admin Panel</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="faculty-dashboard.css">
+</head>
+<body>
+
+  <!-- Admin Topbar Header (Responsive Only: < 992px) -->
+  <header class="admin-topbar d-lg-none sticky-top bg-white border-bottom shadow-sm">
+    <div class="container-fluid px-3 py-2 d-flex justify-content-between align-items-center">
+      <a href="faculty-dashboard.html" class="brand-text text-decoration-none d-flex align-items-center gap-2">
+        <div class="admin-topbar-icon">
+          <i class="bi bi-shield-check"></i>
+        </div>
+        <span class="fs-5 fw-bold">Campus<span class="brand-accent">Fest</span> <span class="badge bg-light text-dark border ms-1 fw-semibold font-monospace" style="font-size: 0.72rem;">ADMIN</span></span>
+      </a>
+      <button class="btn btn-admin-menu-toggle p-2 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#facultySidebar" aria-controls="facultySidebar" aria-label="Toggle Navigation">
+        <i class="bi bi-list fs-4"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Upper-Side (Top) Offcanvas Admin Menu (Responsive Only: < 992px) -->
+  <div class="offcanvas offcanvas-top admin-top-menu d-lg-none" tabindex="-1" id="facultySidebar" aria-labelledby="facultyMenuTitle" data-bs-backdrop="true" data-bs-scroll="false">
+    <div class="container-fluid px-3 px-md-4 py-3">
+      <!-- Menu Header -->
+      <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom">
+        <div class="d-flex align-items-center gap-2">
+          <div class="admin-icon-box">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <div>
+            <h5 class="offcanvas-title fw-bold text-dark mb-0" id="facultyMenuTitle">Faculty Admin Portal</h5>
+            <small class="text-muted">Campus Logistics & Event Management</small>
+          </div>
+        </div>
+        <button type="button" class="btn-close text-reset p-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+
+      <!-- Menu Navigation Grid -->
+      <div class="row g-2 g-sm-3">
+        <div class="col-6">
+          <a href="faculty-dashboard.html" class="admin-nav-card active">
+            <div class="admin-nav-icon bg-primary-soft">
+              <i class="bi bi-grid-fill"></i>
+            </div>
+            <div class="admin-nav-info">
+              <div class="admin-nav-title">Dashboard</div>
+              <div class="admin-nav-desc">Overview & Metrics</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-6">
+          <a href="manage-events.html" class="admin-nav-card">
+            <div class="admin-nav-icon bg-indigo-soft">
+              <i class="bi bi-calendar3-event"></i>
+            </div>
+            <div class="admin-nav-info">
+              <div class="admin-nav-title">Manage Events</div>
+              <div class="admin-nav-desc">Create & Edit Events</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-6">
+          <a href="student-registrations.html" class="admin-nav-card">
+            <div class="admin-nav-icon bg-emerald-soft">
+              <i class="bi bi-people-fill"></i>
+            </div>
+            <div class="admin-nav-info">
+              <div class="admin-nav-title">Registrations</div>
+              <div class="admin-nav-desc">Student Enrollments</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-6">
+          <a href="announcements.html" class="admin-nav-card">
+            <div class="admin-nav-icon bg-amber-soft">
+              <i class="bi bi-megaphone-fill"></i>
+            </div>
+            <div class="admin-nav-info">
+              <div class="admin-nav-title">Announcements</div>
+              <div class="admin-nav-desc">Broadcast Updates</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Menu Footer Actions -->
+      <div class="d-flex flex-wrap align-items-center justify-content-between pt-3 mt-3 border-top gap-2">
+        <a href="add-edit-event.html" class="btn btn-primary-custom d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3">
+          <i class="bi bi-plus-circle-fill"></i>
+          <span>Create New Event</span>
+        </a>
+        <div class="d-flex align-items-center gap-2">
+          <a href="faculty-profile.html" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3">
+            <i class="bi bi-gear-fill"></i>
+            <span>Settings</span>
+          </a>
+          <button type="button" class="btn btn-outline-danger btn-sm d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 faculty-logout-btn" id="facultyLogoutBtnMobile">
+            <i class="bi bi-box-arrow-left"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-layout-wrapper">
+    <!-- Desktop Permanent Sidebar (Visible on >= 992px) -->
+    <aside class="desktop-sidebar d-none d-lg-flex flex-column">
+      <div class="sidebar-header">
+        <div class="d-flex align-items-center gap-2">
+          <div class="admin-icon-box">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <div>
+            <div class="sidebar-title">Admin Panel</div>
+            <div class="sidebar-sub">Logistics Management</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-nav-container">
+        <ul class="nav flex-column sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="faculty-dashboard.html">
+              <i class="bi bi-grid-fill me-2"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="manage-events.html">
+              <i class="bi bi-calendar3-event me-2"></i> Manage Events
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="student-registrations.html">
+              <i class="bi bi-people-fill me-2"></i> Student Registrations
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="announcements.html">
+              <i class="bi bi-megaphone-fill me-2"></i> Announcements
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="add-edit-event.html" class="btn btn-create-event w-100 mb-3">
+          <i class="bi bi-plus-lg me-1"></i> Create New Event
+        </a>
+        <ul class="nav flex-column sidebar-footer-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="faculty-profile.html">
+              <i class="bi bi-gear-fill me-2"></i> Settings
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger faculty-logout-btn" href="#" id="facultyLogoutBtn">
+              <i class="bi bi-box-arrow-left me-2"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="container-fluid px-lg-5 py-4">
+        
+        <div class="page-top-header mb-4">
+          <h1 class="dashboard-heading">Faculty Dashboard</h1>
+          <p class="dashboard-sub text-muted mb-0">Overview of campus logistics and event engagement.</p>
+
+<div class="row g-3 mb-4">
+          
+          <div class="col-sm-6 col-xl-3">
+            <div class="metric-box">
+              <div class="metric-head-label">TOTAL EVENTS</div>
+              <div class="metric-value-large" id="facultyTotalEvents">42</div>
+              <div class="metric-sub-note text-muted">Active Campus Catalog</div>
+            </div>
+          </div>
+
+<div class="col-sm-6 col-xl-3">
+            <div class="metric-box">
+              <div class="metric-head-label">UPCOMING EVENTS</div>
+              <div class="metric-value-large" id="facultyUpcomingEvents">12</div>
+              <div class="metric-sub-note text-muted">Next: Spring Tech Fair</div>
+            </div>
+          </div>
+
+<div class="col-sm-6 col-xl-3">
+            <div class="metric-box">
+              <div class="metric-head-label">TOTAL STUDENTS</div>
+              <div class="metric-value-large">3,205</div>
+              <div class="metric-sub-note text-muted">Institutional Enrollees</div>
+            </div>
+          </div>
+
+<div class="col-sm-6 col-xl-3">
+            <div class="metric-box">
+              <div class="metric-head-label">REGISTRATIONS</div>
+              <div class="metric-value-large" id="facultyTotalRegistrations">8,490</div>
+              <div class="metric-sub-note text-muted">Across all events</div>
+            </div>
+          </div>
+        </div>
+
+<div class="dashboard-card">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="card-inner-title mb-0">Recent Registrations</h2>
+            <a href="student-registrations.html" class="view-all-table-link">View All</a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table admin-table align-middle mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Student Name</th>
+                  <th scope="col">Event</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody id="recentRegistrationsTbody">
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script src="faculty-dashboard.js"></script>
+</body>
+</html>

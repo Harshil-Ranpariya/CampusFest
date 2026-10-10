@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bfdbfe" />
+      <stop offset="60%" stop-color="#e0f2fe" />
+      <stop offset="100%" stop-color="#f0fdf4" />
+    </linearGradient>
+    <linearGradient id="bldgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="50%" stop-color="#e2e8f0" />
+      <stop offset="100%" stop-color="#cbd5e1" />
+    </linearGradient>
+    <linearGradient id="lawnGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80" />
+      <stop offset="100%" stop-color="#15803d" />
+    </linearGradient>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#skyGrad)" />
+  
+  <path d="M 60 420 L 60 180 L 140 180 L 140 140 L 260 140 L 260 180 L 540 180 L 540 140 L 660 140 L 660 180 L 740 180 L 740 420 Z" fill="url(#bldgGrad)" stroke="#94a3b8" stroke-width="2"/>
+  <rect x="80" y="210" width="30" height="180" fill="#cbd5e1" rx="4"/>
+  <rect x="130" y="210" width="30" height="180" fill="#cbd5e1" rx="4"/>
+  <rect x="180" y="210" width="30" height="180" fill="#cbd5e1" rx="4"/>
+  <rect x="230" y="210" width="30" height="180" fill="#cbd5e1" rx="4"/>
+  <rect x="540" y="210" width="30" height="180" fill="#cbd5e1" rx="4"/>
+  <rect x="590" y="210" width="30" height="180" fill="#cbd5e1" rx="4"/>
+  <rect x="640" y="210" width="30" height="180" fill="#cbd5e1" rx="4"/>
+  <rect x="690" y="210" width="30" height="180" fill="#cbd5e1" rx="4"/>
+  
+  <rect x="300" y="190" width="50" height="80" fill="url(#glass)" rx="6"/>
+  <rect x="375" y="190" width="50" height="80" fill="url(#glass)" rx="6"/>
+  <rect x="450" y="190" width="50" height="80" fill="url(#glass)" rx="6"/>
+  
+  <path d="M 360 300 L 440 300 L 440 420 L 360 420 Z" fill="#475569" />
+  
+  <circle cx="90" cy="380" r="60" fill="#16a34a" opacity="0.9"/>
+  <circle cx="140" cy="360" r="50" fill="#22c55e" opacity="0.8"/>
+  <circle cx="680" cy="380" r="70" fill="#15803d" opacity="0.9"/>
+  <circle cx="730" cy="360" r="55" fill="#16a34a" opacity="0.85"/>
+  
+  <path d="M 0 390 Q 400 370 800 390 L 800 600 L 0 600 Z" fill="url(#lawnGrad)" />
+
+  <g transform="translate(180, 360)">
+    <circle cx="45" cy="40" r="22" fill="#fed7aa" />
+    <path d="M 30 35 Q 45 15 65 30 Q 55 10 30 25 Z" fill="#92400e" />
+    <path d="M 25 65 L 65 65 L 75 130 L 15 130 Z" fill="#0284c7" rx="10" />
+    <path d="M 15 130 L 5 180 L 50 180 L 40 130 Z" fill="#334155" />
+    <path d="M 45 130 L 75 170 L 110 170 L 65 130 Z" fill="#334155" />
+    <rect x="45" y="110" width="35" height="25" fill="#f8fafc" stroke="#0f172a" stroke-width="2" rx="2" transform="rotate(-15, 45, 110)"/>
+  </g>
+
+  <g transform="translate(360, 340)">
+    <circle cx="50" cy="40" r="24" fill="#fcd34d" />
+    <path d="M 30 30 Q 50 10 75 25 Q 70 5 35 15 Z" fill="#1e293b" />
+    <path d="M 25 65 L 75 65 L 85 135 L 15 135 Z" fill="#059669" rx="10" />
+    <path d="M 20 135 L 10 190 L 55 190 L 45 135 Z" fill="#1e293b" />
+    <path d="M 55 135 L 80 185 L 125 185 L 75 135 Z" fill="#1e293b" />
+    <polygon points="40,120 85,120 95,140 30,140" fill="#94a3b8" />
+    <polygon points="40,120 40,85 85,85 85,120" fill="#475569" />
+    <rect x="43" y="88" width="39" height="29" fill="#38bdf8" />
+  </g>
+
+  <g transform="translate(520, 350)">
+    <circle cx="45" cy="40" r="22" fill="#ffedd5" />
+    <path d="M 25 35 Q 45 10 65 25 Q 70 45 60 55" fill="#b45309" />
+    <path d="M 25 65 L 65 65 L 75 130 L 15 130 Z" fill="#e11d48" rx="8" />
+    <path d="M 20 130 L 25 185 L 55 185 L 45 130 Z" fill="#475569" />
+    <path d="M 50 130 L 70 180 L 105 180 L 65 130 Z" fill="#475569" />
+    <rect x="70" y="70" width="25" height="45" fill="#0f172a" rx="6" />
+  </g>
+
+  <g transform="translate(480, 260)">
+    <rect width="180" height="48" rx="24" fill="#ffffff" filter="drop-shadow(0px 8px 16px rgba(0,0,0,0.15))" />
+    <circle cx="26" cy="24" r="14" fill="#00875a" />
+    <path d="M 21 24 L 25 28 L 32 20" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <text x="50" y="24" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a">Campus Life 2024</text>
+    <text x="50" y="38" font-family="sans-serif" font-size="10" fill="#64748b">5,000+ Active Students</text>
+  </g>
+</svg>

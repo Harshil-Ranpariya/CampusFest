@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - CampusFest</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="student-profile.css">
+</head>
+<body>
+
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand header-logo" href="student-dashboard.html">
+          <span class="brand-text">CampusFest</span>
+        </a>
+        <div class="d-flex align-items-center d-lg-none gap-2">
+          <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-decoration-none text-dark" data-bs-toggle="dropdown" aria-expanded="false" title="Student Profile & Menu">
+              <div class="user-avatar-circle active-avatar">
+                <i class="bi bi-person-fill"></i>
+              </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li><a class="dropdown-item active" href="student-profile.html">My Profile</a></li>
+              <li><a class="dropdown-item" href="my-registration.html">My Registrations</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger studentLogoutBtn" href="#">Logout</a></li>
+            </ul>
+          </div>
+          <button class="navbar-toggler border-0 shadow-none p-1" type="button" data-bs-toggle="collapse" data-bs-target="#studentNavCollapse" aria-controls="studentNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="studentNavCollapse">
+          <ul class="navbar-nav header-nav-links">
+            <li class="nav-item">
+              <a class="nav-link" href="student-dashboard.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="events.html">Events</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="my-registration.html">My Registrations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="student-about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="notifications.html">Notification</a>
+            </li>
+          </ul>
+          <div class="header-right-user d-none d-lg-flex align-items-center ms-lg-auto">
+            <div class="dropdown">
+              <a href="#" class="d-flex align-items-center text-decoration-none text-dark" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="Student Profile & Menu">
+                <div class="user-avatar-circle active-avatar">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userMenuDropdown">
+                <li><a class="dropdown-item active" href="student-profile.html">My Profile</a></li>
+                <li><a class="dropdown-item" href="my-registration.html">My Registrations</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger studentLogoutBtn" href="#" id="studentLogoutBtn">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="profile-main py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          
+          <div class="profile-card">
+            <h2 class="profile-card-title">Personal Information</h2>
+            <hr class="profile-divider mb-4">
+
+            <div id="profileAlert" class="alert alert-success d-none mb-4" role="alert"></div>
+
+            <form id="studentProfileForm" novalidate>
+              <div class="row g-4">
+                
+                <div class="col-md-6">
+                  <label for="studentFullName" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="studentFullName" placeholder="Alex Mercer" required>
+                </div>
+
+<div class="col-md-6">
+                  <label for="studentEnrollment" class="form-label">Enrollment Number</label>
+                  <input type="text" class="form-control" id="studentEnrollment" placeholder="CS2021045" required>
+                </div>
+
+<div class="col-12">
+                  <label for="studentEmail" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="studentEmail" placeholder="alex.mercer@marwadiuniversity.ac.in" required readonly>
+                </div>
+
+<div class="col-md-6">
+                  <label for="studentDepartment" class="form-label">Department</label>
+                  <select class="form-select" id="studentDepartment" required>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Electronics & Communication">Electronics &amp; Communication</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="Management Studies">Management Studies</option>
+                  </select>
+                </div>
+
+<div class="col-md-6">
+                  <label for="studentSemester" class="form-label">Current Semester</label>
+                  <select class="form-select" id="studentSemester" required>
+                    <option value="1st Semester">1st Semester</option>
+                    <option value="2nd Semester">2nd Semester</option>
+                    <option value="3rd Semester">3rd Semester</option>
+                    <option value="4th Semester">4th Semester</option>
+                    <option value="5th Semester">5th Semester</option>
+                    <option value="6th Semester">6th Semester</option>
+                    <option value="7th Semester">7th Semester</option>
+                    <option value="8th Semester">8th Semester</option>
+                  </select>
+                </div>
+              </div>
+
+<div class="text-end mt-4 pt-3">
+                <button type="submit" class="btn btn-primary-custom px-4 py-2">
+                  <i class="bi bi-floppy me-1"></i> Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+<footer class="site-footer mt-auto">
+    <div class="container py-4">
+      <div class="row align-items-center gy-3">
+        <div class="col-md-6 text-center text-md-start">
+          <span class="footer-brand">CampusFest</span>
+          <p class="footer-tagline text-muted small mt-1 mb-0">© 2024 CampusFest. Institutional Professionalism.</p>
+        </div>
+        <div class="col-md-6">
+          <ul class="footer-nav list-inline text-center text-md-end mb-0">
+            <li class="list-inline-item"><a href="student-about.html">Contact Us</a></li>
+            <li class="list-inline-item"><a href="events.html">College Portal</a></li>
+            <li class="list-inline-item"><a href="student-about.html">Privacy Policy</a></li>
+            <li class="list-inline-item"><a href="student-about.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script src="student-profile.js"></script>
+</body>
+</html>
