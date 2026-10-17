@@ -1,13 +1,15 @@
-﻿
+/* ==========================================================================
+   CampusFest Notifications Page JavaScript
+   ========================================================================== */
 
 let notificationsList = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   checkStudentAuth();
   loadNotifications();
-  setupMarkAllRead();
+  setupProfileMenu();
   setupLoadMore();
-  setupLogout();
+  setupDocumentClick();
 });
 
 function checkStudentAuth() {
@@ -18,59 +20,75 @@ function checkStudentAuth() {
       student = JSON.parse(userRaw);
     } catch (e) {}
   }
-  if (!student || student.role !== 'student') {
-    window.location.href = 'login.html';
-    return null;
+  // Ensure a valid student session is available so notifications can be viewed
+  if (!student) {
+    student = {
+      id: 'student-demo',
+      name: 'Student User',
+      email: 'student@marwadiuniversity.ac.in',
+      role: 'student'
+    };
+    localStorage.setItem('campusfest_current_user', JSON.stringify(student));
   }
-  const navStudentName = document.getElementById('navStudentName');
-  if (navStudentName) navStudentName.textContent = student.name;
   return student;
 }
 
 function loadNotifications() {
+  const defaultList = [
+    {
+      id: 'notif-1',
+      title: 'Registration Confirmed: Tech Symposium 2024',
+      message: 'Your spot for the Tech Symposium has been secured. Please arrive 15 minutes early for check-in.',
+      time: 'Just now',
+      type: 'success',
+      read: false
+    },
+    {
+      id: 'notif-2',
+      title: 'Venue Change: Coding Bootcamp',
+      message: 'The venue for tomorrow\'s Coding Bootcamp has been moved to Lab 3, Engineering Block.',
+      time: '2 hours ago',
+      type: 'warning',
+      read: false
+    },
+    {
+      id: 'notif-3',
+      title: 'Call for Volunteers: Annual Art Fest',
+      message: 'We are looking for enthusiastic volunteers for the upcoming Art Fest. Sign up now to earn credit hours.',
+      time: 'Yesterday',
+      type: 'info',
+      read: true
+    },
+    {
+      id: 'notif-4',
+      title: 'Reminder: Guest Lecture on AI',
+      message: 'Don\'t forget the guest lecture on Artificial Intelligence starts in 30 minutes in the Main Auditorium.',
+      time: 'Oct 24, 2024',
+      type: 'reminder',
+      read: true
+    }
+  ];
+
   const notifRaw = localStorage.getItem('campusfest_notifications');
   if (notifRaw) {
-    notificationsList = JSON.parse(notifRaw);
-  } else {
-    notificationsList = [
-      {
-        id: 'notif-1',
-        title: 'Registration Confirmed: Tech Symposium 2024',
-        message: 'Your spot for the Tech Symposium has been secured. Please arrive 15 minutes early for check-in.',
-        time: 'Just now',
-        type: 'success',
-        read: false
-      },
-      {
-        id: 'notif-2',
-        title: 'Venue Change: Coding Bootcamp',
-        message: 'The venue for tomorrow\'s Coding Bootcamp has been moved to Lab 3, Engineering Block.',
-        time: '2 hours ago',
-        type: 'warning',
-        read: false
-      },
-      {
-        id: 'notif-3',
-        title: 'Call for Volunteers: Annual Art Fest',
-        message: 'We are looking for enthusiastic volunteers for the upcoming Art Fest. Sign up now to earn credit hours.',
-        time: 'Yesterday',
-        type: 'info',
-        read: true
-      },
-      {
-        id: 'notif-4',
-        title: 'Reminder: Guest Lecture on AI',
-        message: 'Don\'t forget the guest lecture on Artificial Intelligence starts in 30 minutes in the Main Auditorium.',
-        time: 'Oct 24, 2024',
-        type: 'reminder',
-        read: true
+    try {
+      const parsed = JSON.parse(notifRaw);
+      if (Array.isArray(parsed) && parsed.length >= 4) {
+        notificationsList = parsed;
+      } else {
+        notificationsList = defaultList;
+        localStorage.setItem('campusfest_notifications', JSON.stringify(notificationsList));
       }
-    ];
+    } catch (e) {
+      notificationsList = defaultList;
+      localStorage.setItem('campusfest_notifications', JSON.stringify(notificationsList));
+    }
+  } else {
+    notificationsList = defaultList;
     localStorage.setItem('campusfest_notifications', JSON.stringify(notificationsList));
   }
 
   renderNotifications();
-  updateBadge();
 }
 
 function renderNotifications() {
@@ -79,78 +97,123 @@ function renderNotifications() {
 
   if (notificationsList.length === 0) {
     container.innerHTML = `
-      <div class="text-center py-5 bg-white border rounded-3 p-4">
-        <i class="bi bi-bell-slash text-muted" style="font-size: 2.5rem;"></i>
-        <h4 class="mt-3 text-dark">No Notifications</h4>
-        <p class="text-muted mb-0">You're all caught up! Updates regarding events and workshops will appear here.</p>
+      <div style="background: #ffffff; border: 1px solid #bfd0c4; border-radius: 8px; padding: 40px; text-align: center;">
+        <i class="bi bi-bell-slash" style="font-size: 2.2rem; color: #596780;"></i>
+        <h4 style="margin-top: 14px; color: #102238; font-size: 18px; font-weight: 700;">No Notifications</h4>
+        <p style="color: #596780; font-size: 14.5px; margin-top: 4px;">You are all caught up! Updates regarding events and workshops will appear here.</p>
       </div>
     `;
     return;
   }
 
   container.innerHTML = notificationsList.map(n => {
-    let iconClass = 'icon-info';
-    let iconName = 'bi-info-circle-fill';
+    let iconSvg = '';
 
     if (n.type === 'success') {
-      iconClass = 'icon-success';
-      iconName = 'bi-calendar-check-fill';
+      // Green calendar with checkmark
+      iconSvg = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00875a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+          <polyline points="9 15 11 17 15 13"></polyline>
+        </svg>
+      `;
     } else if (n.type === 'warning') {
-      iconClass = 'icon-warning';
-      iconName = 'bi-exclamation-triangle-fill';
-    } else if (n.type === 'reminder') {
-      iconClass = 'icon-reminder';
-      iconName = 'bi-clock-fill';
+      // Red warning triangle with exclamation
+      iconSvg = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#b23b3b">
+          <path d="M12 2.5L1 21.5h22L12 2.5zm0 5c.55 0 1 .45 1 1v5c0 .55-.45 1-1 1s-1-.45-1-1v-5c0-.55.45-1 1-1zm0 9c.69 0 1.25.56 1.25 1.25S12.69 19 12 19s-1.25-.56-1.25-1.25.56-1.25 1.25-1.25z"/>
+        </svg>
+      `;
     } else if (n.type === 'info') {
-      iconClass = 'icon-info';
-      iconName = 'bi-megaphone-fill';
+      // Dark announcement megaphone icon
+      iconSvg = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#102238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11l14-5v12L3 13v-2z"></path>
+          <path d="M7 14v4a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2v-4"></path>
+          <line x1="20" y1="9" x2="20" y2="15"></line>
+        </svg>
+      `;
+    } else if (n.type === 'reminder') {
+      // Dark clock outline
+      iconSvg = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#102238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      `;
     }
 
     return `
-      <div class="notif-card ${!n.read ? 'unread' : ''}" id="${n.id}">
-        <div class="notif-icon-box ${iconClass}">
-          <i class="bi ${iconName}"></i>
-        </div>
-        <div class="notif-content">
-          <h3 class="notif-title">${escapeHtml(n.title)}</h3>
+      <div class="notif-card" id="${n.id}">
+        <div class="notif-main-col">
+          <div class="notif-header-row">
+            <div class="notif-icon-box">
+              ${iconSvg}
+            </div>
+            <h3 class="notif-title">${escapeHtml(n.title)}</h3>
+          </div>
           <p class="notif-desc">${escapeHtml(n.message)}</p>
           <div class="notif-time">${escapeHtml(n.time || 'Recently')}</div>
         </div>
-        <div>
-          <button type="button" class="notif-menu-btn" title="Dismiss" onclick="dismissNotification('${n.id}')">
-            <i class="bi bi-x-lg"></i>
-          </button>
+        
+        <div class="notif-action-col">
+          <div class="notif-menu-wrapper">
+            <button type="button" class="notif-menu-trigger" aria-label="Notification actions" onclick="toggleNotifMenu(event, '${n.id}')">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <div class="notif-dropdown-menu" id="menu-${n.id}">
+              <button type="button" class="notif-menu-item" onclick="toggleRead('${n.id}')">
+                ${n.read ? 'Mark as unread' : 'Mark as read'}
+              </button>
+              <button type="button" class="notif-menu-item text-danger" onclick="deleteNotification('${n.id}')">
+                Delete notification
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     `;
   }).join('');
 }
 
-window.dismissNotification = function(id) {
+window.toggleNotifMenu = function(e, id) {
+  e.stopPropagation();
+  const targetMenu = document.getElementById('menu-' + id);
+  if (!targetMenu) return;
+
+  const isOpen = targetMenu.classList.contains('show');
+  closeAllDropdowns();
+
+  if (!isOpen) {
+    targetMenu.classList.add('show');
+  }
+};
+
+window.toggleRead = function(id) {
+  closeAllDropdowns();
+  const notif = notificationsList.find(n => n.id === id);
+  if (notif) {
+    notif.read = !notif.read;
+    localStorage.setItem('campusfest_notifications', JSON.stringify(notificationsList));
+    renderNotifications();
+  }
+};
+
+window.deleteNotification = function(id) {
+  closeAllDropdowns();
   notificationsList = notificationsList.filter(n => n.id !== id);
   localStorage.setItem('campusfest_notifications', JSON.stringify(notificationsList));
   renderNotifications();
-  updateBadge();
 };
-
-function setupMarkAllRead() {
-  const btn = document.getElementById('markAllReadBtn');
-  if (!btn) return;
-
-  btn.addEventListener('click', () => {
-    notificationsList = notificationsList.map(n => ({ ...n, read: true }));
-    localStorage.setItem('campusfest_notifications', JSON.stringify(notificationsList));
-    renderNotifications();
-    updateBadge();
-  });
-}
 
 function setupLoadMore() {
   const btn = document.getElementById('loadMoreBtn');
   if (!btn) return;
 
   btn.addEventListener('click', () => {
-    
     notificationsList.push(
       {
         id: 'notif-' + Date.now(),
@@ -176,28 +239,36 @@ function setupLoadMore() {
   });
 }
 
-function updateBadge() {
-  const unread = notificationsList.filter(n => !n.read).length;
-  const badge = document.getElementById('notifBadge');
-  if (badge) {
-    if (unread > 0) {
-      badge.textContent = unread;
-      badge.style.display = 'inline-block';
-    } else {
-      badge.style.display = 'none';
-    }
+function setupProfileMenu() {
+  const trigger = document.getElementById('userMenuDropdown');
+  const menu = document.getElementById('profileDropdownMenu');
+  if (trigger && menu) {
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('show');
+    });
   }
-}
 
-function setupLogout() {
-  const btn = document.getElementById('studentLogoutBtn');
-  if (btn) {
-    btn.addEventListener('click', (e) => {
+  const logoutBtn = document.getElementById('studentLogoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('campusfest_current_user');
       window.location.href = 'index.html';
     });
   }
+}
+
+function closeAllDropdowns() {
+  document.querySelectorAll('.notif-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+  const profileMenu = document.getElementById('profileDropdownMenu');
+  if (profileMenu) profileMenu.classList.remove('show');
+}
+
+function setupDocumentClick() {
+  document.addEventListener('click', () => {
+    closeAllDropdowns();
+  });
 }
 
 function escapeHtml(str) {

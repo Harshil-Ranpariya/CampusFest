@@ -5,123 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notifications &amp; Announcements - CampusFest</title>
   
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Custom Notifications Stylesheet -->
   <link rel="stylesheet" href="css/notifications.css">
 </head>
 <body>
 
-<header class="site-header">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container">
-        <a class="navbar-brand header-logo" href="student-dashboard.html">
-          <span class="brand-text">CampusFest</span>
-        </a>
-        <div class="d-flex align-items-center d-lg-none gap-2">
-          <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-decoration-none text-dark" data-bs-toggle="dropdown" aria-expanded="false" title="Student Profile & Menu">
-              <div class="user-avatar-circle">
-                <i class="bi bi-person-fill"></i>
-              </div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-              <li><a class="dropdown-item" href="student-profile.html">My Profile</a></li>
-              <li><a class="dropdown-item" href="my-registration.html">My Registrations</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger studentLogoutBtn" href="#">Logout</a></li>
-            </ul>
-          </div>
-          <button class="navbar-toggler border-0 shadow-none p-1" type="button" data-bs-toggle="collapse" data-bs-target="#studentNavCollapse" aria-controls="studentNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse" id="studentNavCollapse">
-          <ul class="navbar-nav header-nav-links">
-            <li class="nav-item">
-              <a class="nav-link" href="student-dashboard.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="events.html">Events</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="my-registration.html">My Registrations</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="student-about.html">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="notifications.html">Notification</a>
-            </li>
-          </ul>
-          <div class="header-right-user d-none d-lg-flex align-items-center ms-lg-auto">
-            <div class="dropdown">
-              <a href="#" class="d-flex align-items-center text-decoration-none text-dark" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="Student Profile & Menu">
-                <div class="user-avatar-circle">
-                  <i class="bi bi-person-fill"></i>
-                </div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userMenuDropdown">
-                <li><a class="dropdown-item" href="student-profile.html">My Profile</a></li>
-                <li><a class="dropdown-item" href="my-registration.html">My Registrations</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger studentLogoutBtn" href="#" id="studentLogoutBtn">Logout</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+  <!-- Top Navigation Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="header-left">
+        <a class="header-logo" href="student-dashboard.html">CampusFest</a>
+        <nav class="header-nav">
+          <a class="nav-link" href="student-dashboard.html">Home</a>
+          <a class="nav-link" href="events.html">Events</a>
+          <a class="nav-link" href="my-registration.html">My Registrations</a>
+          <a class="nav-link" href="student-about.html">About</a>
+          <a class="nav-link active" href="notifications.html">Notifications</a>
+        </nav>
       </div>
-    </nav>
-  </header>
-
-  <main class="notifications-main py-5">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-9">
-          
-          <div class="mb-4">
-            <h1 class="notif-page-title">Notifications &amp; Announcements</h1>
-            <p class="notif-page-subtitle text-muted mb-0">Stay updated on your upcoming events and campus activities.</p>
-          </div>
-
-<div class="notification-feed" id="notificationsFeedContainer">
-            
-          </div>
-
-<div class="text-center mt-4">
-            <button type="button" class="btn btn-outline-custom px-4" id="loadMoreBtn">Load More Notifications</button>
+      
+      <div class="header-right">
+        <div class="profile-dropdown-wrapper">
+          <button type="button" class="profile-icon-btn" id="userMenuDropdown" aria-expanded="false" title="Student Profile & Menu">
+            <i class="bi bi-person"></i>
+          </button>
+          <div class="profile-dropdown-menu" id="profileDropdownMenu">
+            <a class="dropdown-link" href="student-profile.html">My Profile</a>
+            <a class="dropdown-link" href="my-registration.html">My Registrations</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-link text-danger" href="#" id="studentLogoutBtn">Logout</a>
           </div>
         </div>
       </div>
     </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="notifications-main">
+    <div class="notifications-container">
+      <!-- Page Heading & Subtitle -->
+      <div class="notif-page-header">
+        <h1 class="notif-page-title">Notifications &amp; Announcements</h1>
+        <p class="notif-page-subtitle">Stay updated on your upcoming events and campus activities.</p>
+      </div>
+
+      <!-- Notification Cards Feed Container -->
+      <div class="notification-feed" id="notificationsFeedContainer">
+        <!-- Rendered dynamically by js/notifications.js -->
+      </div>
+
+      <!-- Load More Notifications Button -->
+      <div class="load-more-container">
+        <button type="button" class="btn-load-more" id="loadMoreBtn">Load More Notifications</button>
+      </div>
+    </div>
   </main>
 
-<footer class="site-footer mt-auto">
-    <div class="container py-4">
-      <div class="row align-items-center gy-3">
-        <div class="col-md-6 text-center text-md-start">
-          <span class="footer-brand">CampusFest</span>
-          <p class="footer-tagline text-muted small mt-1 mb-0">© 2024 CampusFest. Institutional Professionalism.</p>
-        </div>
-        <div class="col-md-6">
-          <ul class="footer-nav list-inline text-center text-md-end mb-0">
-            <li class="list-inline-item"><a href="student-about.html">Contact Us</a></li>
-            <li class="list-inline-item"><a href="events.html">College Portal</a></li>
-            <li class="list-inline-item"><a href="student-about.html">Privacy Policy</a></li>
-            <li class="list-inline-item"><a href="student-about.html">Terms of Service</a></li>
-          </ul>
+  <!-- Pale Blue Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span class="footer-brand">CampusFest</span>
+        <p class="footer-tagline">&copy; 2024 CampusFest. Institutional Professionalism.</p>
+      </div>
+      
+      <div class="footer-right">
+        <div class="footer-links-grid">
+          <div class="footer-link-col">
+            <a href="student-about.html">Contact Us</a>
+            <a href="events.html">College Portal</a>
+          </div>
+          <div class="footer-link-col">
+            <a href="student-about.html">Privacy Policy</a>
+            <a href="student-about.html">Terms of Service</a>
+          </div>
         </div>
       </div>
     </div>
   </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  
   <script src="js/notifications.js"></script>
 </body>
 </html>

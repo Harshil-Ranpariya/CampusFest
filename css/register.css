@@ -1,359 +1,526 @@
-﻿
+/* ==========================================================================
+   CampusFest Registration Page Styles
+   Pixel-perfect match to reference specification Register.png
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
-  --primary-color: #00875a;
-  --primary-hover: #006e49;
-  --dark-text: #1e293b;
-  --muted-text: #64748b;
-  --bg-light: #f8fafc;
-  --border-color: #e2e8f0;
-  --footer-bg: #eef4fb;
-  --card-radius: 16px;
+  --primary-green: #006b4f;
+  --primary-hover: #00563e;
+  --header-btn-green: #00875a;
+  --header-btn-hover: #006e49;
+  --dark-navy: #0b1c30;
+  --text-muted: #5f7182;
+  --input-border: #7f8b84;
+  --footer-bg: #d4e4fb;
+  --footer-text: #374151;
+  --nav-link-color: #4b5563;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: var(--dark-text);
-  background-color: var(--bg-light);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #0f172a;
+  background-color: #f8f9ff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ==========================================================================
+   1. Header / Navigation Bar
+   Height: ~65px, padding: ~40px horizontal, white bg with subtle border
+   ========================================================================== */
 
 .site-header {
-  height: 70px;
-  min-height: 70px;
-  border-bottom: 1px solid #e2e8f0;
-  background: #ffffff;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  height: 65px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #edf2f7;
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 100;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
-.site-header .navbar {
+.header-container {
   width: 100%;
-  padding: 0;
-  height: 100%;
-}
-
-.site-header .container {
-  height: 100%;
+  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.header-left-group {
-  gap: 48px; 
-  height: 100%;
-}
-
-.header-logo {
-  padding: 0;
-  margin: 0;
-  text-decoration: none;
-  display: inline-flex;
+.header-left {
+  display: flex;
   align-items: center;
 }
 
-.brand-text {
-  font-weight: 800;
-  font-size: 1.35rem;
-  color: #0f172a;
+.header-logo {
+  font-size: 25px;
+  font-weight: 700;
+  color: #006b4f;
+  text-decoration: none;
   letter-spacing: -0.5px;
   line-height: 1;
 }
 
-.header-nav-links {
+.header-nav {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 30px; 
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  height: 100%;
+  margin-left: 36px;
+  gap: 24px;
 }
 
-.header-nav-links .nav-link {
-  font-size: 14.5px;
+.header-nav .nav-link {
+  font-size: 15px;
   font-weight: 500;
-  color: #475569;
-  padding: 0;
-  line-height: 70px;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
+  color: var(--nav-link-color);
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
-.header-nav-links .nav-link:hover {
-  color: #0f172a;
+.header-nav .nav-link:hover {
+  color: #0b1c30;
 }
 
-.header-right-actions {
+.header-right {
   display: flex;
   align-items: center;
-  gap: 14px; 
-  margin-left: auto;
+  gap: 22px;
 }
 
-.btn-header-login {
-  height: 38px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
+.nav-login {
+  font-size: 15px;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.nav-login:hover {
+  color: #006b4f;
+}
+
+.btn-register-nav {
+  background-color: var(--header-btn-green);
+  color: #ffffff;
   font-size: 14px;
   font-weight: 600;
-  color: #0f172a;
-  background-color: transparent;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  padding: 8px 18px;
+  border-radius: 4px;
   text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.btn-header-login:hover {
-  background-color: #f8fafc;
-  border-color: #94a3b8;
-  color: #0f172a;
-}
-
-.btn-header-register {
-  height: 38px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 22px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #ffffff;
-  background-color: var(--primary-color);
-  border: 1px solid var(--primary-color);
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.btn-header-register:hover,
-.btn-header-register.active {
-  background-color: var(--primary-hover);
-  border-color: var(--primary-hover);
-  color: #ffffff;
-}
-
-@media (max-width: 991.98px) {
-  .site-header {
-    height: auto;
-    min-height: 60px;
-    padding: 10px 0;
-  }
-  .header-left-group {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    width: 100%;
-  }
-  .header-logo {
-    padding: 4px 0;
-  }
-  .header-nav-links {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px 0 0 0;
-    width: 100%;
-  }
-  .header-nav-links .nav-link {
-    line-height: normal;
-    padding: 6px 0;
-  }
-}
-
-.btn-primary-custom {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  border: 1px solid var(--primary-color);
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 0.6rem 1.35rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  text-decoration: none;
+  transition: background-color 0.15s ease;
+  line-height: 1.2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.btn-primary-custom:hover {
-  background-color: var(--primary-hover);
-  border-color: var(--primary-hover);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 135, 90, 0.25);
+.btn-register-nav:hover {
+  background-color: var(--header-btn-hover);
 }
 
-.btn-outline-custom {
-  background-color: transparent;
-  color: var(--dark-text);
-  border: 1px solid #cbd5e1;
-  font-weight: 600;
-  font-size: 0.92rem;
-  padding: 0.55rem 1.35rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
+/* ==========================================================================
+   2. Main Background & Registration Card Container
+   Occupies space between header and footer with pale blue & mint gradient
+   ========================================================================== */
 
-.btn-outline-custom:hover {
-  background-color: #f1f5f9;
-  border-color: #94a3b8;
-  color: var(--dark-text);
-}
-
-.register-wrapper {
+.register-main {
   flex: 1;
+  background: radial-gradient(circle at 92% 16%, #c6e1df 0%, rgba(198, 225, 223, 0.45) 24%, rgba(248, 249, 255, 0) 48%),
+              linear-gradient(180deg, #f8f9ff 0%, #edf1fe 100%);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 70px;
+  padding-bottom: 137px;
 }
 
-.register-split-card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: var(--card-radius);
+.register-card {
+  width: 1000px;
+  height: 623px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  display: flex;
   overflow: hidden;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
 }
 
-.register-visual-panel {
-  position: relative;
+/* ==========================================================================
+   3. Left Column — Campus Image
+   Width: ~416px, full height of card (623px), object-fit cover
+   Dark transparent gradient overlay with CampusFest text at bottom
+   ========================================================================== */
+
+.card-left {
+  width: 416px;
+  flex: 0 0 416px;
   height: 100%;
-  min-height: 520px;
-  background-color: #0f172a;
+  position: relative;
+  overflow: hidden;
+  background-color: #1e293b;
 }
 
-.visual-img {
+.campus-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center bottom;
   display: block;
 }
 
-.visual-overlay {
+.image-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 2.5rem 2rem;
-  background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.9) 100%);
+  height: 170px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.35) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 33px 34px 33px;
+}
+
+.overlay-title {
+  font-size: 28px;
+  font-weight: 700;
   color: #ffffff;
+  margin-bottom: 4px;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
 }
 
-.visual-brand {
-  font-size: 1.85rem;
-  font-weight: 800;
-  margin-bottom: 0.25rem;
+.overlay-subtitle {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+  margin: 0;
+  font-weight: 400;
 }
 
-.visual-tagline {
-  font-size: 0.95rem;
-  color: #cbd5e1;
+/* ==========================================================================
+   4. Right Column — Registration Form
+   Width: ~584px, white background, internal padding: 42px 48px
+   ========================================================================== */
+
+.card-right {
+  width: 584px;
+  flex: 0 0 584px;
+  padding: 42px 48px 34px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.form-header {
+  margin-bottom: 22px;
+}
+
+.form-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: 6px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.form-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.4;
   margin: 0;
 }
 
-.register-form-panel {
-  padding: 2.5rem 2.5rem;
+.alert-box {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  border-radius: 4px;
+  margin-bottom: 14px;
 }
 
-.register-title {
-  font-size: 1.75rem;
-  font-weight: 800;
+.d-none {
+  display: none !important;
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  row-gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-navy);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.form-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  font-size: 15px;
+  font-family: inherit;
   color: #0f172a;
-  margin-bottom: 0.25rem;
+  background-color: #ffffff;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.register-subtitle {
-  font-size: 0.92rem;
-  margin-bottom: 1.5rem;
+.form-input::placeholder {
+  color: #8a9993;
+  opacity: 1;
+  font-size: 14.5px;
 }
 
-.form-label {
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #334155;
-  margin-bottom: 0.35rem;
+.form-input:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 1px var(--primary-green);
 }
 
-.form-control, .form-select {
-  border-color: #cbd5e1;
-  padding: 0.55rem 0.8rem;
-  font-size: 0.9rem;
-  border-radius: 8px;
+/* Custom dropdown arrow for select */
+.select-wrapper {
+  position: relative;
+  width: 100%;
 }
 
-.form-control:focus, .form-select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.25rem rgba(0, 135, 90, 0.15);
+.select-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px;
+  padding-right: 34px;
+  cursor: pointer;
 }
 
-.login-redirect-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.login-redirect-link:hover {
-  text-decoration: underline;
-  color: var(--primary-hover);
-}
-
-.role-selector .btn-outline-success {
-  border-color: #cbd5e1;
-  color: #475569;
-  font-weight: 600;
-  font-size: 0.88rem;
-  padding: 0.45rem 1rem;
-}
-
-.role-selector .btn-check:checked + .btn-outline-success {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+/* Submit Button */
+.btn-register-submit {
+  width: 100%;
+  height: 44px;
+  margin-top: 18px;
+  background-color: var(--primary-green);
   color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
-.site-footer {
-  background-color: var(--footer-bg);
-  border-top: 1px solid #dbeafe;
+.btn-register-submit:hover {
+  background-color: var(--primary-hover);
 }
 
-.footer-brand {
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #0f172a;
+.btn-arrow {
+  font-size: 16px;
+  line-height: 1;
 }
 
-.footer-tagline {
-  font-size: 0.85rem;
-  color: var(--muted-text);
+/* Login Link */
+.login-prompt {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--nav-link-color);
 }
 
-.footer-nav a {
-  font-size: 0.85rem;
-  color: var(--muted-text);
+.login-prompt .login-link {
+  color: var(--primary-green);
   text-decoration: none;
   font-weight: 500;
-  margin: 0 0.5rem;
+  margin-left: 2px;
 }
 
-.footer-nav a:hover {
-  color: var(--primary-color);
+.login-prompt .login-link:hover {
+  text-decoration: underline;
 }
 
-@media (max-width: 576px) {
-  .register-form-panel {
-    padding: 1.75rem 1.25rem;
+/* ==========================================================================
+   5. Footer
+   Height: ~65px, light-blue background (#d4e4fb), 3-part layout
+   ========================================================================== */
+
+.site-footer {
+  height: 65px;
+  min-height: 65px;
+  background-color: var(--footer-bg);
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-container {
+  width: 100%;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-logo {
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--primary-green);
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.footer-copyright {
+  font-size: 14px;
+  color: var(--footer-text);
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.footer-right a {
+  font-size: 14px;
+  color: var(--footer-text);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footer-right a:hover {
+  color: var(--primary-green);
+}
+
+/* ==========================================================================
+   6. Responsive Design
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .register-card {
+    width: 95%;
+    max-width: 950px;
+    height: auto;
+    min-height: 623px;
+  }
+}
+
+@media (max-width: 920px) {
+  .register-main {
+    padding-top: 40px;
+    padding-bottom: 60px;
+  }
+
+  .register-card {
+    flex-direction: column;
+    height: auto;
+    max-width: 580px;
+    width: 92%;
+  }
+
+  .card-left {
+    width: 100%;
+    flex: none;
+    height: 280px;
+  }
+
+  .card-right {
+    width: 100%;
+    flex: none;
+    padding: 32px 28px;
+  }
+
+  .site-footer {
+    height: auto;
+    padding: 18px 0;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .footer-right {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-container {
+    padding: 0 20px;
+  }
+
+  .header-nav {
+    margin-left: 20px;
+    gap: 16px;
+  }
+
+  .register-main {
+    padding-top: 24px;
+    padding-bottom: 36px;
+  }
+
+  .card-left {
+    height: 220px;
+  }
+
+  .image-overlay {
+    padding: 0 20px 20px 20px;
+  }
+
+  .overlay-title {
+    font-size: 24px;
+  }
+
+  .card-right {
+    padding: 24px 18px;
+  }
+
+  .form-title {
+    font-size: 26px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+  }
+
+  .footer-container {
+    padding: 0 20px;
   }
 }
