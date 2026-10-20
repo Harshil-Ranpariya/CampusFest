@@ -363,9 +363,15 @@ window.handleCardRegister = function(eventId) {
   const studentEmail = currentStudent ? currentStudent.email : 'alex.mercer@marwadiuniversity.ac.in';
   const studentName = currentStudent ? currentStudent.name : 'Alex Mercer';
 
+  const cleanStudentEmail = (studentEmail || '').trim();
+  if (!/^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i.test(cleanStudentEmail)) {
+    showFeedback('Please use your official student email address ending with @marwadiuniversity.ac.in.', 'danger');
+    return;
+  }
+
   const already = regs.some(r => 
     r.eventId === eventId && 
-    r.studentEmail.toLowerCase() === studentEmail.toLowerCase()
+    (r.studentEmail || '').trim().toLowerCase() === cleanStudentEmail.toLowerCase()
   );
 
   if (already) {

@@ -1,4 +1,4 @@
-﻿
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const student = loadProfileData();
@@ -33,7 +33,7 @@ const nameInput = document.getElementById('studentFullName');
 
   if (nameInput) nameInput.value = student.name || 'Alex Mercer';
   if (enrolInput) enrolInput.value = student.enrollmentNo || 'CS2021045';
-  if (emailInput) emailInput.value = student.email || 'alex.mercer@campus.edu';
+  if (emailInput) emailInput.value = student.email || 'alex.mercer@marwadiuniversity.ac.in';
   if (deptInput && student.department) deptInput.value = student.department;
   if (semInput && student.semester) semInput.value = student.semester;
   if (navName) navName.textContent = student.name || 'Student';
@@ -55,6 +55,12 @@ function setupProfileForm(student) {
 
     if (!name || !enrollment) {
       alert('Name and Enrollment Number cannot be empty.');
+      return;
+    }
+
+    const currentEmail = (student.email || '').trim();
+    if (!/^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i.test(currentEmail)) {
+      alert('Please use your official student email address ending with @marwadiuniversity.ac.in.');
       return;
     }
 

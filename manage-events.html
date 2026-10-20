@@ -6,7 +6,6 @@
   <title>Manage Events - Admin Panel</title>
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,14 +18,14 @@
 
   <!-- Admin Topbar Header (Responsive Only: < 992px) -->
   <header class="admin-topbar d-lg-none sticky-top bg-white border-bottom shadow-sm">
-    <div class="container-fluid px-3 py-2 d-flex justify-content-between align-items-center">
+    <div class="container-fluid px-3 py-2 d-flex justify-content-between align-items-center flex-nowrap">
       <a href="faculty-dashboard.html" class="brand-text text-decoration-none d-flex align-items-center gap-2">
         <div class="admin-topbar-icon">
           <i class="bi bi-shield-check"></i>
         </div>
-        <span class="fs-5 fw-bold">Campus<span class="brand-accent">Fest</span> <span class="badge bg-light text-dark border ms-1 fw-semibold font-monospace" style="font-size: 0.72rem;">ADMIN</span></span>
+        <span class="fs-6 fw-bold text-nowrap">Campus<span class="brand-accent">Fest</span> <span class="badge bg-light text-dark border ms-1 fw-semibold font-monospace" style="font-size: 0.68rem;">ADMIN</span></span>
       </a>
-      <button class="btn btn-admin-menu-toggle p-2 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#facultySidebar" aria-controls="facultySidebar" aria-label="Toggle Navigation">
+      <button class="btn btn-admin-menu-toggle flex-shrink-0 p-2 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#facultySidebar" aria-controls="facultySidebar" aria-label="Toggle Navigation">
         <i class="bi bi-list fs-4"></i>
       </button>
     </div>
@@ -121,11 +120,11 @@
     <!-- Desktop Permanent Sidebar (Visible on >= 992px) -->
     <aside class="desktop-sidebar d-none d-lg-flex flex-column">
       <div class="sidebar-header">
-        <div class="d-flex align-items-center gap-2">
-          <div class="admin-icon-box">
-            <i class="bi bi-shield-check"></i>
+        <div class="sidebar-brand-wrapper">
+          <div class="sidebar-brand-icon">
+            <i class="bi bi-person"></i>
           </div>
-          <div>
+          <div class="sidebar-brand-text">
             <div class="sidebar-title">Admin Panel</div>
             <div class="sidebar-sub">Logistics Management</div>
           </div>
@@ -136,125 +135,129 @@
         <ul class="nav flex-column sidebar-nav">
           <li class="nav-item">
             <a class="nav-link" href="faculty-dashboard.html">
-              <i class="bi bi-grid-fill me-2"></i> Dashboard
+              <i class="bi bi-grid-fill"></i>
+              <span>Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="manage-events.html">
-              <i class="bi bi-calendar3-event me-2"></i> Manage Events
+              <i class="bi bi-calendar3-event"></i>
+              <span>Manage Events</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="student-registrations.html">
-              <i class="bi bi-people-fill me-2"></i> Student Registrations
+              <i class="bi bi-people-fill"></i>
+              <span>Student Registrations</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="announcements.html">
-              <i class="bi bi-megaphone-fill me-2"></i> Announcements
+              <i class="bi bi-megaphone-fill"></i>
+              <span>Announcements</span>
             </a>
           </li>
         </ul>
       </div>
 
       <div class="sidebar-footer">
-        <a href="add-edit-event.html" class="btn btn-create-event w-100 mb-3">
-          <i class="bi bi-plus-lg me-1"></i> Create New Event
+        <a href="add-edit-event.html" class="btn btn-create-event">
+          <span class="plus-symbol">＋</span> Create New Event
         </a>
+        <hr class="sidebar-divider">
         <ul class="nav flex-column sidebar-footer-nav">
           <li class="nav-item">
-            <a class="nav-link" href="faculty-profile.html">
-              <i class="bi bi-gear-fill me-2"></i> Settings
+            <a class="nav-link sidebar-action-link" href="faculty-profile.html">
+              <i class="bi bi-gear-fill"></i>
+              <span>Settings</span>
             </a>
           </li>
           <li class="nav-item">
-            <button type="button" class="nav-link text-danger border-0 bg-transparent w-100 text-start faculty-logout-btn" id="facultyLogoutBtn">
-              <i class="bi bi-box-arrow-left me-2"></i> Logout
+            <button type="button" class="nav-link sidebar-action-link text-danger border-0 bg-transparent w-100 text-start faculty-logout-btn" id="facultyLogoutBtn">
+              <i class="bi bi-box-arrow-left"></i>
+              <span>Logout</span>
             </button>
           </li>
         </ul>
       </div>
     </aside>
 
+    <!-- Main Content Area -->
     <main class="main-content">
-      <div class="container-fluid px-lg-5 py-4">
+      <div class="main-content-inner">
         
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-          <div>
+        <!-- Heading & Toolbar Row -->
+        <div class="page-top-header">
+          <div class="page-title-block">
             <h1 class="page-title">Manage Events</h1>
-            <p class="page-subtitle text-muted mb-0">Overview of all institutional events and their operational status.</p>
+            <p class="page-subtitle">Overview of all institutional events and their operational status.</p>
           </div>
-          <div class="d-flex align-items-center gap-2">
-            <div class="search-box position-relative">
+          <div class="header-toolbar">
+            <div class="search-box">
               <i class="bi bi-search search-icon"></i>
-              <input type="text" class="form-control form-control-sm ps-4" id="manageSearchInput" placeholder="Search events...">
+              <textarea class="search-input" id="manageSearchInput" rows="2" placeholder="Search&#10;events"></textarea>
             </div>
-            <a href="add-edit-event.html" class="btn btn-primary-custom btn-sm d-flex align-items-center gap-1">
-              <i class="bi bi-plus-lg"></i> Add Event
+            <a href="add-edit-event.html" class="btn btn-add-event">
+              <span class="plus-symbol">＋</span> Add Event
             </a>
           </div>
         </div>
 
-<div class="row g-3 mb-4">
-          <div class="col-sm-6 col-lg-3">
-            <div class="mini-stat-card">
-              <div class="mini-stat-label">Total Events</div>
-              <div class="mini-stat-val" id="statTotalEvents">24</div>
-            </div>
+        <!-- 4 Statistic Cards Row -->
+        <div class="metrics-row">
+          <div class="stat-card">
+            <div class="stat-card-label">Total Events</div>
+            <div class="stat-card-val text-green" id="statTotalEvents">24</div>
           </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="mini-stat-card">
-              <div class="mini-stat-label">Active Registrations</div>
-              <div class="mini-stat-val" id="statActiveRegs">1,430</div>
-            </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Active Registrations</div>
+            <div class="stat-card-val text-green" id="statActiveRegs">1,430</div>
           </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="mini-stat-card">
-              <div class="mini-stat-label">Pending Approval</div>
-              <div class="mini-stat-val">3</div>
-            </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Pending Approval</div>
+            <div class="stat-card-val text-red" id="statPendingApproval">3</div>
           </div>
-          <div class="col-sm-6 col-lg-3">
-            <div class="mini-stat-card">
-              <div class="mini-stat-label">Filter Category</div>
-              <select class="form-select form-select-sm border-0 fw-semibold text-dark p-0 bg-transparent" id="categoryFilterSelect">
-                <option value="all">All Categories</option>
-                <option value="Academic">Academic</option>
-                <option value="Cultural">Cultural</option>
-                <option value="Sports">Sports</option>
-                <option value="Workshop">Workshop</option>
-                <option value="Social">Social</option>
-              </select>
-            </div>
+          <div class="stat-card stat-card-filter">
+            <select class="category-filter-select" id="categoryFilterSelect" aria-label="Filter events by category">
+              <option value="all" selected>All Categories</option>
+              <option value="Academic">Academic</option>
+              <option value="Cultural">Cultural</option>
+              <option value="Sports">Sports</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Social">Social</option>
+            </select>
           </div>
         </div>
 
-<div id="manageAlert" class="alert alert-success d-none mb-4" role="alert"></div>
+        <div id="manageAlert" class="alert alert-success d-none mb-4" role="alert"></div>
 
-<div class="events-table-card">
+        <!-- Manage Events Table Panel (818px wide, 402px high on desktop) -->
+        <div class="events-table-panel">
           <div class="table-responsive">
-            <table class="table events-table align-middle mb-0">
+            <table class="events-table">
               <thead>
                 <tr>
-                  <th scope="col" style="min-width: 240px;">Name</th>
-                  <th scope="col">Category</th>
-                  <th scope="col">Date &amp; Time</th>
-                  <th scope="col">Venue</th>
-                  <th scope="col">Registrations</th>
-                  <th scope="col" class="text-end">Actions</th>
+                  <th class="col-name">Name</th>
+                  <th class="col-category">Category</th>
+                  <th class="col-datetime">Date &amp; Time</th>
+                  <th class="col-venue">Venue</th>
+                  <th class="col-regs">Registrations</th>
+                  <th class="col-actions">Actions</th>
                 </tr>
               </thead>
               <tbody id="manageEventsTbody">
-                
+                <!-- Dynamically generated rows -->
               </tbody>
             </table>
           </div>
         </div>
+
       </div>
     </main>
   </div>
 
-<div class="modal fade" id="deleteEventModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <!-- Delete Event Confirmation Modal -->
+  <div class="modal fade" id="deleteEventModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-0 pb-0">
@@ -272,8 +275,7 @@
     </div>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/manage-events.js"></script>
 </body>
 </html>

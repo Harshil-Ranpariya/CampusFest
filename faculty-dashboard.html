@@ -6,7 +6,6 @@
   <title>Faculty Dashboard - Admin Panel</title>
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,14 +18,14 @@
 
   <!-- Admin Topbar Header (Responsive Only: < 992px) -->
   <header class="admin-topbar d-lg-none sticky-top bg-white border-bottom shadow-sm">
-    <div class="container-fluid px-3 py-2 d-flex justify-content-between align-items-center">
+    <div class="container-fluid px-3 py-2 d-flex justify-content-between align-items-center flex-nowrap">
       <a href="faculty-dashboard.html" class="brand-text text-decoration-none d-flex align-items-center gap-2">
         <div class="admin-topbar-icon">
           <i class="bi bi-shield-check"></i>
         </div>
-        <span class="fs-5 fw-bold">Campus<span class="brand-accent">Fest</span> <span class="badge bg-light text-dark border ms-1 fw-semibold font-monospace" style="font-size: 0.72rem;">ADMIN</span></span>
+        <span class="fs-6 fw-bold text-nowrap">Campus<span class="brand-accent">Fest</span> <span class="badge bg-light text-dark border ms-1 fw-semibold font-monospace" style="font-size: 0.68rem;">ADMIN</span></span>
       </a>
-      <button class="btn btn-admin-menu-toggle p-2 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#facultySidebar" aria-controls="facultySidebar" aria-label="Toggle Navigation">
+      <button class="btn btn-admin-menu-toggle flex-shrink-0 p-2 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#facultySidebar" aria-controls="facultySidebar" aria-label="Toggle Navigation">
         <i class="bi bi-list fs-4"></i>
       </button>
     </div>
@@ -121,11 +120,11 @@
     <!-- Desktop Permanent Sidebar (Visible on >= 992px) -->
     <aside class="desktop-sidebar d-none d-lg-flex flex-column">
       <div class="sidebar-header">
-        <div class="d-flex align-items-center gap-2">
-          <div class="admin-icon-box">
-            <i class="bi bi-shield-check"></i>
+        <div class="sidebar-brand-wrapper">
+          <div class="sidebar-brand-icon">
+            <i class="bi bi-person"></i>
           </div>
-          <div>
+          <div class="sidebar-brand-text">
             <div class="sidebar-title">Admin Panel</div>
             <div class="sidebar-sub">Logistics Management</div>
           </div>
@@ -136,40 +135,47 @@
         <ul class="nav flex-column sidebar-nav">
           <li class="nav-item">
             <a class="nav-link active" href="faculty-dashboard.html">
-              <i class="bi bi-grid-fill me-2"></i> Dashboard
+              <i class="bi bi-grid-fill"></i>
+              <span>Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="manage-events.html">
-              <i class="bi bi-calendar3-event me-2"></i> Manage Events
+              <i class="bi bi-calendar3-event"></i>
+              <span>Manage Events</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="student-registrations.html">
-              <i class="bi bi-people-fill me-2"></i> Student Registrations
+              <i class="bi bi-people-fill"></i>
+              <span>Student Registrations</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="announcements.html">
-              <i class="bi bi-megaphone-fill me-2"></i> Announcements
+              <i class="bi bi-megaphone-fill"></i>
+              <span>Announcements</span>
             </a>
           </li>
         </ul>
       </div>
 
       <div class="sidebar-footer">
-        <a href="add-edit-event.html" class="btn btn-create-event w-100 mb-3">
-          <i class="bi bi-plus-lg me-1"></i> Create New Event
+        <a href="add-edit-event.html" class="btn btn-create-event">
+          <span class="plus-symbol">＋</span> Create New Event
         </a>
+        <hr class="sidebar-divider">
         <ul class="nav flex-column sidebar-footer-nav">
           <li class="nav-item">
-            <a class="nav-link" href="faculty-profile.html">
-              <i class="bi bi-gear-fill me-2"></i> Settings
+            <a class="nav-link sidebar-action-link" href="faculty-profile.html">
+              <i class="bi bi-gear-fill"></i>
+              <span>Settings</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-danger faculty-logout-btn" href="#" id="facultyLogoutBtn">
-              <i class="bi bi-box-arrow-left me-2"></i> Logout
+            <a class="nav-link sidebar-action-link text-danger faculty-logout-btn" href="#" id="facultyLogoutBtn">
+              <i class="bi bi-box-arrow-left"></i>
+              <span>Logout</span>
             </a>
           </li>
         </ul>
@@ -177,74 +183,103 @@
     </aside>
 
     <main class="main-content">
-      <div class="container-fluid px-lg-5 py-4">
+      <div class="main-content-inner">
         
-        <div class="page-top-header mb-4">
+        <header class="page-top-header">
           <h1 class="dashboard-heading">Faculty Dashboard</h1>
-          <p class="dashboard-sub text-muted mb-0">Overview of campus logistics and event engagement.</p>
+          <p class="dashboard-sub">Overview of campus logistics and event engagement.</p>
+        </header>
 
-<div class="row g-3 mb-4">
+        <!-- Statistic Cards Row -->
+        <div class="metrics-row">
           
-          <div class="col-sm-6 col-xl-3">
-            <div class="metric-box">
-              <div class="metric-head-label">TOTAL EVENTS</div>
-              <div class="metric-value-large" id="facultyTotalEvents">42</div>
-              <div class="metric-sub-note text-muted">Active Campus Catalog</div>
-            </div>
+          <!-- Card 1: Total Events -->
+          <div class="metric-card">
+            <div class="metric-label">TOTAL EVENTS</div>
+            <div class="metric-value-large" id="facultyTotalEvents">42</div>
           </div>
 
-<div class="col-sm-6 col-xl-3">
-            <div class="metric-box">
-              <div class="metric-head-label">UPCOMING EVENTS</div>
-              <div class="metric-value-large" id="facultyUpcomingEvents">12</div>
-              <div class="metric-sub-note text-muted">Next: Spring Tech Fair</div>
-            </div>
+          <!-- Card 2: Upcoming Events -->
+          <div class="metric-card">
+            <div class="metric-label">UPCOMING<br>EVENTS</div>
+            <div class="metric-value-large" id="facultyUpcomingEvents">12</div>
+            <div class="metric-supporting-text">Next: Spring Tech Fair</div>
           </div>
 
-<div class="col-sm-6 col-xl-3">
-            <div class="metric-box">
-              <div class="metric-head-label">TOTAL STUDENTS</div>
-              <div class="metric-value-large">3,205</div>
-              <div class="metric-sub-note text-muted">Institutional Enrollees</div>
-            </div>
+          <!-- Card 3: Total Students -->
+          <div class="metric-card">
+            <div class="metric-label">TOTAL<br>STUDENTS</div>
+            <div class="metric-value-large">3,205</div>
           </div>
 
-<div class="col-sm-6 col-xl-3">
-            <div class="metric-box">
-              <div class="metric-head-label">REGISTRATIONS</div>
-              <div class="metric-value-large" id="facultyTotalRegistrations">8,490</div>
-              <div class="metric-sub-note text-muted">Across all events</div>
-            </div>
+          <!-- Card 4: Registrations -->
+          <div class="metric-card">
+            <div class="metric-label">REGISTRATIONS</div>
+            <div class="metric-value-large" id="facultyTotalRegistrations">8,490</div>
+            <div class="metric-supporting-text">Across all events</div>
           </div>
         </div>
 
-<div class="dashboard-card">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="card-inner-title mb-0">Recent Registrations</h2>
-            <a href="student-registrations.html" class="view-all-table-link">View All</a>
+        <!-- Recent Registrations Panel -->
+        <div class="recent-registrations-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Recent Registrations</h2>
+            <a href="student-registrations.html" class="panel-view-all">View All</a>
           </div>
 
-          <div class="table-responsive">
-            <table class="table admin-table align-middle mb-0">
+          <div class="panel-table-wrapper">
+            <table class="panel-table">
               <thead>
                 <tr>
-                  <th scope="col">Student Name</th>
-                  <th scope="col">Event</th>
-                  <th scope="col">Date</th>
+                  <th class="col-student">Student Name</th>
+                  <th class="col-event">Event</th>
+                  <th class="col-date">Date</th>
                 </tr>
               </thead>
               <tbody id="recentRegistrationsTbody">
-                
+                <tr>
+                  <td>
+                    <div class="student-cell">
+                      <span class="student-avatar avatar-pale-blue">JD</span>
+                      <span class="student-name">John Doe</span>
+                    </div>
+                  </td>
+                  <td class="event-cell">Spring Tech Fair</td>
+                  <td class="date-cell">Oct 24, 2023</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="student-cell">
+                      <span class="student-avatar avatar-muted-red">AS</span>
+                      <span class="student-name">Alice Smith</span>
+                    </div>
+                  </td>
+                  <td class="event-cell">Campus Hackathon</td>
+                  <td class="date-cell">Oct 23, 2023</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="student-cell">
+                      <span class="student-avatar avatar-pale-blue">BJ</span>
+                      <span class="student-name">Bob Johnson</span>
+                    </div>
+                  </td>
+                  <td class="event-cell">Leadership Summit</td>
+                  <td class="date-cell">Oct 22, 2023</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
+
       </div>
     </main>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/auth-validator.js"></script>
   <script src="js/faculty-dashboard.js"></script>
 </body>
 </html>
+
+

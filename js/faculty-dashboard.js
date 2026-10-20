@@ -1,6 +1,4 @@
-
-
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
   checkFacultyAuth();
   loadDashboardMetrics();
   loadRecentRegistrations();
@@ -48,36 +46,36 @@ function loadRecentRegistrations() {
   const regRaw = localStorage.getItem('campusfest_registrations');
   const regs = regRaw ? JSON.parse(regRaw) : [];
 
-const defaultRecent = [
+  const defaultRecent = [
     {
       initials: 'JD',
       name: 'John Doe',
       event: 'Spring Tech Fair',
       date: 'Oct 24, 2023',
-      colorClass: 'chip-purple'
+      colorClass: 'avatar-pale-blue'
     },
     {
       initials: 'AS',
       name: 'Alice Smith',
       event: 'Campus Hackathon',
       date: 'Oct 23, 2023',
-      colorClass: 'chip-coral'
+      colorClass: 'avatar-muted-red'
     },
     {
       initials: 'BJ',
       name: 'Bob Johnson',
       event: 'Leadership Summit',
       date: 'Oct 22, 2023',
-      colorClass: 'chip-blue'
+      colorClass: 'avatar-pale-blue'
     }
   ];
 
-const displayList = [];
+  const displayList = [];
   if (regs.length > 0) {
     regs.slice(-3).reverse().forEach((r, idx) => {
       const parts = (r.studentName || 'Student Name').split(' ');
       const initials = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : parts[0].slice(0, 2).toUpperCase();
-      const chipColors = ['chip-green', 'chip-coral', 'chip-blue', 'chip-purple'];
+      const chipColors = ['avatar-pale-blue', 'avatar-muted-red', 'avatar-pale-blue'];
       displayList.push({
         initials: initials,
         name: r.studentName,
@@ -88,20 +86,20 @@ const displayList = [];
     });
   }
 
-while (displayList.length < 3) {
+  while (displayList.length < 3) {
     displayList.push(defaultRecent[displayList.length]);
   }
 
   tbody.innerHTML = displayList.map(item => `
     <tr>
       <td>
-        <div class="d-flex align-items-center">
-          <span class="student-avatar-chip ${item.colorClass}">${escapeHtml(item.initials)}</span>
-          <span class="fw-semibold text-dark">${escapeHtml(item.name)}</span>
+        <div class="student-cell">
+          <span class="student-avatar ${item.colorClass}">${escapeHtml(item.initials)}</span>
+          <span class="student-name">${escapeHtml(item.name)}</span>
         </div>
       </td>
-      <td class="text-secondary">${escapeHtml(item.event)}</td>
-      <td class="text-muted">${escapeHtml(item.date)}</td>
+      <td class="event-cell">${escapeHtml(item.event)}</td>
+      <td class="date-cell">${escapeHtml(item.date)}</td>
     </tr>
   `).join('');
 }

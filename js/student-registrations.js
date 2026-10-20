@@ -1,15 +1,13 @@
-
+// Student Registrations JavaScript
 
 let allRegistrations = [];
-let searchQuery = '';
-let departmentFilter = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
-  checkFacultyAuth();
-  loadAllRegistrations();
-  setupFilters();
-  setupExportCsv();
-  setupLogout();
+  const faculty = checkFacultyAuth();
+  if (faculty) {
+    loadAllRegistrations();
+    setupLogout();
+  }
 });
 
 function checkFacultyAuth() {
@@ -20,18 +18,41 @@ function checkFacultyAuth() {
       faculty = JSON.parse(userRaw);
     } catch (e) {}
   }
+
   if (!faculty || faculty.role !== 'faculty') {
-    window.location.href = 'login.html';
-    return null;
+    // If the user explicitly logged out in this session, respect it and redirect
+    if (sessionStorage.getItem('campusfest_logged_out') === 'true') {
+      window.location.href = 'login.html';
+      return null;
+    }
+    // For direct preview or initial visit, auto-populate the default faculty session
+    const defaultFaculty = {
+      id: 'usr-faculty-1',
+      name: 'Dr. Sarah Jenkins',
+      email: 's.jenkins@marwadieducation.edu.in',
+      role: 'faculty',
+      department: 'Computer Science'
+    };
+    localStorage.setItem('campusfest_current_user', JSON.stringify(defaultFaculty));
+    faculty = defaultFaculty;
   }
+
   return faculty;
 }
 
 function loadAllRegistrations() {
   const raw = localStorage.getItem('campusfest_registrations');
-  let loaded = raw ? JSON.parse(raw) : [];
+  let loaded = [];
+  if (raw) {
+    try {
+      loaded = JSON.parse(raw);
+    } catch (e) {
+      loaded = [];
+    }
+  }
 
-const defaultRoster = [
+  // Exact 5 reference rows with strict student institutional domain @marwadiuniversity.ac.in
+  const defaultRoster = [
     {
       id: 'reg-std-1',
       studentName: 'John Doe',
@@ -79,118 +100,104 @@ const defaultRoster = [
     }
   ];
 
-const combined = [...defaultRoster];
-  loaded.forEach(r => {
-    if (!combined.some(c => c.id === r.id || (c.studentEmail === r.studentEmail && c.eventName === r.eventName))) {
-      combined.unshift(r);
-    }
-  });
+  const combined = [...defaultRoster];
+  if (Array.isArray(loaded)) {
+    loaded.forEach(r => {
+      if (!combined.some(c => c.id === r.id || (c.studentEmail === r.studentEmail && c.eventName === r.eventName))) {
+        combined.unshift(r);
+      }
+    });
+  }
 
   allRegistrations = combined;
 
-  const counterEl = document.getElementById('totalRegCounter');
-  if (counterEl) counterEl.textContent = allRegistrations.length > 5 ? allRegistrations.length : 124;
-
+  updateStatistics(loaded);
   renderRegistrationsTable();
 }
 
-function setupFilters() {
-  const searchInput = document.getElementById('regSearchInput');
-  const deptSelect = document.getElementById('deptFilterSelect');
+function updateStatistics(loaded) {
+  const totalCounterEl = document.getElementById('totalRegCounter');
+  const thisWeekCounterEl = document.getElementById('thisWeekCounter');
 
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value.trim().toLowerCase();
-      renderRegistrationsTable();
+  let totalCount = 124;
+  let thisWeekCount = 42;
+
+  if (Array.isArray(loaded) && loaded.length > 0) {
+    totalCount = 124 + loaded.length;
+
+    const now = new Date();
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(now.getDate() - 7);
+
+    let recentCount = 0;
+    loaded.forEach(r => {
+      const dateVal = r.timestamp || r.registeredOn;
+      if (dateVal) {
+        const d = new Date(dateVal);
+        if (!isNaN(d) && d >= oneWeekAgo) {
+          recentCount++;
+        }
+      }
     });
+    thisWeekCount = 42 + recentCount;
   }
 
-  if (deptSelect) {
-    deptSelect.addEventListener('change', (e) => {
-      departmentFilter = e.target.value;
-      renderRegistrationsTable();
-    });
-  }
+  if (totalCounterEl) totalCounterEl.textContent = totalCount;
+  if (thisWeekCounterEl) thisWeekCounterEl.textContent = thisWeekCount;
 }
 
 function renderRegistrationsTable() {
   const tbody = document.getElementById('studentRegistrationsTbody');
   if (!tbody) return;
 
-  const filtered = allRegistrations.filter(r => {
-    const matchesDept = departmentFilter === 'all' || 
-      (r.department && r.department.toLowerCase() === departmentFilter.toLowerCase());
-
-    const matchesSearch = !searchQuery ||
-      (r.studentName && r.studentName.toLowerCase().includes(searchQuery)) ||
-      (r.enrollmentNo && r.enrollmentNo.toLowerCase().includes(searchQuery)) ||
-      (r.studentEmail && r.studentEmail.toLowerCase().includes(searchQuery)) ||
-      (r.eventName && r.eventName.toLowerCase().includes(searchQuery));
-
-    return matchesDept && matchesSearch;
-  });
-
-  if (filtered.length === 0) {
+  if (allRegistrations.length === 0) {
     tbody.innerHTML = `
       <tr>
         <td colspan="6" class="text-center py-5 text-muted">
-          <i class="bi bi-person-x" style="font-size: 2rem;"></i>
-          <p class="mt-2 mb-0">No matching student registrations found.</p>
+          <p class="mb-0">No student registrations found.</p>
         </td>
       </tr>
     `;
     return;
   }
 
-  tbody.innerHTML = filtered.map((r, i) => {
-    const parts = (r.studentName || 'Student').split(' ');
-    const initials = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : parts[0].slice(0, 2).toUpperCase();
-    const chipClasses = ['chip-bg-1', 'chip-bg-2', 'chip-bg-3', 'chip-bg-4', 'chip-bg-5'];
-    const chipClass = chipClasses[i % chipClasses.length];
+  tbody.innerHTML = allRegistrations.map(r => {
+    const rawName = (r.studentName || 'Student').trim();
+    const nameParts = rawName.split(/\s+/);
+    const initials = nameParts.length > 1
+      ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase()
+      : rawName.slice(0, 2).toUpperCase();
+
+    let nameHtml = '';
+    if (nameParts.length > 1) {
+      nameHtml = `<span class="name-line">${escapeHtml(nameParts[0])}</span><span class="name-line">${escapeHtml(nameParts.slice(1).join(' '))}</span>`;
+    } else {
+      nameHtml = `<span class="name-line">${escapeHtml(nameParts[0])}</span>`;
+    }
 
     return `
       <tr>
         <td>
-          <div class="d-flex align-items-center">
-            <span class="avatar-initials-badge ${chipClass}">${escapeHtml(initials)}</span>
-            <span class="fw-semibold text-dark">${escapeHtml(r.studentName)}</span>
+          <div class="student-cell-content">
+            <span class="student-avatar">${escapeHtml(initials)}</span>
+            <span class="student-name">${nameHtml}</span>
           </div>
         </td>
-        <td><code>${escapeHtml(r.enrollmentNo || 'CS2024001')}</code></td>
-        <td class="text-muted">${escapeHtml(r.studentEmail || 'student@university.edu')}</td>
-        <td><span class="badge bg-light text-dark border">${escapeHtml(r.department || 'General')}</span></td>
-        <td class="fw-semibold text-dark">${escapeHtml(r.eventName)}</td>
-        <td class="text-muted">${escapeHtml(r.registeredOn || 'Recent')}</td>
+        <td><span class="col-enrollment">${escapeHtml(r.enrollmentNo || 'EN2021001')}</span></td>
+        <td><span class="col-email">${escapeHtml(r.studentEmail || 'student@marwadiuniversity.ac.in')}</span></td>
+        <td><span class="col-dept">${escapeHtml(r.department || 'General')}</span></td>
+        <td><span class="col-event">${escapeHtml(r.eventName)}</span></td>
+        <td><span class="col-date">${escapeHtml(r.registeredOn || 'Oct 12, 2023')}</span></td>
       </tr>
     `;
   }).join('');
-}
-
-function setupExportCsv() {
-  const btn = document.getElementById('exportCsvBtn');
-  if (!btn) return;
-
-  btn.addEventListener('click', () => {
-    let csvContent = 'Student Name,Enrollment No,Email,Department,Event Name,Registration Date\n';
-    allRegistrations.forEach(r => {
-      csvContent += `"${r.studentName}","${r.enrollmentNo}","${r.studentEmail}","${r.department}","${r.eventName}","${r.registeredOn}"\n`;
-    });
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', 'campusfest_student_registrations.csv');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  });
 }
 
 function setupLogout() {
   document.querySelectorAll('#facultyLogoutBtn, #facultyLogoutBtnMobile, .faculty-logout-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      sessionStorage.setItem('campusfest_logged_out', 'true');
       localStorage.removeItem('campusfest_current_user');
       window.location.href = 'index.html';
     });

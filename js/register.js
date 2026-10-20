@@ -1,8 +1,72 @@
-﻿
+/**
+ * CampusFest - Registration Page Logic
+ * 
+ * Enforces strict institutional email domain rules:
+ * - Student accounts: Only @marwadiuniversity.ac.in
+ *   Error: "Please use your official student email address ending with @marwadiuniversity.ac.in."
+ * - Faculty accounts: Only @marwadieducation.edu.in
+ *   Error: "Please use your official faculty email address ending with @marwadieducation.edu.in."
+ */
+
+let selectedRole = 'student';
 
 document.addEventListener('DOMContentLoaded', () => {
+  setupRoleToggle();
   setupRegisterForm();
 });
+
+function setupRoleToggle() {
+  const studentBtn = document.getElementById('roleBtnStudent');
+  const facultyBtn = document.getElementById('roleBtnFaculty');
+
+  const idLabel = document.getElementById('idLabel');
+  const idInput = document.getElementById('idNumber');
+  const semLabel = document.getElementById('semLabel');
+  const semInput = document.getElementById('semesterOrDesignation');
+  const emailInput = document.getElementById('regEmail');
+
+  function setRole(role) {
+    selectedRole = role;
+    showAlert('', false);
+
+    if (role === 'faculty') {
+      if (studentBtn) studentBtn.classList.remove('active');
+      if (facultyBtn) facultyBtn.classList.add('active');
+
+      if (idLabel) idLabel.textContent = 'Faculty ID';
+      if (idInput) idInput.placeholder = 'Faculty ID (e.g. FAC-2023-894)';
+      if (semLabel) semLabel.textContent = 'Designation';
+      if (semInput) semInput.placeholder = 'e.g., Associate Professor';
+      if (emailInput) emailInput.placeholder = 'faculty.name@marwadieducation.edu.in';
+    } else {
+      if (facultyBtn) facultyBtn.classList.remove('active');
+      if (studentBtn) studentBtn.classList.add('active');
+
+      if (idLabel) idLabel.textContent = 'Enrollment no.';
+      if (idInput) idInput.placeholder = 'Enrollment no.';
+      if (semLabel) semLabel.textContent = 'Semester';
+      if (semInput) semInput.placeholder = 'e.g., Semester 4';
+      if (emailInput) emailInput.placeholder = 'john.doe@marwadiuniversity.ac.in';
+    }
+  }
+
+  if (studentBtn) {
+    studentBtn.addEventListener('click', () => setRole('student'));
+  }
+
+  if (facultyBtn) {
+    facultyBtn.addEventListener('click', () => setRole('faculty'));
+  }
+
+  // Check URL query parameters for initial role preference (?role=faculty)
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestedRole = urlParams.get('role');
+  if (requestedRole && requestedRole.toLowerCase() === 'faculty') {
+    setRole('faculty');
+  } else {
+    setRole('student');
+  }
+}
 
 function setupRegisterForm() {
   const form = document.getElementById('registerForm');
@@ -22,30 +86,36 @@ function setupRegisterForm() {
 
     const fullName = fullNameInput ? fullNameInput.value.trim() : '';
     const idNumber = idNumberInput ? idNumberInput.value.trim() : '';
-    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+    // Trim leading and trailing whitespace before validation
+    const email = emailInput ? emailInput.value.trim() : '';
     const department = departmentInput ? departmentInput.value : '';
     const semesterOrDesignation = semesterOrDesignationInput ? semesterOrDesignationInput.value.trim() : '';
     const password = passwordInput ? passwordInput.value : '';
     const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
 
-if (!fullName || !idNumber || !email || !department || !semesterOrDesignation || !password || !confirmPassword) {
-      showAlert('Please fill in all required fields marked with *.');
+    if (!fullName || !idNumber || !email || !department || !semesterOrDesignation || !password || !confirmPassword) {
+      showAlert('Please fill in all required fields.');
       return;
     }
 
-const isStudent = /^[^\s@]+@marwadiuniversity\.ac\.in$/i.test(email);
-    const isFaculty = /^[^\s@]+@marwadieducation\.edu\.in$/i.test(email);
+    // Role-based domain validation (case-insensitive)
+    const STUDENT_DOMAIN_REGEX = /^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i;
+    const FACULTY_DOMAIN_REGEX = /^[a-zA-Z0-9._%+-]+@marwadieducation\.edu\.in$/i;
 
-    if (!isStudent && !isFaculty) {
-      if (email.includes('gmail') || email.includes('yahoo') || email.includes('example')) {
-        showAlert('Personal email domains are not allowed. Students must use @marwadiuniversity.ac.in and faculty must use @marwadieducation.edu.in');
-      } else {
-        showAlert('Please enter a valid student email ending with @marwadiuniversity.ac.in or faculty/admin email ending with @marwadieducation.edu.in');
+    if (selectedRole === 'student') {
+      if (!STUDENT_DOMAIN_REGEX.test(email)) {
+        showAlert('Please use your official student email address ending with @marwadiuniversity.ac.in.');
+        return;
       }
+    } else if (selectedRole === 'faculty') {
+      if (!FACULTY_DOMAIN_REGEX.test(email)) {
+        showAlert('Please use your official faculty email address ending with @marwadieducation.edu.in.');
+        return;
+      }
+    } else {
+      showAlert('Invalid account type selected.');
       return;
     }
-
-    const role = isFaculty ? 'faculty' : 'student';
 
     if (password.length < 6) {
       showAlert('Password must be at least 6 characters long.');
@@ -57,35 +127,45 @@ const isStudent = /^[^\s@]+@marwadiuniversity\.ac\.in$/i.test(email);
       return;
     }
 
-const rawUsers = localStorage.getItem('campusfest_users');
+    const rawUsers = localStorage.getItem('campusfest_users');
     let users = rawUsers ? JSON.parse(rawUsers) : [];
 
-const exists = users.some(u => u.email.toLowerCase() === email);
+    // Case-insensitive check for existing accounts
+    const exists = users.some(u => (u.email || '').trim().toLowerCase() === email.toLowerCase());
     if (exists) {
       showAlert('An account with this email already exists. Please log in.');
       return;
     }
 
-const newUser = {
+    const newUser = {
       id: 'usr-' + Date.now(),
       name: fullName,
-      email: email,
+      email: email, // Preserving clean trimmed email
       password: password,
-      role: role,
+      role: selectedRole,
       department: department,
-      semester: role === 'student' ? semesterOrDesignation : undefined,
-      designation: role === 'faculty' ? semesterOrDesignation : undefined,
-      enrollmentNo: role === 'student' ? idNumber : undefined,
-      facultyId: role === 'faculty' ? idNumber : undefined,
+      semester: selectedRole === 'student' ? semesterOrDesignation : undefined,
+      designation: selectedRole === 'faculty' ? semesterOrDesignation : undefined,
+      enrollmentNo: selectedRole === 'student' ? idNumber : undefined,
+      facultyId: selectedRole === 'faculty' ? idNumber : undefined,
       registeredAt: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     };
 
-    users.push(newUser);
-    localStorage.setItem('campusfest_users', JSON.stringify(users));
+    // Use centralized AuthValidator if available, or direct localStorage
+    if (window.AuthValidator && typeof window.AuthValidator.safeRegisterUser === 'function') {
+      const res = window.AuthValidator.safeRegisterUser(newUser);
+      if (!res.success) {
+        showAlert(res.message);
+        return;
+      }
+    } else {
+      users.push(newUser);
+      localStorage.setItem('campusfest_users', JSON.stringify(users));
+      localStorage.setItem('campusfest_current_user', JSON.stringify(newUser));
+    }
 
-localStorage.setItem('campusfest_current_user', JSON.stringify(newUser));
-
-if (role === 'faculty') {
+    // Redirect to respective portal
+    if (selectedRole === 'faculty') {
       window.location.href = 'faculty-dashboard.html';
     } else {
       window.location.href = 'student-dashboard.html';

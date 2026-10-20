@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # CampusFest – College Event Registration System
 
 CampusFest is a comprehensive, responsive web-based event registration and management system tailored for university campuses. It streamlines event discovery, registration, and communication for students while giving faculty administrators powerful tools to organize, edit, and track events and announcements.
@@ -7,7 +6,7 @@ CampusFest is a comprehensive, responsive web-based event registration and manag
 
 ## 🌟 Key Features
 
-### For Students (`@collegename.ac.in`)
+### For Students (`@marwadiuniversity.ac.in`)
 - **Event Discovery & Filtering:** Browse upcoming cultural, technical, academic, and sports events with live keyword search and category filtering.
 - **Detailed Event Information:** View event descriptions, venue locations, registration deadlines, seat limits, and faculty coordinators.
 - **One-Click Event Registration:** Register for events with instant feedback and conflict detection.
@@ -16,8 +15,8 @@ CampusFest is a comprehensive, responsive web-based event registration and manag
 - **Student Profile Management:** Update student contact information, department, graduation year, and interests.
 - **Real-Time Notifications:** Receive notifications for event schedule updates, registration reminders, and new campus announcements.
 
-### For Faculty Administrators (`@collegename.edu.in`)
-- **Role Detection:** Automatic detection of faculty vs. student roles based on institutional email domains upon login.
+### For Faculty Administrators (`@marwadieducation.edu.in`)
+- **Strict Role Separation:** Separate student and faculty authentication workflows and account type validation.
 - **Faculty Dashboard:** Live metrics showing total events, active registrations, capacity utilization, and recent registration activity.
 - **Manage Events:** Comprehensive dashboard to view, search, filter, and control campus events.
 - **Create & Edit Events:** Intuitive form to create new events or update existing event schedules, descriptions, categories, capacities, and banner images.
@@ -57,6 +56,7 @@ CampusFest/
 │   └── student-registrations.css
 │
 ├── js/
+│   ├── auth-validator.js
 │   ├── index.js
 │   ├── about.js
 │   ├── login.js
@@ -109,22 +109,25 @@ CampusFest/
 
 ---
 
-## 🔐 Authentication & Role Detection
+## 🔐 Strict Institutional Email Domain Rules
 
-CampusFest uses domain-based email detection to differentiate between user roles:
+CampusFest strictly enforces institutional email domains according to user account types across both frontend interfaces and storage operations:
 
-| Role | Email Domain Pattern | Redirect Target |
-| :--- | :--- | :--- |
-| **Student** | `*@collegename.ac.in` | `student-dashboard.html` |
-| **Faculty / Admin** | `*@collegename.edu.in` | `faculty-dashboard.html` |
+| Role | Allowed Institutional Domain | Redirect Portal | Exact Rejection Error Message |
+| :--- | :--- | :--- | :--- |
+| **Student** | `@marwadiuniversity.ac.in` | `student-dashboard.html` | `Please use your official student email address ending with @marwadiuniversity.ac.in.` |
+| **Faculty / Admin** | `@marwadieducation.edu.in` | `faculty-dashboard.html` | `Please use your official faculty email address ending with @marwadieducation.edu.in.` |
 
 ### Sample Credentials for Testing
-- **Student Account:**
-  - Email: `student@collegename.ac.in`
-  - Password: `Password@123`
-- **Faculty Account:**
-  - Email: `faculty@collegename.edu.in`
-  - Password: `Password@123`
+- **Student Account (Default 1):**
+  - Email: `alex.mercer@marwadiuniversity.ac.in`
+  - Password: `password123`
+- **Student Account (Default 2):**
+  - Email: `john.doe@marwadiuniversity.ac.in`
+  - Password: `password123`
+- **Faculty / Coordinator Account:**
+  - Email: `s.jenkins@marwadieducation.edu.in`
+  - Password: `password123`
 
 ---
 
@@ -140,7 +143,3 @@ CampusFest uses domain-based email detection to differentiate between user roles
    npx serve .
    ```
 3. Navigate to `http://localhost:8000` (or `index.html`) in your browser to experience CampusFest.
-=======
-# CampusFest
-CampusFest is a responsive college event registration system built using HTML5, CSS3, Bootstrap, and JavaScript. Its main purpose is to simplify event management. Students can explore events, register, and manage profiles, while faculty can add, edit, and delete events, track registrations, and publish announcements through separate dashboards.
->>>>>>> 8786d1e62cb78a27eb7758bbd36f0a97bc8bbb94

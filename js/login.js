@@ -1,7 +1,18 @@
-﻿
+/**
+ * CampusFest - Login Page Logic
+ * 
+ * Enforces strict institutional email domain rules:
+ * - Student accounts: Only @marwadiuniversity.ac.in
+ *   Error: "Please use your official student email address ending with @marwadiuniversity.ac.in."
+ * - Faculty accounts: Only @marwadieducation.edu.in
+ *   Error: "Please use your official faculty email address ending with @marwadieducation.edu.in."
+ */
+
+let selectedLoginRole = 'student';
 
 document.addEventListener('DOMContentLoaded', () => {
   ensureDefaultUsers();
+  setupRoleToggle();
   setupLoginForm();
 });
 
@@ -50,7 +61,7 @@ function ensureDefaultUsers() {
       const existing = JSON.parse(raw);
       let updated = false;
       defaultUsers.forEach(du => {
-        if (!existing.some(u => u.email.toLowerCase() === du.email.toLowerCase())) {
+        if (!existing.some(u => (u.email || '').trim().toLowerCase() === du.email.toLowerCase())) {
           existing.push(du);
           updated = true;
         }
@@ -58,9 +69,47 @@ function ensureDefaultUsers() {
       if (updated) {
         localStorage.setItem('campusfest_users', JSON.stringify(existing));
       }
-    } catch(e) {
+    } catch (e) {
       localStorage.setItem('campusfest_users', JSON.stringify(defaultUsers));
     }
+  }
+}
+
+function setupRoleToggle() {
+  const studentBtn = document.getElementById('studentRoleBtn');
+  const facultyBtn = document.getElementById('facultyRoleBtn');
+  const emailInput = document.getElementById('collegeEmail');
+
+  function setRole(role) {
+    selectedLoginRole = role;
+    showAlert('', false);
+
+    if (role === 'faculty') {
+      if (studentBtn) studentBtn.classList.remove('active');
+      if (facultyBtn) facultyBtn.classList.add('active');
+      if (emailInput) emailInput.placeholder = 'faculty.name@marwadieducation.edu.in';
+    } else {
+      if (facultyBtn) facultyBtn.classList.remove('active');
+      if (studentBtn) studentBtn.classList.add('active');
+      if (emailInput) emailInput.placeholder = 'student.name@marwadiuniversity.ac.in';
+    }
+  }
+
+  if (studentBtn) {
+    studentBtn.addEventListener('click', () => setRole('student'));
+  }
+
+  if (facultyBtn) {
+    facultyBtn.addEventListener('click', () => setRole('faculty'));
+  }
+
+  // Support URL parameter: login.html?role=faculty
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestedRole = urlParams.get('role');
+  if (requestedRole && requestedRole.toLowerCase() === 'faculty') {
+    setRole('faculty');
+  } else {
+    setRole('student');
   }
 }
 
@@ -75,11 +124,17 @@ function setupLoginForm() {
     const emailInput = document.getElementById('collegeEmail');
     const passwordInput = document.getElementById('password');
 
-    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
-    const password = passwordInput ? passwordInput.value.trim() : '';
+    // Trim leading and trailing whitespace before validation
+    const rawEmail = emailInput ? emailInput.value : '';
+    const email = rawEmail.trim();
+    const password = passwordInput ? passwordInput.value : '';
 
-if (!email) {
-      showAlert('Please enter your official college email address.');
+    if (!email) {
+      if (selectedLoginRole === 'faculty') {
+        showAlert('Please use your official faculty email address ending with @marwadieducation.edu.in.');
+      } else {
+        showAlert('Please use your official student email address ending with @marwadiuniversity.ac.in.');
+      }
       return;
     }
 
@@ -88,58 +143,79 @@ if (!email) {
       return;
     }
 
-const isStudent = /^[^\s@]+@marwadiuniversity\.ac\.in$/i.test(email);
-    const isFaculty = /^[^\s@]+@marwadieducation\.edu\.in$/i.test(email);
+    // Role-based domain validation (case-insensitive)
+    const STUDENT_DOMAIN_REGEX = /^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i;
+    const FACULTY_DOMAIN_REGEX = /^[a-zA-Z0-9._%+-]+@marwadieducation\.edu\.in$/i;
 
-    if (!isStudent && !isFaculty) {
-      showAlert('Please enter a valid student email ending with @marwadiuniversity.ac.in or faculty/admin email ending with @marwadieducation.edu.in');
+    if (selectedLoginRole === 'student') {
+      if (!STUDENT_DOMAIN_REGEX.test(email)) {
+        showAlert('Please use your official student email address ending with @marwadiuniversity.ac.in.');
+        return;
+      }
+    } else if (selectedLoginRole === 'faculty') {
+      if (!FACULTY_DOMAIN_REGEX.test(email)) {
+        showAlert('Please use your official faculty email address ending with @marwadieducation.edu.in.');
+        return;
+      }
+    } else {
+      showAlert('Invalid account type selected.');
       return;
     }
 
-    const detectedRole = isFaculty ? 'faculty' : 'student';
-
-const usersRaw = localStorage.getItem('campusfest_users');
+    const usersRaw = localStorage.getItem('campusfest_users');
     const users = usersRaw ? JSON.parse(usersRaw) : [];
 
-    let matchedUser = users.find(u => u.email.toLowerCase() === email);
+    // Case-insensitive lookup
+    let matchedUser = users.find(u => (u.email || '').trim().toLowerCase() === email.toLowerCase());
 
     if (matchedUser) {
+      // Disallow cross-role authentication (student and faculty accounts cannot be interchanged)
+      if (matchedUser.role !== selectedLoginRole) {
+        if (selectedLoginRole === 'student') {
+          showAlert('Please use your official student email address ending with @marwadiuniversity.ac.in.');
+        } else {
+          showAlert('Please use your official faculty email address ending with @marwadieducation.edu.in.');
+        }
+        return;
+      }
+
       if (matchedUser.password !== password) {
         showAlert('Incorrect password. Please try again.');
         return;
       }
     } else {
-      
+      // Auto-provision record for valid institutional email
       const namePart = email.split('@')[0].replace(/[._]/g, ' ');
       const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
 
       matchedUser = {
         id: 'usr-' + Date.now(),
-        name: formattedName || (detectedRole === 'faculty' ? 'Faculty Member' : 'Student Member'),
-        email: email,
+        name: formattedName || (selectedLoginRole === 'faculty' ? 'Faculty Member' : 'Student Member'),
+        email: email, // Store clean trimmed email
         password: password,
-        role: detectedRole,
+        role: selectedLoginRole,
         department: 'Computer Science',
-        semester: detectedRole === 'student' ? '5th Semester' : undefined,
-        designation: detectedRole === 'faculty' ? 'Associate Professor' : undefined,
-        enrollmentNo: detectedRole === 'student' ? 'CS' + Math.floor(100000 + Math.random() * 900000) : undefined,
-        facultyId: detectedRole === 'faculty' ? 'FAC-' + Math.floor(1000 + Math.random() * 9000) : undefined
+        semester: selectedLoginRole === 'student' ? '5th Semester' : undefined,
+        designation: selectedLoginRole === 'faculty' ? 'Associate Professor' : undefined,
+        enrollmentNo: selectedLoginRole === 'student' ? 'CS' + Math.floor(100000 + Math.random() * 900000) : undefined,
+        facultyId: selectedLoginRole === 'faculty' ? 'FAC-' + Math.floor(1000 + Math.random() * 9000) : undefined
       };
 
       users.push(matchedUser);
       localStorage.setItem('campusfest_users', JSON.stringify(users));
     }
 
-localStorage.setItem('campusfest_current_user', JSON.stringify(matchedUser));
+    localStorage.setItem('campusfest_current_user', JSON.stringify(matchedUser));
 
-if (matchedUser.role === 'faculty') {
+    // Role-based redirection
+    if (matchedUser.role === 'faculty') {
       window.location.href = 'faculty-dashboard.html';
     } else {
       window.location.href = 'student-dashboard.html';
     }
   });
 
-const forgotLink = document.getElementById('forgotPassLink');
+  const forgotLink = document.getElementById('forgotPassLink');
   if (forgotLink) {
     forgotLink.addEventListener('click', (e) => {
       e.preventDefault();

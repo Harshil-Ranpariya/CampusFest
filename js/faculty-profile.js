@@ -53,6 +53,12 @@ function setupProfileForm(faculty) {
       return;
     }
 
+    const currentEmail = (faculty.email || '').trim();
+    if (!/^[a-zA-Z0-9._%+-]+@marwadieducation\.edu\.in$/i.test(currentEmail)) {
+      alert('Please use your official faculty email address ending with @marwadieducation.edu.in.');
+      return;
+    }
+
     faculty.name = name;
     faculty.facultyId = facultyId;
     faculty.department = dept;

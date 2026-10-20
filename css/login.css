@@ -1,4 +1,4 @@
-﻿
+
 :root {
   --primary-color: #00875a;
   --primary-hover: #006e49;
@@ -399,4 +399,40 @@ body {
   .login-card {
     padding: 1.75rem 1.25rem;
   }
+}
+
+/* Role Selector Styles */
+.role-selector {
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.role-toggle-btn {
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13.5px;
+  color: #64748b;
+  background: transparent;
+  padding: 8px 12px;
+  flex: 1;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.role-toggle-btn:hover {
+  color: #0f172a;
+}
+
+.role-toggle-btn.active {
+  background-color: #00875a;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 135, 90, 0.25);
 }

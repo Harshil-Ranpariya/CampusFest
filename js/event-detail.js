@@ -1,4 +1,4 @@
-﻿
+
 
 let currentEvent = null;
 let currentStudent = null;
@@ -119,7 +119,13 @@ function setupRegistrationAction() {
   if (!regBtn) return;
 
   regBtn.addEventListener('click', () => {
-    if (!currentEvent) return;
+    if (!currentEvent || !currentStudent) return;
+
+    const studentEmail = (currentStudent.email || '').trim();
+    if (!/^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i.test(studentEmail)) {
+      alert('Please use your official student email address ending with @marwadiuniversity.ac.in.');
+      return;
+    }
 
     const regRaw = localStorage.getItem('campusfest_registrations');
     let regs = regRaw ? JSON.parse(regRaw) : [];

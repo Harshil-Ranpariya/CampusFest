@@ -51,6 +51,19 @@
           <p class="form-subtitle">Register as a student or faculty member to access the portal.</p>
         </div>
 
+        <!-- Account Type Toggle -->
+        <div class="role-selector-container">
+          <label class="role-label">Account Type</label>
+          <div class="role-toggle-group" role="group" aria-label="Account Type">
+            <button type="button" class="role-pill-btn active" id="roleBtnStudent" data-role="student">
+              <span class="role-icon">🎓</span> Student
+            </button>
+            <button type="button" class="role-pill-btn" id="roleBtnFaculty" data-role="faculty">
+              <span class="role-icon">💼</span> Faculty
+            </button>
+          </div>
+        </div>
+
         <div id="registerAlert" class="alert-box d-none" role="alert"></div>
 
         <form id="registerForm" novalidate>
@@ -137,6 +150,7 @@
     </div>
   </footer>
 
+  <script src="js/auth-validator.js"></script>
   <script src="js/register.js"></script>
 </body>
 </html>
