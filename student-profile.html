@@ -24,7 +24,7 @@
 
         <div class="d-flex align-items-center d-lg-none gap-2">
           <div class="dropdown header-profile-dropdown">
-            <button class="header-profile-btn" type="button" id="studentProfileDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Student profile menu">
+            <button class="header-profile-btn" type="button" id="studentProfileDropdownMobile" aria-expanded="false" aria-label="Student profile menu" onclick="toggleStudentProfileMenu(this, event)">
               <div class="user-avatar-circle active-avatar">
                 <i class="bi bi-person"></i>
               </div>
@@ -70,7 +70,7 @@
 
           <div class="header-right-group">
             <div class="dropdown header-profile-dropdown d-none d-lg-inline-flex">
-              <button class="header-profile-btn" type="button" id="studentProfileDropdown" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Student profile menu">
+              <button class="header-profile-btn" type="button" id="studentProfileDropdown" aria-expanded="false" aria-label="Student profile menu" onclick="toggleStudentProfileMenu(this, event)">
                 <div class="user-avatar-circle active-avatar">
                   <i class="bi bi-person"></i>
                 </div>

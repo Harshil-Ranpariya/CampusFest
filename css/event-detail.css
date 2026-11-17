@@ -175,7 +175,7 @@ body {
   top: 100% !important;
   right: 0 !important;
   left: auto !important;
-  min-width: 180px !important;
+  min-width: 185px !important;
   background-color: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
   border-radius: 10px !important;
@@ -184,9 +184,11 @@ body {
   margin: 8px 0 0 0 !important;
   list-style: none !important;
   z-index: 1060 !important;
+  transform: none !important;
 }
 
-.student-profile-menu.show {
+.student-profile-menu.show,
+.header-profile-dropdown .dropdown-menu.show {
   display: block !important;
 }
 

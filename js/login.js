@@ -189,6 +189,7 @@ function setupLoginForm() {
       localStorage.setItem('campusfest_users', JSON.stringify(users));
     }
 
+    sessionStorage.removeItem('campusfest_logged_out');
     localStorage.setItem('campusfest_current_user', JSON.stringify(matchedUser));
 
     if (matchedUser.role === 'faculty') {
