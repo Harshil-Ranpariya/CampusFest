@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function checkStudentAuth() {
-  const userRaw = localStorage.getItem('campusfest_current_user');
+  const userRaw = localStorage.getItem('campusfest_current_user') || sessionStorage.getItem('campusfest_current_user');
   let student = null;
   if (userRaw) {
     try {
@@ -275,6 +275,17 @@ function setupProfileDropdown() {
       }
     });
   });
+
+  document.querySelectorAll('.student-profile-menu .profile-dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.student-profile-menu.show').forEach(menu => {
+        menu.classList.remove('show');
+        const btn = menu.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  });
+
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.header-profile-dropdown')) {
       document.querySelectorAll('.student-profile-menu.show').forEach(menu => {
@@ -292,6 +303,8 @@ function setupLogout() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('campusfest_current_user');
+      sessionStorage.removeItem('campusfest_current_user');
+      sessionStorage.clear();
       window.location.href = 'login.html';
     });
   });

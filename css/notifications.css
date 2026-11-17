@@ -178,21 +178,30 @@ body {
 }
 
 .header-profile-dropdown {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
 }
 
 .student-profile-menu {
-  min-width: 175px;
+  display: none;
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  left: auto !important;
+  min-width: 180px !important;
   background-color: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
   border-radius: 10px !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
   padding: 6px !important;
-  margin-top: 8px !important;
-  list-style: none;
-  z-index: 1060;
+  margin: 8px 0 0 0 !important;
+  list-style: none !important;
+  z-index: 1060 !important;
+}
+
+.student-profile-menu.show {
+  display: block !important;
 }
 
 .profile-dropdown-item {
@@ -205,17 +214,17 @@ body {
   color: #334155 !important;
   border-radius: 6px !important;
   text-decoration: none !important;
-  border: none;
-  background: transparent;
-  width: 100%;
-  text-align: left;
+  border: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  text-align: left !important;
   transition: all 0.15s ease !important;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .profile-dropdown-item i {
-  font-size: 16px;
-  line-height: 1;
+  font-size: 16px !important;
+  line-height: 1 !important;
 }
 
 .profile-dropdown-item:hover,
