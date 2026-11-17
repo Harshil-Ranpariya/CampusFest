@@ -20,8 +20,6 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
-
-/* Site Header */
 .site-header {
   height: 68px;
   min-height: 68px;
@@ -230,8 +228,6 @@ body {
     border: 1px solid var(--primary-color);
   }
 }
-
-/* Hero Section */
 .hero-section {
   padding: 4rem 0 3.5rem;
   background-color: #ffffff;
@@ -281,14 +277,10 @@ body {
   object-fit: cover;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
-
-/* Main Content Area (Soft Light Background for Stats + Featured Events) */
 .main-content-section {
   background-color: var(--bg-page);
   padding: 2.5rem 0 4.5rem;
 }
-
-/* Stats Section */
 .stats-section {
   padding-bottom: 2.5rem;
 }
@@ -335,8 +327,6 @@ body {
   font-weight: 500;
   line-height: 1.3;
 }
-
-/* Featured Section */
 .featured-section {
   padding-top: 1rem;
 }
@@ -367,8 +357,6 @@ body {
 .view-all-link:hover {
   color: var(--primary-hover);
 }
-
-/* Event Cards */
 .event-card {
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -484,25 +472,21 @@ body {
   flex-grow: 1;
 }
 
-/* Site Footer */
 .site-footer {
   background-color: #e9eef8;
-  padding: 3.5rem 0 2.25rem;
-  border-top: none;
+  border-top: 1px solid #dbeafe;
 }
 
 .footer-brand {
-  font-weight: 800;
-  font-size: 1.4rem;
-  color: var(--primary-color);
-  letter-spacing: -0.4px;
-  line-height: 1.2;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #0f172a;
 }
 
 .footer-tagline {
-  font-size: 0.9rem;
-  color: #556987;
-  margin-top: 6px;
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 4px;
 }
 
 .footer-nav {
@@ -511,12 +495,12 @@ body {
 }
 
 .footer-nav .list-inline-item {
-  margin: 0 0 0 2rem;
+  margin: 0 0.5rem;
 }
 
 .footer-nav a {
-  font-size: 0.88rem;
-  color: #4b5563;
+  font-size: 0.85rem;
+  color: #64748b;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.15s ease;
@@ -524,23 +508,6 @@ body {
 
 .footer-nav a:hover {
   color: var(--primary-color);
-}
-
-.footer-divider {
-  border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  margin: 2.75rem 0 1.75rem;
-  opacity: 1;
-}
-
-.footer-bottom-row {
-  text-align: left;
-}
-
-.footer-copy {
-  font-size: 0.85rem;
-  color: #596780;
-  font-weight: 400;
 }
 
 @media (max-width: 991.98px) {

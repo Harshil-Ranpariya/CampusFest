@@ -1,7 +1,7 @@
 let eventsList = [];
-let pendingDeleteId = null;
 let searchQuery = '';
 let categoryFilter = 'all';
+let pendingDeleteId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   checkFacultyAuth();
@@ -37,7 +37,7 @@ function loadManageEvents() {
         name: 'Annual Tech Symposium',
         subtext: 'Keynote speakers and workshops',
         category: 'Academic',
-        date: 'Oct 24, 2024',
+        date: 'February 17, 2027',
         time: '09:00 AM',
         venue: 'Main Auditorium',
         registrationsCount: 345,
@@ -48,7 +48,7 @@ function loadManageEvents() {
         name: 'Fall Cultural Fest',
         subtext: 'Music, dance, and arts',
         category: 'Cultural',
-        date: 'Nov 15, 2024',
+        date: 'February 18, 2027',
         time: '05:00 PM',
         venue: 'Campus Grounds',
         registrationsCount: 890,
@@ -59,7 +59,7 @@ function loadManageEvents() {
         name: 'Inter-Collegiate Tournament',
         subtext: 'Basketball and Volleyball finals',
         category: 'Sports',
-        date: 'Dec 02, 2024',
+        date: 'February 19, 2027',
         time: '10:00 AM',
         venue: 'Indoor Stadium',
         registrationsCount: 120,
@@ -69,7 +69,20 @@ function loadManageEvents() {
     localStorage.setItem('campusfest_events', JSON.stringify(eventsList));
   } else {
     let modified = false;
+    const dateMap = {
+      'evt-1': 'February 17, 2027',
+      'evt-2': 'February 18, 2027',
+      'evt-3': 'February 19, 2027',
+      'evt-4': 'February 17, 2027',
+      'evt-5': 'February 18, 2027',
+      'evt-6': 'February 19, 2027'
+    };
+
     eventsList.forEach(evt => {
+      if (dateMap[evt.id] && evt.date !== dateMap[evt.id]) {
+        evt.date = dateMap[evt.id];
+        modified = true;
+      }
       if (evt.id === 'evt-1' && !evt.subtext) {
         evt.subtext = 'Keynote speakers and workshops';
         modified = true;
@@ -294,7 +307,7 @@ function setupLogout() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('campusfest_current_user');
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
   });
 }

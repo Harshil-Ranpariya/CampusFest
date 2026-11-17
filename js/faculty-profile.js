@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const faculty = loadFacultyProfile();
   setupProfileForm(faculty);
@@ -21,7 +19,7 @@ function loadFacultyProfile() {
     return null;
   }
 
-const nameEl = document.getElementById('facultyFullName');
+  const nameEl = document.getElementById('facultyFullName');
   const idEl = document.getElementById('facultyIdInput');
   const emailEl = document.getElementById('facultyEmailInput');
   const deptEl = document.getElementById('facultyDeptSelect');
@@ -66,7 +64,7 @@ function setupProfileForm(faculty) {
 
     localStorage.setItem('campusfest_current_user', JSON.stringify(faculty));
 
-const usersRaw = localStorage.getItem('campusfest_users');
+    const usersRaw = localStorage.getItem('campusfest_users');
     if (usersRaw) {
       const users = JSON.parse(usersRaw);
       const idx = users.findIndex(u => u.email.toLowerCase() === faculty.email.toLowerCase());
@@ -94,7 +92,7 @@ function setupLogout() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('campusfest_current_user');
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
   });
 }

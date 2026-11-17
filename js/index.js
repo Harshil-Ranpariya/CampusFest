@@ -1,153 +1,167 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
   initLocalStorageData();
   renderFeaturedEvents();
 });
 
 function initLocalStorageData() {
-  
+  const defaultEvents = [
+    {
+      id: 'evt-1',
+      name: 'Annual Tech Symposium',
+      category: 'Tech',
+      badgeClass: 'badge-tech',
+      date: 'February 17, 2027',
+      time: '10:00 AM - 4:00 PM',
+      venue: 'Main Auditorium',
+      description: 'Join industry leaders and alumni for a day of networking and insights into the future of technology.',
+      keyHighlights: [
+        'Keynote address by leading AI researchers.',
+        'Hands-on coding workshops in modern web frameworks.',
+        'Career fair featuring top tech recruiters.',
+        'Project showcase competition with prizes.'
+      ],
+      organizer: 'Computer Science Department',
+      maxParticipants: 200,
+      seatsLeft: 45,
+      deadline: 'February 15, 2027',
+      image: 'assets/images/tech-symposium.jpg',
+      status: 'Open'
+    },
+    {
+      id: 'evt-2',
+      name: 'Global Culture Fest',
+      category: 'Culture',
+      badgeClass: 'badge-culture',
+      date: 'February 18, 2027',
+      time: '12:00 PM - 8:00 PM',
+      venue: 'Campus Quad',
+      description: 'Celebrate diversity with food, music, and performances from student organizations around the world.',
+      keyHighlights: [
+        'International food street with 25+ cultural stalls.',
+        'Traditional dance and acoustic musical acts.',
+        'Live student band showcase in the evening.',
+        'Cultural attire fashion walk.'
+      ],
+      organizer: 'Student Union',
+      maxParticipants: 1000,
+      seatsLeft: 520,
+      deadline: 'February 16, 2027',
+      image: 'assets/images/culture-fest.jpg',
+      status: 'Open'
+    },
+    {
+      id: 'evt-3',
+      name: 'Resume Building Workshop',
+      category: 'Workshop',
+      badgeClass: 'badge-workshop',
+      date: 'February 19, 2027',
+      time: '02:00 PM - 05:00 PM',
+      venue: 'Career Center, Room 204',
+      description: 'Get expert advice on crafting a standout resume that will catch the eye of top employers.',
+      keyHighlights: [
+        '1-on-1 resume review with certified HR recruiters.',
+        'ATS optimization tips and portfolio advice.',
+        'Mock technical & behavioral interview walkthroughs.',
+        'Custom template pack provided to all participants.'
+      ],
+      organizer: 'Career Placement Cell',
+      maxParticipants: 30,
+      seatsLeft: 3,
+      deadline: 'February 17, 2027',
+      image: 'assets/images/resume-workshop.jpg',
+      status: 'Almost Full'
+    },
+    {
+      id: 'evt-4',
+      name: 'Spring Club Rush & Organization Fair',
+      category: 'Social',
+      badgeClass: 'badge-social',
+      date: 'February 17, 2027',
+      time: '12:00 PM - 03:00 PM',
+      venue: 'Campus Quad',
+      description: 'Discover over 50 campus clubs, student chapters, and sports organizations. Sign up and build your campus network.',
+      keyHighlights: [
+        'Interactive student association booths.',
+        'Free campus fest merchandise and refreshments.',
+        'Meet club presidents and leadership teams.',
+        'Sign-up raffle giveaways.'
+      ],
+      organizer: 'Campus Life Committee',
+      maxParticipants: 9999,
+      seatsLeft: 'Unlimited',
+      deadline: 'February 16, 2027',
+      image: 'assets/images/club-rush-fair.jpg',
+      status: 'Open'
+    },
+    {
+      id: 'evt-5',
+      name: 'Intro to Python for Data Science',
+      category: 'Workshop',
+      badgeClass: 'badge-workshop',
+      date: 'February 18, 2027',
+      time: '02:00 PM - 05:00 PM',
+      venue: 'Lab 3B, Science Center',
+      description: 'Hands-on programming session exploring data analysis with Python, NumPy, Pandas, and exploratory charts.',
+      keyHighlights: [
+        'Interactive Jupyter notebook exercises.',
+        'Real-world campus datasets for practice.',
+        'Guidance on machine learning basics.',
+        'Course completion digital certificate.'
+      ],
+      organizer: 'Data Science Society',
+      maxParticipants: 30,
+      seatsLeft: 3,
+      deadline: 'February 16, 2027',
+      image: 'assets/images/python-workshop.jpg',
+      status: 'Almost Full'
+    },
+    {
+      id: 'evt-6',
+      name: 'Inter-Collegiate Tournament',
+      category: 'Sports',
+      badgeClass: 'badge-sports',
+      date: 'February 19, 2027',
+      time: '10:00 AM - 06:00 PM',
+      venue: 'Indoor Stadium',
+      description: 'Basketball and Volleyball tournament featuring competing teams from top regional engineering and degree institutes.',
+      keyHighlights: [
+        'Trophies and medals for podium finishers.',
+        'Professional referees and live scorekeeping.',
+        'Halftime performances and cheering contest.',
+        'Energy drinks and nutrition kits for players.'
+      ],
+      organizer: 'Sports Council',
+      maxParticipants: 200,
+      seatsLeft: 80,
+      deadline: 'February 17, 2027',
+      image: 'assets/images/sports-tournament.svg',
+      status: 'Open'
+    }
+  ];
+
   if (!localStorage.getItem('campusfest_events')) {
-    const defaultEvents = [
-      {
-        id: 'evt-1',
-        name: 'Annual Tech Symposium',
-        category: 'Tech',
-        badgeClass: 'badge-tech',
-        date: 'Oct 15, 2024',
-        time: '10:00 AM - 4:00 PM',
-        venue: 'Main Auditorium',
-        description: 'Join industry leaders and alumni for a day of networking and insights into the future of technology.',
-        keyHighlights: [
-          'Keynote address by leading AI researchers.',
-          'Hands-on coding workshops in modern web frameworks.',
-          'Career fair featuring top tech recruiters.',
-          'Project showcase competition with prizes.'
-        ],
-        organizer: 'Computer Science Department',
-        maxParticipants: 200,
-        seatsLeft: 45,
-        deadline: 'Oct 10, 2024',
-        image: 'assets/images/tech-symposium.jpg',
-        status: 'Open'
-      },
-      {
-        id: 'evt-2',
-        name: 'Global Culture Fest',
-        category: 'Culture',
-        badgeClass: 'badge-culture',
-        date: 'Oct 20, 2024',
-        time: '12:00 PM - 8:00 PM',
-        venue: 'Campus Quad',
-        description: 'Celebrate diversity with food, music, and performances from student organizations around the world.',
-        keyHighlights: [
-          'International food street with 25+ cultural stalls.',
-          'Traditional dance and acoustic musical acts.',
-          'Live student band showcase in the evening.',
-          'Cultural attire fashion walk.'
-        ],
-        organizer: 'Student Union',
-        maxParticipants: 1000,
-        seatsLeft: 520,
-        deadline: 'Oct 18, 2024',
-        image: 'assets/images/culture-fest.jpg',
-        status: 'Open'
-      },
-      {
-        id: 'evt-3',
-        name: 'Resume Building Workshop',
-        category: 'Workshop',
-        badgeClass: 'badge-workshop',
-        date: 'Oct 25, 2024',
-        time: '02:00 PM - 05:00 PM',
-        venue: 'Career Center, Room 204',
-        description: 'Get expert advice on crafting a standout resume that will catch the eye of top employers.',
-        keyHighlights: [
-          '1-on-1 resume review with certified HR recruiters.',
-          'ATS optimization tips and portfolio advice.',
-          'Mock technical & behavioral interview walkthroughs.',
-          'Custom template pack provided to all participants.'
-        ],
-        organizer: 'Career Placement Cell',
-        maxParticipants: 30,
-        seatsLeft: 3,
-        deadline: 'Oct 23, 2024',
-        image: 'assets/images/resume-workshop.jpg',
-        status: 'Almost Full'
-      },
-      {
-        id: 'evt-4',
-        name: 'Spring Club Rush & Organization Fair',
-        category: 'Social',
-        badgeClass: 'badge-social',
-        date: 'Oct 18, 2024',
-        time: '12:00 PM - 03:00 PM',
-        venue: 'Campus Quad',
-        description: 'Discover over 50 campus clubs, student chapters, and sports organizations. Sign up and build your campus network.',
-        keyHighlights: [
-          'Interactive student association booths.',
-          'Free campus fest merchandise and refreshments.',
-          'Meet club presidents and leadership teams.',
-          'Sign-up raffle giveaways.'
-        ],
-        organizer: 'Campus Life Committee',
-        maxParticipants: 9999,
-        seatsLeft: 'Unlimited',
-        deadline: 'Oct 18, 2024',
-        image: 'assets/images/club-rush.svg',
-        status: 'Open'
-      },
-      {
-        id: 'evt-5',
-        name: 'Intro to Python for Data Science',
-        category: 'Workshop',
-        badgeClass: 'badge-workshop',
-        date: 'Oct 20, 2024',
-        time: '02:00 PM - 05:00 PM',
-        venue: 'Lab 3B, Science Center',
-        description: 'Hands-on programming session exploring data analysis with Python, NumPy, Pandas, and exploratory charts.',
-        keyHighlights: [
-          'Interactive Jupyter notebook exercises.',
-          'Real-world campus datasets for practice.',
-          'Guidance on machine learning basics.',
-          'Course completion digital certificate.'
-        ],
-        organizer: 'Data Science Society',
-        maxParticipants: 30,
-        seatsLeft: 3,
-        deadline: 'Oct 19, 2024',
-        image: 'assets/images/python-datascience.svg',
-        status: 'Almost Full'
-      },
-      {
-        id: 'evt-6',
-        name: 'Inter-Collegiate Tournament',
-        category: 'Sports',
-        badgeClass: 'badge-sports',
-        date: 'Dec 02, 2024',
-        time: '10:00 AM - 06:00 PM',
-        venue: 'Indoor Stadium',
-        description: 'Basketball and Volleyball tournament featuring competing teams from top regional engineering and degree institutes.',
-        keyHighlights: [
-          'Trophies and medals for podium finishers.',
-          'Professional referees and live scorekeeping.',
-          'Halftime performances and cheering contest.',
-          'Energy drinks and nutrition kits for players.'
-        ],
-        organizer: 'Sports Council',
-        maxParticipants: 200,
-        seatsLeft: 80,
-        deadline: 'Nov 25, 2024',
-        image: 'assets/images/sports-tournament.svg',
-        status: 'Open'
-      }
-    ];
     localStorage.setItem('campusfest_events', JSON.stringify(defaultEvents));
   } else {
     try {
       const stored = JSON.parse(localStorage.getItem('campusfest_events'));
       let modified = false;
+      const dateMap = {
+        'evt-1': { date: 'February 17, 2027', deadline: 'February 15, 2027' },
+        'evt-2': { date: 'February 18, 2027', deadline: 'February 16, 2027' },
+        'evt-3': { date: 'February 19, 2027', deadline: 'February 17, 2027' },
+        'evt-4': { date: 'February 17, 2027', deadline: 'February 16, 2027' },
+        'evt-5': { date: 'February 18, 2027', deadline: 'February 16, 2027' },
+        'evt-6': { date: 'February 19, 2027', deadline: 'February 17, 2027' }
+      };
+
       stored.forEach(evt => {
+        if (dateMap[evt.id]) {
+          if (evt.date !== dateMap[evt.id].date || evt.deadline !== dateMap[evt.id].deadline) {
+            evt.date = dateMap[evt.id].date;
+            evt.deadline = dateMap[evt.id].deadline;
+            modified = true;
+          }
+        }
         if (evt.id === 'evt-1' && (evt.image.endsWith('.svg') || evt.name === 'Annual Tech Symposium 2024')) {
           evt.name = 'Annual Tech Symposium';
           evt.venue = 'Main Auditorium';
@@ -170,7 +184,7 @@ function initLocalStorageData() {
     } catch(e) {}
   }
 
-const defaultUsers = [
+  const defaultUsers = [
     {
       id: 'usr-student-1',
       name: 'Alex Mercer',
@@ -227,153 +241,192 @@ const defaultUsers = [
     }
   }
 
-if (!localStorage.getItem('campusfest_registrations')) {
-    const defaultRegistrations = [
-      {
-        id: 'reg-1',
-        eventId: 'evt-1',
-        eventName: 'Tech Symposium 2024',
-        studentName: 'Alex Mercer',
-        studentEmail: 'alex.mercer@marwadiuniversity.ac.in',
-        enrollmentNo: 'CS2021045',
-        department: 'Computer Science',
-        date: 'Oct 15, 2024',
-        time: '09:00 AM - 05:00 PM',
-        venue: 'Main Auditorium',
-        registeredOn: 'Sep 01, 2024',
-        status: 'Confirmed'
-      },
-      {
-        id: 'reg-2',
-        eventId: 'evt-4',
-        eventName: 'Spring Career Fair',
-        studentName: 'Alex Mercer',
-        studentEmail: 'alex.mercer@marwadiuniversity.ac.in',
-        enrollmentNo: 'CS2021045',
-        department: 'Computer Science',
-        date: 'Mar 22, 2024',
-        time: '10:00 AM - 03:00 PM',
-        venue: 'Student Union Building',
-        registeredOn: 'Feb 15, 2024',
-        status: 'Completed'
-      },
-      {
-        id: 'reg-3',
-        eventId: 'evt-1',
-        eventName: 'Annual Hackathon',
-        studentName: 'Alex Mercer',
-        studentEmail: 'alex.mercer@marwadiuniversity.ac.in',
-        enrollmentNo: 'CS2021045',
-        department: 'Computer Science',
-        date: 'Nov 05, 2024',
-        time: '24-Hour Event',
-        venue: 'Computer Science Lab',
-        registeredOn: 'Sep 10, 2024',
-        status: 'Confirmed'
-      },
-      {
-        id: 'reg-4',
-        eventId: 'evt-1',
-        eventName: 'Tech Symposium 2024',
-        studentName: 'John Doe',
-        studentEmail: 'john.doe@marwadiuniversity.ac.in',
-        enrollmentNo: 'EN2021001',
-        department: 'Computer Science',
-        date: 'Oct 15, 2024',
-        time: '10:00 AM - 04:00 PM',
-        venue: 'Main Auditorium',
-        registeredOn: 'Oct 12, 2023',
-        status: 'Confirmed'
-      },
-      {
-        id: 'reg-5',
-        eventId: 'evt-5',
-        eventName: 'Robotics Workshop',
-        studentName: 'Alice Smith',
-        studentEmail: 'alice.s@marwadiuniversity.ac.in',
-        enrollmentNo: 'EN2021045',
-        department: 'Electrical Eng.',
-        date: 'Oct 14, 2023',
-        time: '02:00 PM - 05:00 PM',
-        venue: 'Robotics Lab',
-        registeredOn: 'Oct 14, 2023',
-        status: 'Confirmed'
-      },
-      {
-        id: 'reg-6',
-        eventId: 'evt-6',
-        eventName: 'Annual Sports Meet',
-        studentName: 'Robert Johnson',
-        studentEmail: 'r.johnson@marwadiuniversity.ac.in',
-        enrollmentNo: 'EN2020112',
-        department: 'Mechanical Eng.',
-        date: 'Oct 15, 2023',
-        time: '09:00 AM - 05:00 PM',
-        venue: 'Campus Grounds',
-        registeredOn: 'Oct 15, 2023',
-        status: 'Confirmed'
-      }
-    ];
+  const defaultRegistrations = [
+    {
+      id: 'reg-1',
+      eventId: 'evt-1',
+      eventName: 'Annual Tech Symposium',
+      studentName: 'Alex Mercer',
+      studentEmail: 'alex.mercer@marwadiuniversity.ac.in',
+      enrollmentNo: 'CS2021045',
+      department: 'Computer Science',
+      date: 'February 17, 2027',
+      time: '10:00 AM - 04:00 PM',
+      venue: 'Main Auditorium',
+      registeredOn: 'Feb 01, 2027',
+      status: 'Confirmed'
+    },
+    {
+      id: 'reg-2',
+      eventId: 'evt-2',
+      eventName: 'Global Culture Fest',
+      studentName: 'Alex Mercer',
+      studentEmail: 'alex.mercer@marwadiuniversity.ac.in',
+      enrollmentNo: 'CS2021045',
+      department: 'Computer Science',
+      date: 'February 18, 2027',
+      time: '12:00 PM - 08:00 PM',
+      venue: 'Campus Quad',
+      registeredOn: 'Feb 02, 2027',
+      status: 'Confirmed'
+    },
+    {
+      id: 'reg-3',
+      eventId: 'evt-3',
+      eventName: 'Resume Building Workshop',
+      studentName: 'Alex Mercer',
+      studentEmail: 'alex.mercer@marwadiuniversity.ac.in',
+      enrollmentNo: 'CS2021045',
+      department: 'Computer Science',
+      date: 'February 19, 2027',
+      time: '02:00 PM - 05:00 PM',
+      venue: 'Career Center, Room 204',
+      registeredOn: 'Feb 03, 2027',
+      status: 'Confirmed'
+    },
+    {
+      id: 'reg-4',
+      eventId: 'evt-1',
+      eventName: 'Annual Tech Symposium',
+      studentName: 'John Doe',
+      studentEmail: 'john.doe@marwadiuniversity.ac.in',
+      enrollmentNo: 'EN2021001',
+      department: 'Computer Science',
+      date: 'February 17, 2027',
+      time: '10:00 AM - 04:00 PM',
+      venue: 'Main Auditorium',
+      registeredOn: 'Feb 04, 2027',
+      status: 'Confirmed'
+    },
+    {
+      id: 'reg-5',
+      eventId: 'evt-5',
+      eventName: 'Intro to Python for Data Science',
+      studentName: 'Alice Smith',
+      studentEmail: 'alice.s@marwadiuniversity.ac.in',
+      enrollmentNo: 'EN2021045',
+      department: 'Electrical Eng.',
+      date: 'February 18, 2027',
+      time: '02:00 PM - 05:00 PM',
+      venue: 'Lab 3B, Science Center',
+      registeredOn: 'Feb 05, 2027',
+      status: 'Confirmed'
+    },
+    {
+      id: 'reg-6',
+      eventId: 'evt-6',
+      eventName: 'Inter-Collegiate Tournament',
+      studentName: 'Robert Johnson',
+      studentEmail: 'r.johnson@marwadiuniversity.ac.in',
+      enrollmentNo: 'EN2020112',
+      department: 'Mechanical Eng.',
+      date: 'February 19, 2027',
+      time: '10:00 AM - 06:00 PM',
+      venue: 'Indoor Stadium',
+      registeredOn: 'Feb 06, 2027',
+      status: 'Confirmed'
+    }
+  ];
+
+  const rawRegistrations = localStorage.getItem('campusfest_registrations');
+  if (!rawRegistrations) {
     localStorage.setItem('campusfest_registrations', JSON.stringify(defaultRegistrations));
+  } else {
+    try {
+      const storedRegs = JSON.parse(rawRegistrations);
+      let regUpdated = false;
+      storedRegs.forEach(r => {
+        if (r.eventId === 'evt-1' && r.date !== 'February 17, 2027') {
+          r.date = 'February 17, 2027';
+          r.registeredOn = 'Feb 01, 2027';
+          regUpdated = true;
+        } else if (r.eventId === 'evt-2' && r.date !== 'February 18, 2027') {
+          r.date = 'February 18, 2027';
+          r.registeredOn = 'Feb 02, 2027';
+          regUpdated = true;
+        } else if (r.eventId === 'evt-3' && r.date !== 'February 19, 2027') {
+          r.date = 'February 19, 2027';
+          r.registeredOn = 'Feb 03, 2027';
+          regUpdated = true;
+        } else if (r.eventId === 'evt-4' && r.date !== 'February 17, 2027') {
+          r.date = 'February 17, 2027';
+          r.registeredOn = 'Feb 01, 2027';
+          regUpdated = true;
+        } else if (r.eventId === 'evt-5' && r.date !== 'February 18, 2027') {
+          r.date = 'February 18, 2027';
+          r.registeredOn = 'Feb 02, 2027';
+          regUpdated = true;
+        } else if (r.eventId === 'evt-6' && r.date !== 'February 19, 2027') {
+          r.date = 'February 19, 2027';
+          r.registeredOn = 'Feb 03, 2027';
+          regUpdated = true;
+        }
+      });
+      if (regUpdated) {
+        localStorage.setItem('campusfest_registrations', JSON.stringify(storedRegs));
+      }
+    } catch (e) {}
   }
 
-if (!localStorage.getItem('campusfest_notifications')) {
-    const defaultNotifs = [
-      {
-        id: 'notif-1',
-        title: 'Registration Confirmed: Tech Symposium 2024',
-        message: 'Your spot for the Tech Symposium has been secured. Please arrive 15 minutes early for check-in.',
-        time: 'Just now',
-        type: 'success',
-        read: false
-      },
-      {
-        id: 'notif-2',
-        title: 'Venue Change: Coding Bootcamp',
-        message: 'The venue for tomorrow\'s Coding Bootcamp has been moved to Lab 3, Engineering Block.',
-        time: '2 hours ago',
-        type: 'warning',
-        read: false
-      },
-      {
-        id: 'notif-3',
-        title: 'Call for Volunteers: Annual Art Fest',
-        message: 'We are looking for enthusiastic volunteers for the upcoming Art Fest. Sign up now to earn credit hours.',
-        time: 'Yesterday',
-        type: 'info',
-        read: true
-      },
-      {
-        id: 'notif-4',
-        title: 'Reminder: Guest Lecture on AI',
-        message: 'Don\'t forget the guest lecture on Artificial Intelligence starts in 30 minutes in the Main Auditorium.',
-        time: 'Oct 24, 2024',
-        type: 'reminder',
-        read: true
-      }
-    ];
+  const defaultNotifs = [
+    {
+      id: 'notif-1',
+      title: 'Registration Confirmed: Annual Tech Symposium',
+      message: 'Your spot for the Annual Tech Symposium has been secured. Please arrive 15 minutes early for check-in.',
+      time: 'Just now',
+      type: 'success',
+      read: false
+    },
+    {
+      id: 'notif-2',
+      title: 'Venue Change: Coding Bootcamp',
+      message: 'The venue for tomorrow\'s Coding Bootcamp has been moved to Lab 3, Engineering Block.',
+      time: '2 hours ago',
+      type: 'warning',
+      read: false
+    },
+    {
+      id: 'notif-3',
+      title: 'Call for Volunteers: Annual Art Fest',
+      message: 'We are looking for enthusiastic volunteers for the upcoming Art Fest. Sign up now to earn credit hours.',
+      time: 'Yesterday',
+      type: 'info',
+      read: true
+    },
+    {
+      id: 'notif-4',
+      title: 'Reminder: Guest Lecture on AI',
+      message: 'Don\'t forget the guest lecture on Artificial Intelligence starts in 30 minutes in the Main Auditorium.',
+      time: 'Feb 15, 2027',
+      type: 'reminder',
+      read: true
+    }
+  ];
+
+  if (!localStorage.getItem('campusfest_notifications')) {
     localStorage.setItem('campusfest_notifications', JSON.stringify(defaultNotifs));
   }
 
-if (!localStorage.getItem('campusfest_announcements')) {
-    const defaultAnnouncements = [
-      {
-        id: 'ann-1',
-        title: 'Spring Semester Registration Deadlines',
-        relatedEvent: 'General',
-        description: 'Please be advised that the final deadline for Spring 2024 course registration is approaching. Ensure all students have finalized their schedules to avoid late fees.',
-        date: 'Oct 24, 2023',
-        badge: 'General'
-      },
-      {
-        id: 'ann-2',
-        title: 'Venue Change: Tech Symposium Keynote',
-        relatedEvent: 'Annual Tech Symposium 2024',
-        description: 'Due to overwhelming response, the opening keynote for the Annual Tech Symposium has been moved to the Main Auditorium.',
-        date: 'Oct 22, 2023',
-        badge: 'Related: Annual Tech Symposium'
-      }
-    ];
+  const defaultAnnouncements = [
+    {
+      id: 'ann-1',
+      title: 'Spring Semester Registration Deadlines',
+      relatedEvent: 'General',
+      description: 'Please be advised that the final deadline for Spring 2027 course and event registration is approaching. Ensure all students have finalized their registrations.',
+      date: 'Feb 10, 2027',
+      badge: 'General'
+    },
+    {
+      id: 'ann-2',
+      title: 'Venue Change: Tech Symposium Keynote',
+      relatedEvent: 'Annual Tech Symposium',
+      description: 'Due to overwhelming response, the opening keynote for the Annual Tech Symposium has been moved to the Main Auditorium.',
+      date: 'Feb 12, 2027',
+      badge: 'Related: Annual Tech Symposium'
+    }
+  ];
+
+  if (!localStorage.getItem('campusfest_announcements')) {
     localStorage.setItem('campusfest_announcements', JSON.stringify(defaultAnnouncements));
   }
 }

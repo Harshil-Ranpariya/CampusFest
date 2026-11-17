@@ -1,14 +1,11 @@
-/* ==========================================================================
-   CampusFest Notifications Page JavaScript
-   ========================================================================== */
-
 let notificationsList = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   checkStudentAuth();
   loadNotifications();
-  setupProfileMenu();
   setupLoadMore();
+  setupProfileDropdown();
+  setupLogout();
   setupDocumentClick();
 });
 
@@ -20,15 +17,9 @@ function checkStudentAuth() {
       student = JSON.parse(userRaw);
     } catch (e) {}
   }
-  // Ensure a valid student session is available so notifications can be viewed
-  if (!student) {
-    student = {
-      id: 'student-demo',
-      name: 'Student User',
-      email: 'student@marwadiuniversity.ac.in',
-      role: 'student'
-    };
-    localStorage.setItem('campusfest_current_user', JSON.stringify(student));
+  if (!student || student.role !== 'student') {
+    window.location.href = 'login.html';
+    return null;
   }
   return student;
 }
@@ -37,8 +28,8 @@ function loadNotifications() {
   const defaultList = [
     {
       id: 'notif-1',
-      title: 'Registration Confirmed: Tech Symposium 2024',
-      message: 'Your spot for the Tech Symposium has been secured. Please arrive 15 minutes early for check-in.',
+      title: 'Registration Confirmed: Annual Tech Symposium',
+      message: 'Your spot for the Annual Tech Symposium has been secured. Please arrive 15 minutes early for check-in.',
       time: 'Just now',
       type: 'success',
       read: false
@@ -63,7 +54,7 @@ function loadNotifications() {
       id: 'notif-4',
       title: 'Reminder: Guest Lecture on AI',
       message: 'Don\'t forget the guest lecture on Artificial Intelligence starts in 30 minutes in the Main Auditorium.',
-      time: 'Oct 24, 2024',
+      time: 'Feb 15, 2027',
       type: 'reminder',
       read: true
     }
@@ -110,7 +101,6 @@ function renderNotifications() {
     let iconSvg = '';
 
     if (n.type === 'success') {
-      // Green calendar with checkmark
       iconSvg = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00875a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -121,14 +111,12 @@ function renderNotifications() {
         </svg>
       `;
     } else if (n.type === 'warning') {
-      // Red warning triangle with exclamation
       iconSvg = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="#b23b3b">
           <path d="M12 2.5L1 21.5h22L12 2.5zm0 5c.55 0 1 .45 1 1v5c0 .55-.45 1-1 1s-1-.45-1-1v-5c0-.55.45-1 1-1zm0 9c.69 0 1.25.56 1.25 1.25S12.69 19 12 19s-1.25-.56-1.25-1.25.56-1.25 1.25-1.25z"/>
         </svg>
       `;
     } else if (n.type === 'info') {
-      // Dark announcement megaphone icon
       iconSvg = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#102238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 11l14-5v12L3 13v-2z"></path>
@@ -137,7 +125,6 @@ function renderNotifications() {
         </svg>
       `;
     } else if (n.type === 'reminder') {
-      // Dark clock outline
       iconSvg = `
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#102238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"></circle>
@@ -239,28 +226,51 @@ function setupLoadMore() {
   });
 }
 
-function setupProfileMenu() {
-  const trigger = document.getElementById('userMenuDropdown');
-  const menu = document.getElementById('profileDropdownMenu');
-  if (trigger && menu) {
-    trigger.addEventListener('click', (e) => {
+function setupProfileDropdown() {
+  document.querySelectorAll('.header-profile-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      menu.classList.toggle('show');
+      const parent = btn.closest('.header-profile-dropdown');
+      if (!parent) return;
+      const menu = parent.querySelector('.student-profile-menu');
+      if (!menu) return;
+      const isOpen = menu.classList.contains('show');
+      document.querySelectorAll('.student-profile-menu.show').forEach(m => {
+        m.classList.remove('show');
+        const sib = m.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (sib) sib.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        menu.classList.add('show');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
-  }
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.header-profile-dropdown')) {
+      document.querySelectorAll('.student-profile-menu.show').forEach(menu => {
+        menu.classList.remove('show');
+        const btn = menu.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+}
 
-  const logoutBtn = document.getElementById('studentLogoutBtn');
-  if (logoutBtn) {
+function setupLogout() {
+  const logoutBtns = document.querySelectorAll('.student-logout-btn, #studentLogoutBtn');
+  logoutBtns.forEach(logoutBtn => {
     logoutBtn.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('campusfest_current_user');
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
-  }
+  });
 }
 
 function closeAllDropdowns() {
   document.querySelectorAll('.notif-dropdown-menu.show').forEach(m => m.classList.remove('show'));
+  document.querySelectorAll('.student-profile-menu.show').forEach(m => m.classList.remove('show'));
   const profileMenu = document.getElementById('profileDropdownMenu');
   if (profileMenu) profileMenu.classList.remove('show');
 }

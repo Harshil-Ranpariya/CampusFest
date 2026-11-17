@@ -1,9 +1,8 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const student = loadProfileData();
   setupProfileForm(student);
   loadNotificationBadge();
+  setupProfileDropdown();
   setupLogout();
 });
 
@@ -24,7 +23,7 @@ function loadProfileData() {
     return null;
   }
 
-const nameInput = document.getElementById('studentFullName');
+  const nameInput = document.getElementById('studentFullName');
   const enrolInput = document.getElementById('studentEnrollment');
   const emailInput = document.getElementById('studentEmail');
   const deptInput = document.getElementById('studentDepartment');
@@ -64,14 +63,14 @@ function setupProfileForm(student) {
       return;
     }
 
-student.name = name;
+    student.name = name;
     student.enrollmentNo = enrollment;
     student.department = dept;
     student.semester = semester;
 
-localStorage.setItem('campusfest_current_user', JSON.stringify(student));
+    localStorage.setItem('campusfest_current_user', JSON.stringify(student));
 
-const usersRaw = localStorage.getItem('campusfest_users');
+    const usersRaw = localStorage.getItem('campusfest_users');
     if (usersRaw) {
       const users = JSON.parse(usersRaw);
       const idx = users.findIndex(u => u.email.toLowerCase() === student.email.toLowerCase());
@@ -84,10 +83,10 @@ const usersRaw = localStorage.getItem('campusfest_users');
       }
     }
 
-const navName = document.getElementById('navStudentName');
+    const navName = document.getElementById('navStudentName');
     if (navName) navName.textContent = name;
 
-const alertBox = document.getElementById('profileAlert');
+    const alertBox = document.getElementById('profileAlert');
     if (alertBox) {
       alertBox.textContent = 'Profile information saved successfully!';
       alertBox.classList.remove('d-none');
@@ -112,13 +111,44 @@ function loadNotificationBadge() {
   } catch (e) {}
 }
 
-function setupLogout() {
-  const logoutBtns = document.querySelectorAll('#studentLogoutBtn, .studentLogoutBtn');
-    logoutBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        localStorage.removeItem('campusfest_current_user');
-        window.location.href = 'index.html';
+function setupProfileDropdown() {
+  document.querySelectorAll('.header-profile-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const parent = btn.closest('.header-profile-dropdown');
+      if (!parent) return;
+      const menu = parent.querySelector('.student-profile-menu');
+      if (!menu) return;
+      const isOpen = menu.classList.contains('show');
+      document.querySelectorAll('.student-profile-menu.show').forEach(m => {
+        m.classList.remove('show');
+        const sib = m.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (sib) sib.setAttribute('aria-expanded', 'false');
       });
+      if (!isOpen) {
+        menu.classList.add('show');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.header-profile-dropdown')) {
+      document.querySelectorAll('.student-profile-menu.show').forEach(menu => {
+        menu.classList.remove('show');
+        const btn = menu.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+}
+
+function setupLogout() {
+  const logoutBtns = document.querySelectorAll('.student-logout-btn, #studentLogoutBtn, .studentLogoutBtn');
+  logoutBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('campusfest_current_user');
+      window.location.href = 'login.html';
+    });
+  });
 }

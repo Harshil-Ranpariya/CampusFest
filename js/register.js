@@ -1,13 +1,3 @@
-/**
- * CampusFest - Registration Page Logic
- * 
- * Enforces strict institutional email domain rules:
- * - Student accounts: Only @marwadiuniversity.ac.in
- *   Error: "Please use your official student email address ending with @marwadiuniversity.ac.in."
- * - Faculty accounts: Only @marwadieducation.edu.in
- *   Error: "Please use your official faculty email address ending with @marwadieducation.edu.in."
- */
-
 let selectedRole = 'student';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -58,7 +48,6 @@ function setupRoleToggle() {
     facultyBtn.addEventListener('click', () => setRole('faculty'));
   }
 
-  // Check URL query parameters for initial role preference (?role=faculty)
   const urlParams = new URLSearchParams(window.location.search);
   const requestedRole = urlParams.get('role');
   if (requestedRole && requestedRole.toLowerCase() === 'faculty') {
@@ -86,7 +75,6 @@ function setupRegisterForm() {
 
     const fullName = fullNameInput ? fullNameInput.value.trim() : '';
     const idNumber = idNumberInput ? idNumberInput.value.trim() : '';
-    // Trim leading and trailing whitespace before validation
     const email = emailInput ? emailInput.value.trim() : '';
     const department = departmentInput ? departmentInput.value : '';
     const semesterOrDesignation = semesterOrDesignationInput ? semesterOrDesignationInput.value.trim() : '';
@@ -98,7 +86,6 @@ function setupRegisterForm() {
       return;
     }
 
-    // Role-based domain validation (case-insensitive)
     const STUDENT_DOMAIN_REGEX = /^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i;
     const FACULTY_DOMAIN_REGEX = /^[a-zA-Z0-9._%+-]+@marwadieducation\.edu\.in$/i;
 
@@ -130,7 +117,6 @@ function setupRegisterForm() {
     const rawUsers = localStorage.getItem('campusfest_users');
     let users = rawUsers ? JSON.parse(rawUsers) : [];
 
-    // Case-insensitive check for existing accounts
     const exists = users.some(u => (u.email || '').trim().toLowerCase() === email.toLowerCase());
     if (exists) {
       showAlert('An account with this email already exists. Please log in.');
@@ -140,7 +126,7 @@ function setupRegisterForm() {
     const newUser = {
       id: 'usr-' + Date.now(),
       name: fullName,
-      email: email, // Preserving clean trimmed email
+      email: email,
       password: password,
       role: selectedRole,
       department: department,
@@ -151,7 +137,6 @@ function setupRegisterForm() {
       registeredAt: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     };
 
-    // Use centralized AuthValidator if available, or direct localStorage
     if (window.AuthValidator && typeof window.AuthValidator.safeRegisterUser === 'function') {
       const res = window.AuthValidator.safeRegisterUser(newUser);
       if (!res.success) {
@@ -164,7 +149,6 @@ function setupRegisterForm() {
       localStorage.setItem('campusfest_current_user', JSON.stringify(newUser));
     }
 
-    // Redirect to respective portal
     if (selectedRole === 'faculty') {
       window.location.href = 'faculty-dashboard.html';
     } else {

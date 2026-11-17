@@ -1,11 +1,10 @@
-
-
 let isEditMode = false;
 let editingEventId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   checkFacultyAuth();
   setupImagePresetPicker();
+  setupDateConstraints();
   checkEditMode();
   setupFormSubmission();
   setupLogout();
@@ -24,6 +23,24 @@ function checkFacultyAuth() {
     return null;
   }
   return faculty;
+}
+
+function setupDateConstraints() {
+  const dateEl = document.getElementById('eventDateInput');
+  const deadEl = document.getElementById('eventDeadlineInput');
+  const todayStr = new Date().toISOString().split('T')[0];
+
+  if (dateEl) {
+    dateEl.min = todayStr;
+    dateEl.addEventListener('change', () => {
+      if (deadEl && dateEl.value) {
+        deadEl.max = dateEl.value;
+      }
+    });
+  }
+  if (deadEl) {
+    deadEl.min = todayStr;
+  }
 }
 
 function setupImagePresetPicker() {
@@ -67,12 +84,12 @@ function checkEditMode() {
     isEditMode = true;
     editingEventId = id;
 
-const heading = document.getElementById('formPageHeading');
+    const heading = document.getElementById('formPageHeading');
     const saveBtn = document.getElementById('saveEventBtn');
     if (heading) heading.textContent = 'Edit Event';
     if (saveBtn) saveBtn.textContent = 'Update Event';
 
-const nameEl = document.getElementById('eventNameInput');
+    const nameEl = document.getElementById('eventNameInput');
     const catEl = document.getElementById('eventCategorySelect');
     const descEl = document.getElementById('eventDescInput');
     const timeEl = document.getElementById('eventTimeInput');
@@ -88,18 +105,22 @@ const nameEl = document.getElementById('eventNameInput');
     if (capEl) capEl.value = event.maxParticipants || '';
     if (bannerEl && event.image) bannerEl.value = event.image;
 
-const dateEl = document.getElementById('eventDateInput');
+    const dateEl = document.getElementById('eventDateInput');
     const deadEl = document.getElementById('eventDeadlineInput');
-    if (dateEl) {
+    if (dateEl && event.date) {
       try {
         const d = new Date(event.date);
-        if (!isNaN(d.getTime())) dateEl.value = d.toISOString().split('T')[0];
+        if (!isNaN(d.getTime())) {
+          dateEl.value = d.toISOString().split('T')[0];
+        }
       } catch (e) {}
     }
-    if (deadEl) {
+    if (deadEl && (event.deadline || event.date)) {
       try {
         const d = new Date(event.deadline || event.date);
-        if (!isNaN(d.getTime())) deadEl.value = d.toISOString().split('T')[0];
+        if (!isNaN(d.getTime())) {
+          deadEl.value = d.toISOString().split('T')[0];
+        }
       } catch (e) {}
     }
   }
@@ -128,7 +149,27 @@ function setupFormSubmission() {
       return;
     }
 
-const formattedDate = formatDateDisplay(rawDate);
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const parsedDate = new Date(rawDate + 'T00:00:00');
+    if (isNaN(parsedDate.getTime()) || parsedDate < todayStart) {
+      showAlert('Event date cannot be in the past. Please select an upcoming date.');
+      return;
+    }
+
+    const parsedDeadline = new Date(rawDeadline + 'T00:00:00');
+    if (isNaN(parsedDeadline.getTime()) || parsedDeadline < todayStart) {
+      showAlert('Registration deadline cannot be in the past.');
+      return;
+    }
+
+    if (parsedDeadline > parsedDate) {
+      showAlert('Registration deadline cannot be after the event date.');
+      return;
+    }
+
+    const formattedDate = formatDateDisplay(rawDate);
     const formattedDeadline = formatDateDisplay(rawDeadline);
     const capacity = rawCapacity ? parseInt(rawCapacity, 10) : 500;
 
@@ -140,42 +181,43 @@ const formattedDate = formatDateDisplay(rawDate);
       if (idx !== -1) {
         events[idx] = {
           ...events[idx],
-          name: name,
-          category: category,
-          description: description,
+          name,
+          category,
+          description,
           date: formattedDate,
-          time: time,
-          venue: venue,
+          time,
+          venue,
           maxParticipants: capacity,
           deadline: formattedDeadline,
-          image: bannerImage,
+          image: bannerImage || events[idx].image || 'assets/images/tech-symposium.jpg',
           seatsLeft: Math.min(events[idx].seatsLeft || capacity, capacity)
         };
       }
     } else {
       const newEvent = {
         id: 'evt-' + Date.now(),
-        name: name,
-        category: category,
-        description: description,
+        name,
+        category,
+        description,
         date: formattedDate,
-        time: time,
-        venue: venue,
+        time,
+        venue,
+        organizer: 'Faculty Coordinator',
         maxParticipants: capacity,
         seatsLeft: capacity,
         deadline: formattedDeadline,
-        image: bannerImage,
-        organizer: 'Academic Department',
+        image: bannerImage || 'assets/images/tech-symposium.jpg',
         status: 'Open',
         keyHighlights: [
-          'Interactive hands-on session with industry mentors.',
-          'Networking opportunities and project certifications.',
-          'Resource materials provided to registered participants.'
+          'Interactive student workshops and sessions.',
+          'Keynote addresses by expert speakers.',
+          'Networking opportunities across campus departments.',
+          'Certificates awarded to all attendees.'
         ]
       };
       events.unshift(newEvent);
 
-const annRaw = localStorage.getItem('campusfest_announcements');
+      const annRaw = localStorage.getItem('campusfest_announcements');
       let annList = annRaw ? JSON.parse(annRaw) : [];
       annList.unshift({
         id: 'ann-' + Date.now(),
@@ -199,7 +241,7 @@ function formatDateDisplay(dateStr) {
     const parts = dateStr.split('-');
     if (parts.length === 3) {
       const d = new Date(parts[0], parts[1] - 1, parts[2]);
-      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
     }
   } catch (e) {}
   return dateStr;
@@ -224,7 +266,7 @@ function setupLogout() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('campusfest_current_user');
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
   });
 }

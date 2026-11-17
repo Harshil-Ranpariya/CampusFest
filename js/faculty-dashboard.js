@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   checkFacultyAuth();
   loadDashboardMetrics();
   loadRecentRegistrations();
@@ -50,22 +50,22 @@ function loadRecentRegistrations() {
     {
       initials: 'JD',
       name: 'John Doe',
-      event: 'Spring Tech Fair',
-      date: 'Oct 24, 2023',
+      event: 'Annual Tech Symposium',
+      date: 'February 17, 2027',
       colorClass: 'avatar-pale-blue'
     },
     {
       initials: 'AS',
       name: 'Alice Smith',
-      event: 'Campus Hackathon',
-      date: 'Oct 23, 2023',
+      event: 'Global Culture Fest',
+      date: 'February 18, 2027',
       colorClass: 'avatar-muted-red'
     },
     {
       initials: 'BJ',
       name: 'Bob Johnson',
-      event: 'Leadership Summit',
-      date: 'Oct 22, 2023',
+      event: 'Resume Building Workshop',
+      date: 'February 19, 2027',
       colorClass: 'avatar-pale-blue'
     }
   ];
@@ -80,7 +80,7 @@ function loadRecentRegistrations() {
         initials: initials,
         name: r.studentName,
         event: r.eventName,
-        date: r.registeredOn || 'Recent',
+        date: r.date || r.registeredOn || 'February 17, 2027',
         colorClass: chipColors[idx % chipColors.length]
       });
     });
@@ -109,7 +109,7 @@ function setupLogout() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('campusfest_current_user');
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
   });
 }

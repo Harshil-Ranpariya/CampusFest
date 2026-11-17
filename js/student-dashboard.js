@@ -1,10 +1,9 @@
-﻿
-
 document.addEventListener('DOMContentLoaded', () => {
   const student = checkStudentAuth();
   loadStudentMetrics(student);
   loadRecentRegistrations(student);
   loadNotificationBadge();
+  setupProfileDropdown();
   setupLogout();
 });
 
@@ -20,12 +19,12 @@ function checkStudentAuth() {
     }
   }
 
-if (!student || student.role !== 'student') {
+  if (!student || student.role !== 'student') {
     window.location.href = 'login.html';
     return null;
   }
 
-const welcomeHeading = document.getElementById('welcomeHeading');
+  const welcomeHeading = document.getElementById('welcomeHeading');
   if (welcomeHeading) {
     welcomeHeading.textContent = `Welcome back, ${student.name}!`;
   }
@@ -42,7 +41,7 @@ function loadStudentMetrics(student) {
   const regRaw = localStorage.getItem('campusfest_registrations');
   const allRegistrations = regRaw ? JSON.parse(regRaw) : [];
 
-const studentRegs = allRegistrations.filter(r => 
+  const studentRegs = allRegistrations.filter(r => 
     (r.studentEmail && r.studentEmail.toLowerCase() === student.email.toLowerCase()) ||
     (r.enrollmentNo && r.enrollmentNo === student.enrollmentNo)
   );
@@ -70,32 +69,32 @@ function loadRecentRegistrations(student) {
   const evtRaw = localStorage.getItem('campusfest_events');
   const allEvents = evtRaw ? JSON.parse(evtRaw) : [];
 
-let studentRegs = allRegs.filter(r => 
+  let studentRegs = allRegs.filter(r => 
     (r.studentEmail && r.studentEmail.toLowerCase() === student.email.toLowerCase()) ||
     (r.enrollmentNo && r.enrollmentNo === student.enrollmentNo)
   );
 
-if (studentRegs.length === 0) {
+  if (studentRegs.length === 0) {
     studentRegs = [
       {
         id: 'reg-default-1',
-        eventName: 'Tech Symposium 2024',
-        date: 'Oct 15, 2024',
+        eventName: 'Annual Tech Symposium',
+        date: 'February 17, 2027',
         venue: 'Main Auditorium',
         status: 'Confirmed'
       },
       {
         id: 'reg-default-2',
-        eventName: 'Spring Music Festival',
-        date: 'Oct 22, 2024',
+        eventName: 'Global Culture Fest',
+        date: 'February 18, 2027',
         venue: 'Campus Quad',
         status: 'Confirmed'
       },
       {
         id: 'reg-default-3',
-        eventName: 'Design Thinking Workshop',
-        date: 'Nov 05, 2024',
-        venue: 'Innovation Lab',
+        eventName: 'Resume Building Workshop',
+        date: 'February 19, 2027',
+        venue: 'Career Center, Room 204',
         status: 'Confirmed'
       }
     ];
@@ -104,9 +103,8 @@ if (studentRegs.length === 0) {
   const recent = studentRegs.slice(0, 3);
 
   container.innerHTML = recent.map(reg => {
-    
     const matchedEvt = allEvents.find(e => e.id === reg.eventId || e.name === reg.eventName);
-    const imgUrl = matchedEvt ? matchedEvt.image : 'assets/images/tech-symposium.svg';
+    const imgUrl = matchedEvt ? matchedEvt.image : 'assets/images/tech-symposium.jpg';
 
     return `
       <div class="reg-item-row">
@@ -151,15 +149,46 @@ function loadNotificationBadge() {
   }
 }
 
-function setupLogout() {
-  const logoutBtns = document.querySelectorAll('#studentLogoutBtn, .studentLogoutBtn');
-    logoutBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        localStorage.removeItem('campusfest_current_user');
-        window.location.href = 'index.html';
+function setupProfileDropdown() {
+  document.querySelectorAll('.header-profile-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const parent = btn.closest('.header-profile-dropdown');
+      if (!parent) return;
+      const menu = parent.querySelector('.student-profile-menu');
+      if (!menu) return;
+      const isOpen = menu.classList.contains('show');
+      document.querySelectorAll('.student-profile-menu.show').forEach(m => {
+        m.classList.remove('show');
+        const sib = m.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (sib) sib.setAttribute('aria-expanded', 'false');
       });
+      if (!isOpen) {
+        menu.classList.add('show');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.header-profile-dropdown')) {
+      document.querySelectorAll('.student-profile-menu.show').forEach(menu => {
+        menu.classList.remove('show');
+        const btn = menu.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+}
+
+function setupLogout() {
+  const logoutBtns = document.querySelectorAll('.student-logout-btn, #studentLogoutBtn, .studentLogoutBtn');
+  logoutBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('campusfest_current_user');
+      window.location.href = 'login.html';
+    });
+  });
 }
 
 function escapeHtml(str) {

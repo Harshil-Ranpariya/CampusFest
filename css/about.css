@@ -19,8 +19,6 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
-
-/* Site Header */
 .site-header {
   height: 68px;
   min-height: 68px;
@@ -250,15 +248,11 @@ body {
     border: 1px solid var(--primary-color);
   }
 }
-
-/* Main Content */
 .main-content {
   background-color: var(--page-bg);
   padding-top: 3.5rem;
   padding-bottom: 5rem;
 }
-
-/* Page Header */
 .page-title {
   font-size: 2.4rem;
   font-weight: 800;
@@ -273,8 +267,6 @@ body {
   max-width: 680px;
   line-height: 1.5;
 }
-
-/* Mission Section */
 .mission-card {
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -317,8 +309,6 @@ body {
   max-height: 350px;
   display: block;
 }
-
-/* Key Features Section */
 .section-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -368,8 +358,6 @@ body {
   line-height: 1.55;
   margin-bottom: 0;
 }
-
-/* How it Works Section */
 .how-it-works-card {
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -425,51 +413,41 @@ body {
   margin: 0 auto;
 }
 
-/* Site Footer */
 .site-footer {
   background-color: var(--footer-bg);
-  padding: 3.5rem 0 3rem;
-  border-top: none;
+  border-top: 1px solid #dbeafe;
 }
 
 .footer-brand {
-  font-weight: 800;
-  font-size: 1.35rem;
-  color: var(--primary-color);
-  letter-spacing: -0.4px;
-}
-
-.footer-spacer {
-  height: 2.75rem;
-}
-
-.footer-copy {
-  font-size: 0.85rem;
-  color: var(--muted-text);
-}
-
-.footer-column-title {
-  font-size: 0.95rem;
   font-weight: 700;
+  font-size: 1.15rem;
   color: #0f172a;
-  margin-bottom: 1rem;
 }
 
-.footer-links {
-  padding: 0;
+.footer-tagline {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.footer-nav {
   margin: 0;
+  padding: 0;
 }
 
-.footer-links a {
-  font-size: 0.88rem;
-  color: #4b5563;
+.footer-nav .list-inline-item {
+  margin: 0 0.5rem;
+}
+
+.footer-nav a {
+  font-size: 0.85rem;
+  color: #64748b;
   text-decoration: none;
-  display: block;
-  margin-bottom: 0.65rem;
+  font-weight: 500;
   transition: color 0.15s ease;
 }
 
-.footer-links a:hover {
+.footer-nav a:hover {
   color: var(--primary-color);
 }
 

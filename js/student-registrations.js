@@ -1,5 +1,3 @@
-// Student Registrations JavaScript
-
 let allRegistrations = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -20,12 +18,10 @@ function checkFacultyAuth() {
   }
 
   if (!faculty || faculty.role !== 'faculty') {
-    // If the user explicitly logged out in this session, respect it and redirect
     if (sessionStorage.getItem('campusfest_logged_out') === 'true') {
       window.location.href = 'login.html';
       return null;
     }
-    // For direct preview or initial visit, auto-populate the default faculty session
     const defaultFaculty = {
       id: 'usr-faculty-1',
       name: 'Dr. Sarah Jenkins',
@@ -51,7 +47,6 @@ function loadAllRegistrations() {
     }
   }
 
-  // Exact 5 reference rows with strict student institutional domain @marwadiuniversity.ac.in
   const defaultRoster = [
     {
       id: 'reg-std-1',
@@ -59,8 +54,8 @@ function loadAllRegistrations() {
       enrollmentNo: 'EN2021001',
       studentEmail: 'john.doe@marwadiuniversity.ac.in',
       department: 'Computer Science',
-      eventName: 'Tech Symposium 2024',
-      registeredOn: 'Oct 12, 2023'
+      eventName: 'Annual Tech Symposium',
+      registeredOn: 'Feb 10, 2027'
     },
     {
       id: 'reg-std-2',
@@ -68,8 +63,8 @@ function loadAllRegistrations() {
       enrollmentNo: 'EN2021045',
       studentEmail: 'alice.s@marwadiuniversity.ac.in',
       department: 'Electrical Eng.',
-      eventName: 'Robotics Workshop',
-      registeredOn: 'Oct 14, 2023'
+      eventName: 'Intro to Python for Data Science',
+      registeredOn: 'Feb 11, 2027'
     },
     {
       id: 'reg-std-3',
@@ -77,8 +72,8 @@ function loadAllRegistrations() {
       enrollmentNo: 'EN2020112',
       studentEmail: 'r.johnson@marwadiuniversity.ac.in',
       department: 'Mechanical Eng.',
-      eventName: 'Annual Sports Meet',
-      registeredOn: 'Oct 15, 2023'
+      eventName: 'Inter-Collegiate Tournament',
+      registeredOn: 'Feb 12, 2027'
     },
     {
       id: 'reg-std-4',
@@ -86,8 +81,8 @@ function loadAllRegistrations() {
       enrollmentNo: 'EN2022088',
       studentEmail: 'emma.w@marwadiuniversity.ac.in',
       department: 'Civil Eng.',
-      eventName: 'Design Thinking Seminar',
-      registeredOn: 'Oct 15, 2023'
+      eventName: 'Global Culture Fest',
+      registeredOn: 'Feb 12, 2027'
     },
     {
       id: 'reg-std-5',
@@ -95,8 +90,8 @@ function loadAllRegistrations() {
       enrollmentNo: 'EN2021077',
       studentEmail: 'mbrown@marwadiuniversity.ac.in',
       department: 'Computer Science',
-      eventName: 'Hackathon 2024',
-      registeredOn: 'Oct 16, 2023'
+      eventName: 'Resume Building Workshop',
+      registeredOn: 'Feb 13, 2027'
     }
   ];
 
@@ -187,7 +182,7 @@ function renderRegistrationsTable() {
         <td><span class="col-email">${escapeHtml(r.studentEmail || 'student@marwadiuniversity.ac.in')}</span></td>
         <td><span class="col-dept">${escapeHtml(r.department || 'General')}</span></td>
         <td><span class="col-event">${escapeHtml(r.eventName)}</span></td>
-        <td><span class="col-date">${escapeHtml(r.registeredOn || 'Oct 12, 2023')}</span></td>
+        <td><span class="col-date">${escapeHtml(r.registeredOn || 'Feb 10, 2027')}</span></td>
       </tr>
     `;
   }).join('');
@@ -199,7 +194,7 @@ function setupLogout() {
       e.preventDefault();
       sessionStorage.setItem('campusfest_logged_out', 'true');
       localStorage.removeItem('campusfest_current_user');
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
   });
 }

@@ -1,13 +1,3 @@
-/**
- * CampusFest - Login Page Logic
- * 
- * Enforces strict institutional email domain rules:
- * - Student accounts: Only @marwadiuniversity.ac.in
- *   Error: "Please use your official student email address ending with @marwadiuniversity.ac.in."
- * - Faculty accounts: Only @marwadieducation.edu.in
- *   Error: "Please use your official faculty email address ending with @marwadieducation.edu.in."
- */
-
 let selectedLoginRole = 'student';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -103,7 +93,6 @@ function setupRoleToggle() {
     facultyBtn.addEventListener('click', () => setRole('faculty'));
   }
 
-  // Support URL parameter: login.html?role=faculty
   const urlParams = new URLSearchParams(window.location.search);
   const requestedRole = urlParams.get('role');
   if (requestedRole && requestedRole.toLowerCase() === 'faculty') {
@@ -124,7 +113,6 @@ function setupLoginForm() {
     const emailInput = document.getElementById('collegeEmail');
     const passwordInput = document.getElementById('password');
 
-    // Trim leading and trailing whitespace before validation
     const rawEmail = emailInput ? emailInput.value : '';
     const email = rawEmail.trim();
     const password = passwordInput ? passwordInput.value : '';
@@ -143,7 +131,6 @@ function setupLoginForm() {
       return;
     }
 
-    // Role-based domain validation (case-insensitive)
     const STUDENT_DOMAIN_REGEX = /^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i;
     const FACULTY_DOMAIN_REGEX = /^[a-zA-Z0-9._%+-]+@marwadieducation\.edu\.in$/i;
 
@@ -165,11 +152,9 @@ function setupLoginForm() {
     const usersRaw = localStorage.getItem('campusfest_users');
     const users = usersRaw ? JSON.parse(usersRaw) : [];
 
-    // Case-insensitive lookup
     let matchedUser = users.find(u => (u.email || '').trim().toLowerCase() === email.toLowerCase());
 
     if (matchedUser) {
-      // Disallow cross-role authentication (student and faculty accounts cannot be interchanged)
       if (matchedUser.role !== selectedLoginRole) {
         if (selectedLoginRole === 'student') {
           showAlert('Please use your official student email address ending with @marwadiuniversity.ac.in.');
@@ -184,14 +169,13 @@ function setupLoginForm() {
         return;
       }
     } else {
-      // Auto-provision record for valid institutional email
       const namePart = email.split('@')[0].replace(/[._]/g, ' ');
       const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
 
       matchedUser = {
         id: 'usr-' + Date.now(),
         name: formattedName || (selectedLoginRole === 'faculty' ? 'Faculty Member' : 'Student Member'),
-        email: email, // Store clean trimmed email
+        email: email,
         password: password,
         role: selectedLoginRole,
         department: 'Computer Science',
@@ -207,7 +191,6 @@ function setupLoginForm() {
 
     localStorage.setItem('campusfest_current_user', JSON.stringify(matchedUser));
 
-    // Role-based redirection
     if (matchedUser.role === 'faculty') {
       window.location.href = 'faculty-dashboard.html';
     } else {

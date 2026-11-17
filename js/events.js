@@ -1,8 +1,3 @@
-/* ==========================================================================
-   CampusFest - Browse Events JavaScript
-   Pixel-perfect implementation of Browse Events page logic & interactions
-   ========================================================================== */
-
 let allEvents = [];
 let currentStudent = null;
 let selectedCategory = 'all';
@@ -11,9 +6,9 @@ let searchQuery = '';
 const referenceEvents = [
   {
     id: 'evt-1',
-    name: 'Annual Tech Symposium 2024',
+    name: 'Annual Tech Symposium',
     category: 'Academic',
-    date: 'Oct 15, 2024',
+    date: 'February 17, 2027',
     time: '10:00 AM - 4:00 PM',
     venue: 'Main Auditorium, Building A',
     description: 'Join industry leaders and alumni for a day of networking and insights into the future of technology.',
@@ -26,7 +21,7 @@ const referenceEvents = [
     organizer: 'Computer Science Department',
     maxParticipants: 200,
     seatsLeft: 45,
-    deadline: 'Oct 10, 2024',
+    deadline: 'February 15, 2027',
     image: 'assets/images/tech-symposium-lab.jpg',
     status: 'Open'
   },
@@ -34,7 +29,7 @@ const referenceEvents = [
     id: 'evt-2',
     name: 'Spring Club Rush & Organization Fair',
     category: 'Social',
-    date: 'Oct 18, 2024',
+    date: 'February 18, 2027',
     time: '12:00 PM - 3:00 PM',
     venue: 'Campus Quad',
     description: 'Discover over 50 campus clubs, student chapters, and sports organizations. Sign up and build your campus network.',
@@ -47,7 +42,7 @@ const referenceEvents = [
     organizer: 'Campus Life Committee',
     maxParticipants: 9999,
     seatsLeft: 'Unlimited',
-    deadline: 'Oct 18, 2024',
+    deadline: 'February 16, 2027',
     image: 'assets/images/club-rush-fair.jpg',
     status: 'Open'
   },
@@ -55,7 +50,7 @@ const referenceEvents = [
     id: 'evt-3',
     name: 'Intro to Python for Data Science',
     category: 'Workshop',
-    date: 'Oct 20, 2024',
+    date: 'February 19, 2027',
     time: '2:00 PM - 5:00 PM',
     venue: 'Lab 3B, Science Center',
     description: 'Hands-on programming session exploring data analysis with Python, NumPy, Pandas, and exploratory charts.',
@@ -68,72 +63,72 @@ const referenceEvents = [
     organizer: 'Data Science Society',
     maxParticipants: 30,
     seatsLeft: 3,
-    deadline: 'Oct 19, 2024',
+    deadline: 'February 17, 2027',
     image: 'assets/images/python-workshop.jpg',
     status: 'Almost Full'
   },
   {
     id: 'evt-4',
-    name: 'Annual Tech Symposium 2024',
-    category: 'Academic',
-    date: 'Oct 15, 2024',
-    time: '10:00 AM - 4:00 PM',
-    venue: 'Main Auditorium, Building A',
-    description: 'Join industry leaders and alumni for a day of networking and insights into the future of technology.',
+    name: 'Global Culture Fest',
+    category: 'Culture',
+    date: 'February 17, 2027',
+    time: '12:00 PM - 8:00 PM',
+    venue: 'Campus Quad',
+    description: 'Celebrate diversity with food, music, and performances from student organizations around the world.',
     keyHighlights: [
-      'Keynote address by leading AI researchers.',
-      'Hands-on coding workshops in modern web frameworks.',
-      'Career fair featuring top tech recruiters.',
-      'Project showcase competition with prizes.'
+      'International food street with 25+ cultural stalls.',
+      'Traditional dance and acoustic musical acts.',
+      'Live student band showcase in the evening.',
+      'Cultural attire fashion walk.'
     ],
-    organizer: 'Computer Science Department',
-    maxParticipants: 200,
-    seatsLeft: 45,
-    deadline: 'Oct 10, 2024',
-    image: 'assets/images/tech-symposium-lab.jpg',
+    organizer: 'Student Union',
+    maxParticipants: 1000,
+    seatsLeft: 520,
+    deadline: 'February 15, 2027',
+    image: 'assets/images/culture-fest.jpg',
     status: 'Open'
   },
   {
     id: 'evt-5',
-    name: 'Spring Club Rush & Organization Fair',
-    category: 'Social',
-    date: 'Oct 18, 2024',
-    time: '12:00 PM - 3:00 PM',
-    venue: 'Campus Quad',
-    description: 'Discover over 50 campus clubs, student chapters, and sports organizations. Sign up and build your campus network.',
+    name: 'Resume Building Workshop',
+    category: 'Workshop',
+    date: 'February 18, 2027',
+    time: '02:00 PM - 05:00 PM',
+    venue: 'Career Center, Room 204',
+    description: 'Get expert advice on crafting a standout resume that will catch the eye of top employers.',
     keyHighlights: [
-      'Interactive student association booths.',
-      'Free campus fest merchandise and refreshments.',
-      'Meet club presidents and leadership teams.',
-      'Sign-up raffle giveaways.'
+      '1-on-1 resume review with certified HR recruiters.',
+      'ATS optimization tips and portfolio advice.',
+      'Mock technical & behavioral interview walkthroughs.',
+      'Custom template pack provided to all participants.'
     ],
-    organizer: 'Campus Life Committee',
-    maxParticipants: 9999,
-    seatsLeft: 'Unlimited',
-    deadline: 'Oct 18, 2024',
-    image: 'assets/images/club-rush-fair.jpg',
-    status: 'Open'
+    organizer: 'Career Placement Cell',
+    maxParticipants: 30,
+    seatsLeft: 3,
+    deadline: 'February 16, 2027',
+    image: 'assets/images/resume-workshop.jpg',
+    status: 'Almost Full'
   },
   {
     id: 'evt-6',
-    name: 'Intro to Python for Data Science',
-    category: 'Workshop',
-    date: 'Oct 20, 2024',
-    time: '2:00 PM - 5:00 PM',
-    venue: 'Lab 3B, Science Center',
-    description: 'Hands-on programming session exploring data analysis with Python, NumPy, Pandas, and exploratory charts.',
+    name: 'Inter-Collegiate Tournament',
+    category: 'Sports',
+    date: 'February 19, 2027',
+    time: '10:00 AM - 06:00 PM',
+    venue: 'Indoor Stadium',
+    description: 'Basketball and Volleyball tournament featuring competing teams from top regional engineering and degree institutes.',
     keyHighlights: [
-      'Interactive Jupyter notebook exercises.',
-      'Real-world campus datasets for practice.',
-      'Guidance on machine learning basics.',
-      'Course completion digital certificate.'
+      'Trophies and medals for podium finishers.',
+      'Professional referees and live scorekeeping.',
+      'Halftime performances and cheering contest.',
+      'Energy drinks and nutrition kits for players.'
     ],
-    organizer: 'Data Science Society',
-    maxParticipants: 30,
-    seatsLeft: 3,
-    deadline: 'Oct 19, 2024',
-    image: 'assets/images/python-workshop.jpg',
-    status: 'Almost Full'
+    organizer: 'Sports Council',
+    maxParticipants: 200,
+    seatsLeft: 80,
+    deadline: 'February 17, 2027',
+    image: 'assets/images/sports-tournament.svg',
+    status: 'Open'
   }
 ];
 
@@ -142,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadEventsData();
   setupFiltersAndSearch();
   loadNotificationBadge();
+  setupProfileDropdown();
   setupLogout();
 });
 
@@ -153,17 +149,9 @@ function checkStudentAuth() {
       student = JSON.parse(userRaw);
     } catch (e) {}
   }
-  // Ensure a valid student session is available so events page can be accessed & tested directly
-  if (!student) {
-    student = {
-      id: 'usr-student-1',
-      name: 'Alex Mercer',
-      email: 'alex.mercer@marwadiuniversity.ac.in',
-      enrollmentNo: 'CS2021045',
-      department: 'Computer Science',
-      role: 'student'
-    };
-    localStorage.setItem('campusfest_current_user', JSON.stringify(student));
+  if (!student || student.role !== 'student') {
+    window.location.href = 'login.html';
+    return null;
   }
   const navStudentName = document.getElementById('navStudentName');
   if (navStudentName) navStudentName.textContent = student.name;
@@ -183,47 +171,44 @@ function loadEventsData() {
     localStorage.setItem('campusfest_events', JSON.stringify(referenceEvents));
   }
 
-  // Ensure reference images and updated data are reflected if default events are being used
   let updated = false;
-  if (!allEvents || allEvents.length < 6 || allEvents.some(e => e.image && e.image.endsWith('.svg'))) {
-    allEvents = referenceEvents;
-    localStorage.setItem('campusfest_events', JSON.stringify(referenceEvents));
-  } else {
-    // Check if evt-1, evt-2, evt-3 match the reference specification
+  const dateMap = {
+    'evt-1': { date: 'February 17, 2027', deadline: 'February 15, 2027' },
+    'evt-2': { date: 'February 18, 2027', deadline: 'February 16, 2027' },
+    'evt-3': { date: 'February 19, 2027', deadline: 'February 17, 2027' },
+    'evt-4': { date: 'February 17, 2027', deadline: 'February 15, 2027' },
+    'evt-5': { date: 'February 18, 2027', deadline: 'February 16, 2027' },
+    'evt-6': { date: 'February 19, 2027', deadline: 'February 17, 2027' }
+  };
+
+  if (!allEvents || allEvents.length < 6 || allEvents.some(e => e.date && !e.date.includes('2027'))) {
     allEvents.forEach(evt => {
-      if (evt.id === 'evt-1') {
-        if (evt.name !== 'Annual Tech Symposium 2024' || evt.image !== 'assets/images/tech-symposium-lab.jpg' || evt.category !== 'Academic') {
-          evt.name = 'Annual Tech Symposium 2024';
-          evt.category = 'Academic';
-          evt.venue = 'Main Auditorium, Building A';
-          evt.image = 'assets/images/tech-symposium-lab.jpg';
-          updated = true;
-        }
-      } else if (evt.id === 'evt-2') {
-        if (evt.name !== 'Spring Club Rush & Organization Fair' || evt.image !== 'assets/images/club-rush-fair.jpg' || evt.category !== 'Social') {
-          evt.name = 'Spring Club Rush & Organization Fair';
-          evt.category = 'Social';
-          evt.venue = 'Campus Quad';
-          evt.seatsLeft = 'Unlimited';
-          evt.image = 'assets/images/club-rush-fair.jpg';
-          updated = true;
-        }
-      } else if (evt.id === 'evt-3') {
-        if (evt.name !== 'Intro to Python for Data Science' || evt.image !== 'assets/images/python-workshop.jpg' || evt.category !== 'Workshop') {
-          evt.name = 'Intro to Python for Data Science';
-          evt.category = 'Workshop';
-          evt.venue = 'Lab 3B, Science Center';
-          evt.seatsLeft = 3;
-          evt.maxParticipants = 30;
-          evt.status = 'Almost Full';
-          evt.image = 'assets/images/python-workshop.jpg';
-          updated = true;
-        }
+      if (dateMap[evt.id]) {
+        evt.date = dateMap[evt.id].date;
+        evt.deadline = dateMap[evt.id].deadline;
+        updated = true;
       }
     });
-    if (updated) {
-      localStorage.setItem('campusfest_events', JSON.stringify(allEvents));
+    if (!allEvents || allEvents.length < 6) {
+      allEvents = referenceEvents;
+      updated = true;
     }
+  }
+
+  allEvents.forEach(evt => {
+    if (dateMap[evt.id] && (evt.date !== dateMap[evt.id].date || evt.deadline !== dateMap[evt.id].deadline)) {
+      evt.date = dateMap[evt.id].date;
+      evt.deadline = dateMap[evt.id].deadline;
+      updated = true;
+    }
+    if (evt.id === 'evt-1' && evt.name === 'Annual Tech Symposium 2024') {
+      evt.name = 'Annual Tech Symposium';
+      updated = true;
+    }
+  });
+
+  if (updated) {
+    localStorage.setItem('campusfest_events', JSON.stringify(allEvents));
   }
 
   renderEvents();
@@ -245,9 +230,35 @@ function setupFiltersAndSearch() {
   }
 
   const searchInput = document.getElementById('eventSearchInput');
+  const headerSearchInput = document.getElementById('headerSearchInput');
+
+  // Check URL parameters for search query
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryParam = urlParams.get('search');
+    if (queryParam) {
+      searchQuery = queryParam.trim().toLowerCase();
+      if (searchInput) searchInput.value = queryParam;
+      if (headerSearchInput) headerSearchInput.value = queryParam;
+    }
+  } catch (err) {}
+
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value.trim().toLowerCase();
+      if (headerSearchInput && headerSearchInput.value !== e.target.value) {
+        headerSearchInput.value = e.target.value;
+      }
+      renderEvents();
+    });
+  }
+
+  if (headerSearchInput) {
+    headerSearchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      if (searchInput && searchInput.value !== e.target.value) {
+        searchInput.value = e.target.value;
+      }
       renderEvents();
     });
   }
@@ -364,6 +375,7 @@ window.handleCardRegister = function(eventId) {
   const studentName = currentStudent ? currentStudent.name : 'Alex Mercer';
 
   const cleanStudentEmail = (studentEmail || '').trim();
+  // Ensure valid institutional student email
   if (!/^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i.test(cleanStudentEmail)) {
     showFeedback('Please use your official student email address ending with @marwadiuniversity.ac.in.', 'danger');
     return;
@@ -447,15 +459,46 @@ function loadNotificationBadge() {
   } catch (e) {}
 }
 
+function setupProfileDropdown() {
+  document.querySelectorAll('.header-profile-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const parent = btn.closest('.header-profile-dropdown');
+      if (!parent) return;
+      const menu = parent.querySelector('.student-profile-menu');
+      if (!menu) return;
+      const isOpen = menu.classList.contains('show');
+      document.querySelectorAll('.student-profile-menu.show').forEach(m => {
+        m.classList.remove('show');
+        const sib = m.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (sib) sib.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        menu.classList.add('show');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.header-profile-dropdown')) {
+      document.querySelectorAll('.student-profile-menu.show').forEach(menu => {
+        menu.classList.remove('show');
+        const btn = menu.closest('.header-profile-dropdown')?.querySelector('.header-profile-btn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+}
+
 function setupLogout() {
-  const btn = document.getElementById('studentLogoutBtn');
-  if (btn) {
+  const logoutBtns = document.querySelectorAll('.student-logout-btn, #studentLogoutBtn');
+  logoutBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.removeItem('campusfest_current_user');
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
-  }
+  });
 }
 
 function escapeHtml(str) {

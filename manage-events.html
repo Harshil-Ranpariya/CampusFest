@@ -15,45 +15,38 @@
   <link rel="stylesheet" href="css/manage-events.css">
 </head>
 <body>
-
-  <!-- Admin Topbar Header (Responsive Only: < 992px) -->
   <header class="admin-topbar d-lg-none sticky-top bg-white border-bottom shadow-sm">
     <div class="container-fluid px-3 py-2 d-flex justify-content-between align-items-center flex-nowrap">
       <a href="faculty-dashboard.html" class="brand-text text-decoration-none d-flex align-items-center gap-2">
         <div class="admin-topbar-icon">
-          <i class="bi bi-shield-check"></i>
+          <i class="bi bi-person"></i>
         </div>
-        <span class="fs-6 fw-bold text-nowrap">Campus<span class="brand-accent">Fest</span> <span class="badge bg-light text-dark border ms-1 fw-semibold font-monospace" style="font-size: 0.68rem;">ADMIN</span></span>
+        <span class="fs-6 fw-bold text-nowrap">Admin <span class="brand-accent">Panel</span></span>
       </a>
       <button class="btn btn-admin-menu-toggle flex-shrink-0 p-2 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#facultySidebar" aria-controls="facultySidebar" aria-label="Toggle Navigation">
         <i class="bi bi-list fs-4"></i>
       </button>
     </div>
   </header>
-
-  <!-- Upper-Side (Top) Offcanvas Admin Menu (Responsive Only: < 992px) -->
   <div class="offcanvas offcanvas-top admin-top-menu d-lg-none" tabindex="-1" id="facultySidebar" aria-labelledby="facultyMenuTitle" data-bs-backdrop="true" data-bs-scroll="false">
     <div class="container-fluid px-3 px-md-4 py-3">
-      <!-- Menu Header -->
       <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom">
         <div class="d-flex align-items-center gap-2">
-          <div class="admin-icon-box">
-            <i class="bi bi-shield-check"></i>
-          </div>
+          <a href="faculty-profile.html" class="admin-icon-box text-decoration-none" title="Faculty Profile">
+            <i class="bi bi-person"></i>
+          </a>
           <div>
-            <h5 class="offcanvas-title fw-bold text-dark mb-0" id="facultyMenuTitle">Faculty Admin Portal</h5>
-            <small class="text-muted">Campus Logistics & Event Management</small>
+            <h5 class="offcanvas-title fw-bold text-dark mb-0" id="facultyMenuTitle">Admin Panel</h5>
+            <small class="text-muted">Logistics Management</small>
           </div>
         </div>
         <button type="button" class="btn-close text-reset p-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-
-      <!-- Menu Navigation Grid -->
-      <div class="row g-2 g-sm-3">
+      <div class="row g-2 g-sm-3 mb-3">
         <div class="col-6">
           <a href="faculty-dashboard.html" class="admin-nav-card">
-            <div class="admin-nav-icon bg-primary-soft">
-              <i class="bi bi-grid-fill"></i>
+            <div class="admin-nav-icon">
+              <i class="bi bi-grid"></i>
             </div>
             <div class="admin-nav-info">
               <div class="admin-nav-title">Dashboard</div>
@@ -63,7 +56,7 @@
         </div>
         <div class="col-6">
           <a href="manage-events.html" class="admin-nav-card active">
-            <div class="admin-nav-icon bg-indigo-soft">
+            <div class="admin-nav-icon">
               <i class="bi bi-calendar3-event"></i>
             </div>
             <div class="admin-nav-info">
@@ -74,8 +67,8 @@
         </div>
         <div class="col-6">
           <a href="student-registrations.html" class="admin-nav-card">
-            <div class="admin-nav-icon bg-emerald-soft">
-              <i class="bi bi-people-fill"></i>
+            <div class="admin-nav-icon">
+              <i class="bi bi-people"></i>
             </div>
             <div class="admin-nav-info">
               <div class="admin-nav-title">Registrations</div>
@@ -85,8 +78,8 @@
         </div>
         <div class="col-6">
           <a href="announcements.html" class="admin-nav-card">
-            <div class="admin-nav-icon bg-amber-soft">
-              <i class="bi bi-megaphone-fill"></i>
+            <div class="admin-nav-icon">
+              <i class="bi bi-megaphone"></i>
             </div>
             <div class="admin-nav-info">
               <div class="admin-nav-title">Announcements</div>
@@ -95,20 +88,18 @@
           </a>
         </div>
       </div>
-
-      <!-- Menu Footer Actions -->
-      <div class="d-flex flex-wrap align-items-center justify-content-between pt-3 mt-3 border-top gap-2">
+      <div class="d-flex flex-wrap align-items-center justify-content-between pt-3 border-top gap-2">
         <a href="add-edit-event.html" class="btn btn-primary-custom d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3">
-          <i class="bi bi-plus-circle-fill"></i>
+          <i class="bi bi-plus-lg"></i>
           <span>Create New Event</span>
         </a>
         <div class="d-flex align-items-center gap-2">
           <a href="faculty-profile.html" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3">
-            <i class="bi bi-gear-fill"></i>
+            <i class="bi bi-gear"></i>
             <span>Settings</span>
           </a>
           <button type="button" class="btn btn-outline-danger btn-sm d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3 faculty-logout-btn" id="facultyLogoutBtnMobile">
-            <i class="bi bi-box-arrow-left"></i>
+            <i class="bi bi-box-arrow-right"></i>
             <span>Logout</span>
           </button>
         </div>
@@ -117,25 +108,24 @@
   </div>
 
   <div class="admin-layout-wrapper">
-    <!-- Desktop Permanent Sidebar (Visible on >= 992px) -->
     <aside class="desktop-sidebar d-none d-lg-flex flex-column">
       <div class="sidebar-header">
         <div class="sidebar-brand-wrapper">
-          <div class="sidebar-brand-icon">
+          <a href="faculty-profile.html" class="sidebar-brand-icon" title="Faculty Profile">
             <i class="bi bi-person"></i>
-          </div>
+          </a>
           <div class="sidebar-brand-text">
-            <div class="sidebar-title">Admin Panel</div>
+            <a href="faculty-dashboard.html" class="sidebar-title text-decoration-none">Admin Panel</a>
             <div class="sidebar-sub">Logistics Management</div>
           </div>
         </div>
       </div>
 
       <div class="sidebar-nav-container">
-        <ul class="nav flex-column sidebar-nav">
+        <ul class="sidebar-nav">
           <li class="nav-item">
             <a class="nav-link" href="faculty-dashboard.html">
-              <i class="bi bi-grid-fill"></i>
+              <i class="bi bi-grid"></i>
               <span>Dashboard</span>
             </a>
           </li>
@@ -147,13 +137,13 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="student-registrations.html">
-              <i class="bi bi-people-fill"></i>
+              <i class="bi bi-people"></i>
               <span>Student Registrations</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="announcements.html">
-              <i class="bi bi-megaphone-fill"></i>
+              <i class="bi bi-megaphone"></i>
               <span>Announcements</span>
             </a>
           </li>
@@ -162,31 +152,28 @@
 
       <div class="sidebar-footer">
         <a href="add-edit-event.html" class="btn btn-create-event">
-          <span class="plus-symbol">＋</span> Create New Event
+          <i class="bi bi-plus-lg"></i>
+          <span>Create New Event</span>
         </a>
         <hr class="sidebar-divider">
-        <ul class="nav flex-column sidebar-footer-nav">
+        <ul class="sidebar-footer-nav">
           <li class="nav-item">
             <a class="nav-link sidebar-action-link" href="faculty-profile.html">
-              <i class="bi bi-gear-fill"></i>
+              <i class="bi bi-gear"></i>
               <span>Settings</span>
             </a>
           </li>
           <li class="nav-item">
             <button type="button" class="nav-link sidebar-action-link text-danger border-0 bg-transparent w-100 text-start faculty-logout-btn" id="facultyLogoutBtn">
-              <i class="bi bi-box-arrow-left"></i>
+              <i class="bi bi-box-arrow-right"></i>
               <span>Logout</span>
             </button>
           </li>
         </ul>
       </div>
     </aside>
-
-    <!-- Main Content Area -->
     <main class="main-content">
       <div class="main-content-inner">
-        
-        <!-- Heading & Toolbar Row -->
         <div class="page-top-header">
           <div class="page-title-block">
             <h1 class="page-title">Manage Events</h1>
@@ -202,8 +189,6 @@
             </a>
           </div>
         </div>
-
-        <!-- 4 Statistic Cards Row -->
         <div class="metrics-row">
           <div class="stat-card">
             <div class="stat-card-label">Total Events</div>
@@ -230,8 +215,6 @@
         </div>
 
         <div id="manageAlert" class="alert alert-success d-none mb-4" role="alert"></div>
-
-        <!-- Manage Events Table Panel (818px wide, 402px high on desktop) -->
         <div class="events-table-panel">
           <div class="table-responsive">
             <table class="events-table">
@@ -246,17 +229,33 @@
                 </tr>
               </thead>
               <tbody id="manageEventsTbody">
-                <!-- Dynamically generated rows -->
               </tbody>
             </table>
           </div>
         </div>
 
       </div>
+
+      <footer class="site-footer">
+        <div class="container-fluid px-4 py-4">
+          <div class="row align-items-center gy-3">
+            <div class="col-md-6 text-center text-md-start">
+              <span class="footer-brand">CampusFest</span>
+              <p class="footer-tagline text-muted small mt-1 mb-0">© 2026 CampusFest. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-6">
+              <ul class="footer-nav list-inline text-center text-md-end mb-0">
+                <li class="list-inline-item"><a href="about.html">Contact Us</a></li>
+                <li class="list-inline-item"><a href="events.html">College Portal</a></li>
+                <li class="list-inline-item"><a href="about.html">Privacy Policy</a></li>
+                <li class="list-inline-item"><a href="about.html">Terms of Service</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
     </main>
   </div>
-
-  <!-- Delete Event Confirmation Modal -->
   <div class="modal fade" id="deleteEventModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
