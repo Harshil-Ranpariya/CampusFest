@@ -1,5 +1,3 @@
-
-
 * {
   margin: 0;
   padding: 0;
@@ -586,6 +584,7 @@ body {
   object-position: center;
   display: block;
 }
+
 .card-category-badge {
   position: absolute;
   top: 10px;
@@ -622,6 +621,7 @@ body {
   background-color: #ffedd5;
   color: #c2410c;
 }
+
 .card-status-pill {
   position: absolute;
   bottom: 10px;
@@ -634,6 +634,7 @@ body {
   padding: 4px 8px;
   border-radius: 4px;
 }
+
 .event-card-body {
   padding: 14px;
   display: flex;
@@ -692,6 +693,7 @@ body {
   color: var(--limited-red);
   font-weight: 700;
 }
+
 .event-actions-row {
   margin-top: auto;
   padding-top: 12px;
