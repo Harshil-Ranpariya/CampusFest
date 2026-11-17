@@ -132,6 +132,7 @@ const referenceEvents = [
   }
 ];
 
+// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   setupProfileDropdown();
   setupLogout();
@@ -141,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadNotificationBadge();
 });
 
+// Auth Check
 function checkStudentAuth() {
   const isLoggedOut = sessionStorage.getItem('campusfest_logged_out') === 'true';
   const userRaw = localStorage.getItem('campusfest_current_user') || sessionStorage.getItem('campusfest_current_user');
@@ -253,7 +255,7 @@ function setupFiltersAndSearch() {
   const searchInput = document.getElementById('eventSearchInput');
   const headerSearchInput = document.getElementById('headerSearchInput');
 
-  // Check URL parameters for search query
+  // URL Search
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const queryParam = urlParams.get('search');
@@ -395,7 +397,7 @@ window.handleCardRegister = function (eventId) {
   const studentName = currentStudent ? currentStudent.name : 'Alex Mercer';
 
   const cleanStudentEmail = (studentEmail || '').trim();
-  // Ensure valid institutional student email
+  // Email Validation
   if (!/^[a-zA-Z0-9._%+-]+@marwadiuniversity\.ac\.in$/i.test(cleanStudentEmail)) {
     showFeedback('Please use your official student email address ending with @marwadiuniversity.ac.in.', 'danger');
     return;
@@ -479,6 +481,7 @@ function loadNotificationBadge() {
   } catch (e) { }
 }
 
+// Profile Menu
 window.toggleStudentProfileMenu = function(btn, event) {
   if (event) {
     if (typeof event.preventDefault === 'function') event.preventDefault();
@@ -558,6 +561,7 @@ function setupProfileDropdown() {
   });
 }
 
+// Logout Handler
 function setupLogout() {
   const logoutBtns = document.querySelectorAll('.student-logout-btn, #studentLogoutBtn, .studentLogoutBtn');
   logoutBtns.forEach(btn => {
@@ -571,6 +575,7 @@ function setupLogout() {
   });
 }
 
+// Helper Utilities
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)

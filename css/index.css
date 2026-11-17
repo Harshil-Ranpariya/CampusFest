@@ -1,3 +1,4 @@
+﻿/* Variables */
 :root {
   --primary-color: #00875a;
   --primary-hover: #006e49;
@@ -20,6 +21,7 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
+/* Header Navigation */
 .site-header {
   height: 68px;
   min-height: 68px;
@@ -61,6 +63,7 @@ body {
   line-height: 1;
 }
 
+/* Responsive */
 @media (min-width: 992px) {
   .site-header {
     height: 68px;
@@ -228,6 +231,7 @@ body {
     border: 1px solid var(--primary-color);
   }
 }
+/* Main Content */
 .hero-section {
   padding: 4rem 0 3.5rem;
   background-color: #ffffff;
@@ -472,6 +476,7 @@ body {
   flex-grow: 1;
 }
 
+/* Footer */
 .site-footer {
   background-color: #e9eef8;
   border-top: 1px solid #dbeafe;

@@ -1,6 +1,7 @@
-let isEditMode = false;
+﻿let isEditMode = false;
 let editingEventId = null;
 
+// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   checkFacultyAuth();
   setupImagePresetPicker();
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupLogout();
 });
 
+// Auth Check
 function checkFacultyAuth() {
   const userRaw = localStorage.getItem('campusfest_current_user');
   let faculty = null;
@@ -261,6 +263,7 @@ function showAlert(msg, show = true) {
   }
 }
 
+// Logout Handler
 function setupLogout() {
   document.querySelectorAll('#facultyLogoutBtn, #facultyLogoutBtnMobile, .faculty-logout-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {

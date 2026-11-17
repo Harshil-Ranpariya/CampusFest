@@ -1,5 +1,6 @@
-let selectedRole = 'student';
+﻿let selectedRole = 'student';
 
+// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   setupRoleToggle();
   setupRegisterForm();

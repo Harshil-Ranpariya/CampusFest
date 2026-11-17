@@ -1,3 +1,4 @@
+﻿/* Variables */
 :root {
   --primary-color: #00875a;
   --primary-hover: #006e49;
@@ -19,6 +20,7 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
 }
+/* Header Navigation */
 .site-header {
   height: 68px;
   min-height: 68px;
@@ -60,6 +62,7 @@ body {
   line-height: 1;
 }
 
+/* Responsive */
 @media (min-width: 992px) {
   .site-header {
     height: 68px;
@@ -248,6 +251,7 @@ body {
     border: 1px solid var(--primary-color);
   }
 }
+/* Main Content */
 .main-content {
   background-color: var(--page-bg);
   padding-top: 3.5rem;
@@ -413,6 +417,7 @@ body {
   margin: 0 auto;
 }
 
+/* Footer */
 .site-footer {
   background-color: var(--footer-bg);
   border-top: 1px solid #dbeafe;

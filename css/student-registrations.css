@@ -1,3 +1,4 @@
+﻿/* Variables */
 :root {
   --primary-green: #006b4f;
   --heading-green: #007653;
@@ -30,6 +31,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
+/* Header Navigation */
 .admin-topbar {
   z-index: 1030;
   background-color: #ffffff;
@@ -189,6 +191,7 @@ body {
   width: 100% !important;
 }
 
+/* Sidebar */
 .desktop-sidebar {
   width: var(--admin-sidebar-width) !important;
   min-width: var(--admin-sidebar-width) !important;
@@ -440,6 +443,7 @@ body {
   background-color: rgba(213, 29, 29, 0.08) !important;
   color: #b91c1c !important;
 }
+/* Main Content */
 .main-content {
   flex: 1 1 auto;
   min-width: 0;
@@ -655,6 +659,7 @@ body {
   color: var(--table-text);
   white-space: nowrap;
 }
+/* Responsive */
 @media (max-width: 991.98px) {
   .admin-layout-wrapper {
     display: block;
@@ -717,6 +722,7 @@ body {
   }
 }
 
+/* Footer */
 .site-footer {
   background-color: var(--sidebar-bg, #edf3ff);
   border-top: 1px solid var(--card-border, #c2d0c5);

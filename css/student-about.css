@@ -1,3 +1,4 @@
+﻿/* Variables */
 :root {
   --primary-color: #00875a;
   --primary-hover: #006e49;
@@ -31,6 +32,7 @@ body {
   --student-avatar-color: #1e293b;
 }
 
+/* Header Navigation */
 .site-header {
   height: 68px;
   background-color: var(--student-header-bg) !important;
@@ -169,6 +171,7 @@ body {
   align-items: center !important;
 }
 
+/* Profile Dropdown */
 .student-profile-menu {
   display: none;
   position: absolute !important;
@@ -265,6 +268,7 @@ body {
   box-shadow: 0 0 0 2px var(--student-brand-green) !important;
 }
 
+/* Responsive */
 @media (min-width: 992px) {
   .site-header {
     height: 68px !important;
@@ -447,6 +451,7 @@ body {
   font-weight: 500;
 }
 
+/* Footer */
 .site-footer {
   background-color: var(--footer-bg);
   border-top: 1px solid #dbeafe;

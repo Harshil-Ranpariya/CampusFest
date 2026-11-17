@@ -1,4 +1,5 @@
-
+﻿
+/* Variables */
 :root {
   --primary-color: #00875a;
   --primary-hover: #006e49;
@@ -29,6 +30,7 @@ body {
   color: var(--primary-color);
 }
 
+/* Header Navigation */
 .admin-topbar {
   z-index: 1030;
   background-color: #ffffff;
@@ -213,6 +215,7 @@ body.offcanvas-open .main-content {
   text-overflow: ellipsis;
 }
 
+/* Responsive */
 @media (max-width: 480px) {
   .admin-nav-card {
     padding: 0.7rem 0.75rem;
@@ -251,6 +254,7 @@ body.offcanvas-open .main-content {
   width: 100% !important;
 }
 
+/* Sidebar */
 .desktop-sidebar {
   width: var(--admin-sidebar-width) !important;
   min-width: var(--admin-sidebar-width) !important;
@@ -503,6 +507,7 @@ body.offcanvas-open .main-content {
   color: #b91c1c !important;
 }
 
+/* Main Content */
 .main-content {
   flex-grow: 1;
   min-width: 0;
@@ -517,6 +522,7 @@ body.offcanvas-open .main-content {
   flex: 1;
 }
 
+/* Footer */
 .site-footer {
   background-color: var(--sidebar-bg, #edf3ff);
   border-top: 1px solid var(--border-color, #e2e8f0);

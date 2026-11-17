@@ -1,3 +1,4 @@
+﻿// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   setupProfileDropdown();
   setupLogout();
@@ -9,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Auth Check
 function checkStudentAuth() {
   const isLoggedOut = sessionStorage.getItem('campusfest_logged_out') === 'true';
   const userRaw = localStorage.getItem('campusfest_current_user') || sessionStorage.getItem('campusfest_current_user');
@@ -167,6 +169,7 @@ function loadNotificationBadge() {
   }
 }
 
+// Profile Menu
 window.toggleStudentProfileMenu = function(btn, event) {
   if (event) {
     if (typeof event.preventDefault === 'function') event.preventDefault();
@@ -246,6 +249,7 @@ function setupProfileDropdown() {
   });
 }
 
+// Logout Handler
 function setupLogout() {
   const logoutBtns = document.querySelectorAll('.student-logout-btn, #studentLogoutBtn, .studentLogoutBtn');
   logoutBtns.forEach(btn => {
@@ -259,6 +263,7 @@ function setupLogout() {
   });
 }
 
+// Helper Utilities
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)

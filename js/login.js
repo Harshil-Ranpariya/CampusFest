@@ -1,5 +1,6 @@
-let selectedLoginRole = 'student';
+﻿let selectedLoginRole = 'student';
 
+// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   ensureDefaultUsers();
   setupRoleToggle();

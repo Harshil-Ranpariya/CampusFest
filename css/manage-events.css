@@ -1,3 +1,4 @@
+﻿/* Variables */
 :root {
   --primary-green: #006b4f;
   --active-green: #00865f;
@@ -28,6 +29,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
+/* Header Navigation */
 .admin-topbar {
   z-index: 1030;
   background-color: #ffffff;
@@ -191,6 +193,7 @@ body {
   width: 100% !important;
 }
 
+/* Sidebar */
 .desktop-sidebar {
   width: var(--admin-sidebar-width) !important;
   min-width: var(--admin-sidebar-width) !important;
@@ -537,6 +540,7 @@ body {
 .btn-primary-custom:hover {
   background-color: #2b553f !important;
 }
+/* Main Content */
 .main-content {
   flex: 1;
   min-width: 0;
@@ -554,6 +558,7 @@ body {
   flex: 1;
 }
 
+/* Footer */
 .site-footer {
   background-color: var(--sidebar-bg, #edf3ff);
   border-top: 1px solid var(--card-border, #c2d0c5);
@@ -954,6 +959,7 @@ body {
 .action-btn-icon.delete-btn:hover {
   color: var(--logout-red);
 }
+/* Responsive */
 @media (max-width: 1200px) {
   .page-title {
     font-size: 38px;

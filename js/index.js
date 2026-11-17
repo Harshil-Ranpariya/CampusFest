@@ -1,3 +1,4 @@
+﻿// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   initLocalStorageData();
   renderFeaturedEvents();
@@ -492,6 +493,7 @@ function renderFeaturedEvents() {
   }).join('');
 }
 
+// Helper Utilities
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)

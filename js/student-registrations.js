@@ -1,5 +1,6 @@
-let allRegistrations = [];
+﻿let allRegistrations = [];
 
+// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   const faculty = checkFacultyAuth();
   if (faculty) {
@@ -8,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Auth Check
 function checkFacultyAuth() {
   const userRaw = localStorage.getItem('campusfest_current_user');
   let faculty = null;
@@ -188,6 +190,7 @@ function renderRegistrationsTable() {
   }).join('');
 }
 
+// Logout Handler
 function setupLogout() {
   document.querySelectorAll('#facultyLogoutBtn, #facultyLogoutBtnMobile, .faculty-logout-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -199,6 +202,7 @@ function setupLogout() {
   });
 }
 
+// Helper Utilities
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)

@@ -1,3 +1,4 @@
+﻿// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   checkFacultyAuth();
   loadDashboardMetrics();
@@ -5,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupLogout();
 });
 
+// Auth Check
 function checkFacultyAuth() {
   const userRaw = localStorage.getItem('campusfest_current_user');
   let faculty = null;
@@ -104,6 +106,7 @@ function loadRecentRegistrations() {
   `).join('');
 }
 
+// Logout Handler
 function setupLogout() {
   document.querySelectorAll('#facultyLogoutBtn, #facultyLogoutBtnMobile, .faculty-logout-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -114,6 +117,7 @@ function setupLogout() {
   });
 }
 
+// Helper Utilities
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)

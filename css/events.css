@@ -1,9 +1,10 @@
-* {
+﻿* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Variables */
 :root {
   --primary-green: #006b4f;
   --primary-hover: #00563e;
@@ -49,6 +50,7 @@ body {
   --student-avatar-color: #1e293b;
 }
 
+/* Header Navigation */
 .site-header {
   height: 68px;
   background-color: var(--student-header-bg) !important;
@@ -233,6 +235,7 @@ body {
   align-items: center !important;
 }
 
+/* Profile Dropdown */
 .student-profile-menu {
   display: none;
   position: absolute !important;
@@ -329,6 +332,7 @@ body {
   box-shadow: 0 0 0 2px var(--student-brand-green) !important;
 }
 
+/* Responsive */
 @media (min-width: 992px) {
   .site-header {
     height: 68px !important;
@@ -438,6 +442,7 @@ body {
   }
 }
 
+/* Main Content */
 .events-main {
   flex-grow: 1;
   background-color: var(--main-bg);
@@ -768,6 +773,7 @@ body {
   gap: 4px;
 }
 
+/* Footer */
 .site-footer {
   background-color: var(--footer-bg);
   border-top: 1px solid var(--footer-border);

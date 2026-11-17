@@ -1,3 +1,4 @@
+﻿// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   const faculty = loadFacultyProfile();
   setupProfileForm(faculty);
@@ -87,6 +88,7 @@ function setupProfileForm(faculty) {
   });
 }
 
+// Logout Handler
 function setupLogout() {
   document.querySelectorAll('#facultyLogoutBtn, #facultyLogoutBtnMobile, .faculty-logout-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {

@@ -1,4 +1,4 @@
-
+﻿
 
 * {
   margin: 0;
@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 
+/* Variables */
 :root {
   --primary-green: #006b4f;
   --primary-hover: #00563e;
@@ -30,6 +31,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Header Navigation */
 .site-header {
   height: 65px;
   background-color: #ffffff;
@@ -119,6 +121,7 @@ body {
   background-color: var(--header-btn-hover);
 }
 
+/* Main Content */
 .register-main {
   flex: 1;
   background: radial-gradient(circle at 92% 16%, #c6e1df 0%, rgba(198, 225, 223, 0.45) 24%, rgba(248, 249, 255, 0) 48%),
@@ -390,6 +393,7 @@ body {
   text-decoration: underline;
 }
 
+/* Footer */
 .site-footer {
   background-color: var(--footer-bg);
   border-top: 1px solid var(--border-light);
@@ -421,6 +425,7 @@ body {
   color: var(--primary-green);
 }
 
+/* Responsive */
 @media (max-width: 1080px) {
   .register-card {
     width: 95%;

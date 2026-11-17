@@ -1,8 +1,9 @@
-let eventsList = [];
+﻿let eventsList = [];
 let searchQuery = '';
 let categoryFilter = 'all';
 let pendingDeleteId = null;
 
+// DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   checkFacultyAuth();
   loadManageEvents();
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupLogout();
 });
 
+// Auth Check
 function checkFacultyAuth() {
   const userRaw = localStorage.getItem('campusfest_current_user');
   let faculty = null;
@@ -302,6 +304,7 @@ function setupDeleteModal() {
   });
 }
 
+// Logout Handler
 function setupLogout() {
   document.querySelectorAll('#facultyLogoutBtn, #facultyLogoutBtnMobile, .faculty-logout-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -312,6 +315,7 @@ function setupLogout() {
   });
 }
 
+// Helper Utilities
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)
